@@ -1,9 +1,9 @@
-//Eclipse e4 properties http://wiki.eclipse.org/E4/CSS/SWT_Mapping
+/* Eclipse e4 properties http://wiki.eclipse.org/E4/CSS/SWT_Mapping */
+
 Composite Text {
 	background-color: #f4f4f4;
 	color: black;
 }
-
 
 SashForm {
 	background-color: #fff;
@@ -19,7 +19,7 @@ Shell {
 }
 
 
-// CSS properties from comes-care.net
+/* CSS properties from comes-care.net */ 
 /*
 #header #top .moduletable h3{
 color:#a6d512;
