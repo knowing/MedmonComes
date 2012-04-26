@@ -8,7 +8,6 @@ import org.eclipse.swt.widgets.Label;
 
 public class SensorView {
 
-
 	public static final String ID = "net.comes.care.ui.view.sensor";
 	
 	@Inject
