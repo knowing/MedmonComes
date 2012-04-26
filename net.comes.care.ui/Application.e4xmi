@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_g6D3II-cEeGSFOgdbNI9Jg" elementId="org.eclipse.e4.ide.application" bindingContexts="_g6D3IY-cEeGSFOgdbNI9Jg">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_g6D3N4-cEeGSFOgdbNI9Jg" label="net.comes.care.ui" width="500" height="400">
+    <children xsi:type="advanced:PerspectiveStack" xmi:id="_g6D3P4-cEeGSFOgdbNI9Jg">
+      <children xsi:type="advanced:Perspective" xmi:id="_g6D3QI-cEeGSFOgdbNI9Jg">
+        <children xsi:type="basic:PartSashContainer" xmi:id="_g6D3QY-cEeGSFOgdbNI9Jg">
+          <children xsi:type="basic:PartStack" xmi:id="_g6D3Qo-cEeGSFOgdbNI9Jg"/>
+        </children>
+      </children>
+    </children>
+    <children xsi:type="basic:PartSashContainer" xmi:id="_8HlwsI-iEeGSFOgdbNI9Jg">
+      <children xsi:type="basic:PartSashContainer" xmi:id="_9aVyAI-iEeGSFOgdbNI9Jg" horizontal="true">
+        <children xsi:type="basic:Part" xmi:id="__8HLMI-iEeGSFOgdbNI9Jg" elementId="net.comes.care.ui.view.patient" contributionURI="bundleclass://net.comes.care.ui/net.comes.care.ui.views.PatientView"/>
+        <children xsi:type="basic:Part" xmi:id="_AgMvsI-jEeGSFOgdbNI9Jg" elementId="net.comes.care.ui.view.sensor" contributionURI="bundleclass://net.comes.care.ui/net.comes.care.ui.views.SensorView"/>
+      </children>
+      <children xsi:type="basic:Part" xmi:id="_-OKboI-iEeGSFOgdbNI9Jg" elementId="net.comes.care.ui.view.presenter" contributionURI="bundleclass://net.comes.care.ui/net.comes.care.ui.views.PresenterView"/>
+    </children>
+    <mainMenu xmi:id="_g6D3OI-cEeGSFOgdbNI9Jg" elementId="menu:org.eclipse.ui.main.menu">
+      <children xsi:type="menu:Menu" xmi:id="_g6D3OY-cEeGSFOgdbNI9Jg" label="File">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_g6D3Oo-cEeGSFOgdbNI9Jg" label="Open" iconURI="platform:/plugin/net.comes.care.ui/icons/sample.gif" command="_g6D3Lo-cEeGSFOgdbNI9Jg"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_g6D3O4-cEeGSFOgdbNI9Jg" label="Save" iconURI="platform:/plugin/net.comes.care.ui/icons/save_edit.gif" command="_g6D3MY-cEeGSFOgdbNI9Jg"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_g6D3PI-cEeGSFOgdbNI9Jg" label="Quit" command="_g6D3Ko-cEeGSFOgdbNI9Jg"/>
+      </children>
+      <children xsi:type="menu:Menu" xmi:id="_g6D3PY-cEeGSFOgdbNI9Jg" label="Help">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_g6D3Po-cEeGSFOgdbNI9Jg" label="About" command="_g6D3NI-cEeGSFOgdbNI9Jg"/>
+      </children>
+    </mainMenu>
+    <trimBars xmi:id="_g6D3Q4-cEeGSFOgdbNI9Jg">
+      <children xsi:type="menu:ToolBar" xmi:id="_g6D3RI-cEeGSFOgdbNI9Jg" elementId="toolbar:org.eclipse.ui.main.toolbar">
+        <children xsi:type="menu:HandledToolItem" xmi:id="_g6D3RY-cEeGSFOgdbNI9Jg" iconURI="platform:/plugin/net.comes.care.ui/icons/sample.gif" command="_g6D3Lo-cEeGSFOgdbNI9Jg"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_g6D3Ro-cEeGSFOgdbNI9Jg" iconURI="platform:/plugin/net.comes.care.ui/icons/save_edit.gif" command="_g6D3MY-cEeGSFOgdbNI9Jg"/>
+      </children>
+    </trimBars>
+  </children>
+  <handlers xmi:id="_g6D3K4-cEeGSFOgdbNI9Jg" contributionURI="bundleclass://net.comes.care.ui/net.comes.care.ui.handlers.QuitHandler" command="_g6D3Ko-cEeGSFOgdbNI9Jg"/>
+  <handlers xmi:id="_g6D3L4-cEeGSFOgdbNI9Jg" contributionURI="bundleclass://net.comes.care.ui/net.comes.care.ui.handlers.OpenHandler" command="_g6D3Lo-cEeGSFOgdbNI9Jg"/>
+  <handlers xmi:id="_g6D3Mo-cEeGSFOgdbNI9Jg" contributionURI="bundleclass://net.comes.care.ui/net.comes.care.ui.handlers.SaveHandler" command="_g6D3MY-cEeGSFOgdbNI9Jg"/>
+  <handlers xmi:id="_g6D3NY-cEeGSFOgdbNI9Jg" contributionURI="bundleclass://net.comes.care.ui/net.comes.care.ui.handlers.AboutHandler" command="_g6D3NI-cEeGSFOgdbNI9Jg"/>
+  <bindingTables xmi:id="_g6D3LI-cEeGSFOgdbNI9Jg" bindingContext="_g6D3IY-cEeGSFOgdbNI9Jg">
+    <bindings xmi:id="_g6D3LY-cEeGSFOgdbNI9Jg" keySequence="Ctrl+Q" command="_g6D3Ko-cEeGSFOgdbNI9Jg"/>
+    <bindings xmi:id="_g6D3MI-cEeGSFOgdbNI9Jg" keySequence="Ctrl+O" command="_g6D3Lo-cEeGSFOgdbNI9Jg"/>
+    <bindings xmi:id="_g6D3M4-cEeGSFOgdbNI9Jg" keySequence="Ctrl+S" command="_g6D3MY-cEeGSFOgdbNI9Jg"/>
+    <bindings xmi:id="_g6D3No-cEeGSFOgdbNI9Jg" keySequence="Ctrl+A" command="_g6D3NI-cEeGSFOgdbNI9Jg"/>
+  </bindingTables>
+  <rootContext xmi:id="_g6D3IY-cEeGSFOgdbNI9Jg" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="In Dialog and Windows">
+    <children xmi:id="_g6D3Io-cEeGSFOgdbNI9Jg" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
+    <children xmi:id="_g6D3I4-cEeGSFOgdbNI9Jg" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>
+  </rootContext>
+  <commands xmi:id="_g6D3Ko-cEeGSFOgdbNI9Jg" elementId="net.comes.care.ui.quitCommand" commandName="quitCommand"/>
+  <commands xmi:id="_g6D3Lo-cEeGSFOgdbNI9Jg" elementId="net.comes.care.ui.openCommand" commandName="openCommand"/>
+  <commands xmi:id="_g6D3MY-cEeGSFOgdbNI9Jg" elementId="net.comes.care.ui.saveCommand" commandName="saveCommand"/>
+  <commands xmi:id="_g6D3NI-cEeGSFOgdbNI9Jg" elementId="net.comes.care.ui.aboutCommand" commandName="aboutCommand"/>
+  <addons xmi:id="_g6D3JI-cEeGSFOgdbNI9Jg" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
+  <addons xmi:id="_g6D3JY-cEeGSFOgdbNI9Jg" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
+  <addons xmi:id="_g6D3Jo-cEeGSFOgdbNI9Jg" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
+  <addons xmi:id="_g6D3J4-cEeGSFOgdbNI9Jg" elementId="org.eclipse.e4.ui.workbench.commands.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.CommandProcessingAddon"/>
+  <addons xmi:id="_g6D3KI-cEeGSFOgdbNI9Jg" elementId="org.eclipse.e4.ui.workbench.contexts.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.ContextProcessingAddon"/>
+  <addons xmi:id="_g6D3KY-cEeGSFOgdbNI9Jg" elementId="org.eclipse.e4.ui.workbench.bindings.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.swt/org.eclipse.e4.ui.workbench.swt.util.BindingProcessingAddon"/>
+</application:Application>
