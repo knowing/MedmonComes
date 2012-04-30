@@ -1,6 +1,6 @@
 package net.comes.care.ui.views;
 
-import javax.inject.Inject;
+import javax.annotation.PostConstruct;
 
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
@@ -12,7 +12,7 @@ public class DataView {
 	public static final String ID = "net.comes.care.ui.view.data";
 	private TreeViewer dataViewer;
 	
-	@Inject
+	@PostConstruct
 	protected void createContent(Composite parent) {
 		dataViewer = new TreeViewer(parent, SWT.NONE);
 	}
