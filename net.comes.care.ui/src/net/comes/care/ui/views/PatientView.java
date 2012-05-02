@@ -1,21 +1,26 @@
 package net.comes.care.ui.views;
 
 import java.io.ByteArrayInputStream;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import net.comes.care.entity.Patient;
 import net.comes.care.ui.Activator;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.PojoObservables;
+import org.eclipse.core.databinding.beans.PojoProperties;
 import org.eclipse.core.databinding.observable.value.ComputedValue;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.gemini.ext.di.GeminiPersistenceContext;
+import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.osgi.internal.signedcontent.Base64;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -26,13 +31,15 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.custom.CCombo;
 
 /**
  * 
  * @author Nepomuk Seiler
  * @since 2012-04-28
  * @see https
- *      ://github.com/toedter/e4-rendering/blob/master/com.toedter.e4.demo.contacts
+ *      ://github.com/toedter/e4-rendering/blob/master/com.toedter.e4.demo.
+ *      contacts
  *      .swt/src/com/toedter/e4/demo/contacts/swt/views/DetailComposite.java
  * 
  */
@@ -46,22 +53,31 @@ public class PatientView {
 
 	private DataBindingContext dbc;
 	private IObservableValue scaledImage;
-	private final WritableValue contactValue = new WritableValue();
+	private final WritableValue patientValue = new WritableValue();
 	private Image dummyPortrait;
 
 	private Label imageLabel;
+	private Text txtLastName;
+	private Text txtFirstName;
+	private Text txtInsuranceId;
+
+	private List<Patient> patients;
+
+	private CCombo combo;
 
 	@PostConstruct
 	protected void createContent(Composite parent) {
 		Composite container = new Composite(parent, SWT.NONE);
-		dbc = new DataBindingContext();
 		container.setLayout(new GridLayout(3, false));
 
+		combo = new CCombo(container, SWT.BORDER);
+		combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1));
+		
 		Label lblLastName = new Label(container, SWT.NONE);
 		lblLastName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblLastName.setText("Nachname");
 
-		Text txtLastName = new Text(container, SWT.BORDER);
+		txtLastName = new Text(container, SWT.BORDER);
 		txtLastName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		imageLabel = new Label(container, SWT.BORDER | SWT.SHADOW_IN);
@@ -76,23 +92,42 @@ public class PatientView {
 		Label lblFirstName = new Label(container, SWT.NONE);
 		lblFirstName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblFirstName.setText("Vorname");
-		Text txtFirstName = new Text(container, SWT.BORDER);
+		txtFirstName = new Text(container, SWT.BORDER);
 		txtFirstName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Label lblInsuranceId = new Label(container, SWT.NONE);
 		lblInsuranceId.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
 		lblInsuranceId.setText("VersicherungsNr.");
-		Text txtInsuranceId = new Text(container, SWT.BORDER);
+		txtInsuranceId = new Text(container, SWT.BORDER);
 		txtInsuranceId.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
-
-		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
 
-		//TODO this is just a short snippet used from Kai Toedter. Use databindings everywhere
-		// Bind the image
-		final IObservableValue imageObservableValue = PojoObservables.observeDetailValue(contactValue, "jpegString", String.class);
+		bindValues();
+		updatePatient();
+		loadPatients();
+	}
 
+	private void bindValues() {
+		dbc = new DataBindingContext();
+
+		// Bind lastname
+		ISWTObservableValue lastNameTarget = WidgetProperties.text(SWT.Modify).observe(txtLastName);
+		IObservableValue lastNameModel = PojoProperties.value("surname").observeDetail(patientValue);
+		dbc.bindValue(lastNameTarget, lastNameModel);
+
+		// Bind firstname
+		ISWTObservableValue firstNameTarget = WidgetProperties.text(SWT.Modify).observe(txtFirstName);
+		IObservableValue firstNameModel = PojoProperties.value("name").observeDetail(patientValue);
+		dbc.bindValue(firstNameTarget, firstNameModel);
+
+		// Bind insurance id
+		ISWTObservableValue insuranceIdTarget = WidgetProperties.text(SWT.Modify).observe(txtInsuranceId);
+		IObservableValue insuranceIdModel = PojoProperties.value("insuranceNumber").observeDetail(patientValue);
+		dbc.bindValue(insuranceIdTarget, insuranceIdModel);
+
+		// Binding the patient image
+		final IObservableValue imageObservableValue = PojoObservables.observeDetailValue(patientValue, "jpegString", String.class);
 		this.scaledImage = new ComputedValue() {
 			private Image currentImage;
 
@@ -131,8 +166,20 @@ public class PatientView {
 			}
 
 		};
-
 		dbc.bindValue(SWTObservables.observeImage(imageLabel), scaledImage, new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER), null);
-
 	}
+
+	private void updatePatient() {
+		Patient patient = new Patient();
+		patient.setName("Max");
+		patient.setSurname("Mustermann");
+		patient.setInsuranceNumber("ABC 123");
+
+		patientValue.setValue(patient);
+	}
+
+	private void loadPatients() {
+		patients = em.createQuery("SELECT p FROM Patient p").getResultList();
+	}
+
 }

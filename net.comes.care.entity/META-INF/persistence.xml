@@ -6,10 +6,7 @@
 	<persistence-unit name="comes" transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<class>net.comes.care.entity.Patient</class>
-		<class>net.comes.care.entity.Sensor</class>
-		<class>net.comes.care.entity.Data</class>
-		<class>net.comes.care.entity.Therapy</class>
-		<class>net.comes.care.entity.TherapyResult</class>
+		<class>net.comes.care.entity.User</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 
 		<properties>

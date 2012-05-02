@@ -41,7 +41,6 @@
   <bindingTables xmi:id="_g6D3LI-cEeGSFOgdbNI9Jg" bindingContext="_g6D3IY-cEeGSFOgdbNI9Jg">
     <bindings xmi:id="_g6D3LY-cEeGSFOgdbNI9Jg" keySequence="Ctrl+Q" command="_g6D3Ko-cEeGSFOgdbNI9Jg"/>
     <bindings xmi:id="_g6D3M4-cEeGSFOgdbNI9Jg" keySequence="Ctrl+S" command="_g6D3MY-cEeGSFOgdbNI9Jg"/>
-    <bindings xmi:id="_g6D3No-cEeGSFOgdbNI9Jg" keySequence="Ctrl+A" command="_g6D3NI-cEeGSFOgdbNI9Jg"/>
   </bindingTables>
   <rootContext xmi:id="_g6D3IY-cEeGSFOgdbNI9Jg" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="In Dialog and Windows">
     <children xmi:id="_g6D3Io-cEeGSFOgdbNI9Jg" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
