@@ -81,6 +81,10 @@ public class PatientView {
 		Composite container = new Composite(parent, SWT.BORDER);
 		container.setLayout(new GridLayout(3, false));
 
+		Label lblSearch = new Label(container, SWT.NONE);
+		lblSearch.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblSearch.setText("Suche");
+		
 		createSearch(container);
 
 		Label lblLastName = new Label(container, SWT.NONE);
@@ -191,7 +195,7 @@ public class PatientView {
 
 	private void createSearch(Composite container) {
 		txtSearch = new TextViewer(container, SWT.BORDER | SWT.SINGLE | SWT.SEARCH);
-		txtSearch.getControl().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1));
+		txtSearch.getControl().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 		txtSearch.setDocument(new Document());
 
 		final ContentAssistant assistant = new ContentAssistant();
