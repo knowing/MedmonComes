@@ -25,15 +25,8 @@ import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.TextViewer;
-import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
-import org.eclipse.jface.text.contentassist.ContextInformationValidator;
-import org.eclipse.jface.text.contentassist.ICompletionProposal;
-import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
-import org.eclipse.jface.text.contentassist.IContextInformation;
-import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 import org.eclipse.osgi.internal.signedcontent.Base64;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
@@ -46,7 +39,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.custom.CCombo;
 
 import com.google.common.base.Splitter;
 
@@ -120,7 +112,6 @@ public class PatientView {
 		new Label(container, SWT.NONE);
 
 		bindValues();
-		updatePatient();
 		loadPatients();
 	}
 
@@ -226,15 +217,6 @@ public class PatientView {
 		
 		patientValue.setValue(patient);
 		
-	}
-
-	private void updatePatient() {
-		Patient patient = new Patient();
-		patient.setName("Max");
-		patient.setSurname("Mustermann");
-		patient.setInsuranceNumber("ABC 123");
-
-		patientValue.setValue(patient);
 	}
 
 	private void loadPatients() {
