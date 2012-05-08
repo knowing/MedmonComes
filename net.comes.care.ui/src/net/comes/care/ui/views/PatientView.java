@@ -84,7 +84,7 @@ public class PatientView {
 
 	@PostConstruct
 	protected void createContent(Composite parent) {
-		Composite container = new Composite(parent, SWT.NONE);
+		Composite container = new Composite(parent, SWT.BORDER);
 		container.setLayout(new GridLayout(3, false));
 
 		createSearch(container);

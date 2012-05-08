@@ -4,7 +4,6 @@ import javax.annotation.PostConstruct;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
 
 public class PresenterView {
 
@@ -13,8 +12,7 @@ public class PresenterView {
 	
 	@PostConstruct
 	protected void createContent(Composite parent) {
-		Label lblTest = new Label(parent, SWT.NONE);
-		lblTest.setText("Test");
+		Composite container = new Composite(parent, SWT.BORDER);
 	}
 	
 }
