@@ -1,6 +1,7 @@
 package net.comes.care.ui.views;
 
 import java.io.ByteArrayInputStream;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -9,6 +10,7 @@ import javax.persistence.EntityManager;
 
 import net.comes.care.entity.Patient;
 import net.comes.care.ui.Activator;
+import net.comes.care.ui.search.PatientContentAssistenProcessor;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
@@ -21,8 +23,21 @@ import org.eclipse.gemini.ext.di.GeminiPersistenceContext;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.text.Document;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.ITextViewer;
+import org.eclipse.jface.text.TextViewer;
+import org.eclipse.jface.text.contentassist.CompletionProposal;
+import org.eclipse.jface.text.contentassist.ContentAssistant;
+import org.eclipse.jface.text.contentassist.ContextInformationValidator;
+import org.eclipse.jface.text.contentassist.ICompletionProposal;
+import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
+import org.eclipse.jface.text.contentassist.IContextInformation;
+import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 import org.eclipse.osgi.internal.signedcontent.Base64;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.layout.GridData;
@@ -32,6 +47,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.custom.CCombo;
+
+import com.google.common.base.Splitter;
 
 /**
  * 
@@ -63,16 +80,15 @@ public class PatientView {
 
 	private List<Patient> patients;
 
-	private CCombo combo;
+	private TextViewer txtSearch;
 
 	@PostConstruct
 	protected void createContent(Composite parent) {
 		Composite container = new Composite(parent, SWT.NONE);
 		container.setLayout(new GridLayout(3, false));
 
-		combo = new CCombo(container, SWT.BORDER);
-		combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1));
-		
+		createSearch(container);
+
 		Label lblLastName = new Label(container, SWT.NONE);
 		lblLastName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblLastName.setText("Nachname");
@@ -167,6 +183,49 @@ public class PatientView {
 
 		};
 		dbc.bindValue(SWTObservables.observeImage(imageLabel), scaledImage, new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER), null);
+	}
+
+	private void createSearch(Composite container) {
+		txtSearch = new TextViewer(container, SWT.BORDER | SWT.SINGLE | SWT.SEARCH);
+		txtSearch.getControl().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1));
+		txtSearch.setDocument(new Document());
+
+		final ContentAssistant assistant = new ContentAssistant();
+		assistant.setContentAssistProcessor(new PatientContentAssistenProcessor(), IDocument.DEFAULT_CONTENT_TYPE);
+		assistant.enableAutoActivation(true);
+		assistant.setAutoActivationDelay(200); //Test this
+		assistant.install(txtSearch);
+
+		txtSearch.getControl().addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				switch (e.keyCode) {
+				case 13:
+					loadPatient();
+					break;
+				default:
+					// ignore everything else
+				}
+			}
+		});
+	}
+	
+	private void loadPatient() {
+		String fullSearch = txtSearch.getDocument().get();
+		Splitter s1 = Splitter.on('#').omitEmptyStrings();
+		Iterator<String> itPatientInsurance = s1.split(fullSearch).iterator();
+		String patientString = itPatientInsurance.next();
+		String insuranceId = itPatientInsurance.next();
+		
+		
+		//This is for testing. Normally you would load the patient here
+		Iterator<String> itPatient = Splitter.on(' ').omitEmptyStrings().split(patientString).iterator();		
+		Patient patient = new Patient();
+		patient.setName(itPatient.next());
+		patient.setSurname(itPatient.next());
+		patient.setInsuranceNumber(insuranceId);
+		
+		patientValue.setValue(patient);
+		
 	}
 
 	private void updatePatient() {
