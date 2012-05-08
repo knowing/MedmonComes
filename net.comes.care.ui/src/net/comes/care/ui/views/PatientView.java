@@ -35,6 +35,8 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
@@ -110,6 +112,17 @@ public class PatientView {
 		txtInsuranceId.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		
+		Composite cButtons = new Composite(container, SWT.NONE);
+		cButtons.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
+		cButtons.setLayout(new RowLayout());
+		
+		Button btnImport = new Button(cButtons, SWT.PUSH);
+		btnImport.setImage(Activator.getImageDescriptor("img/import.png").createImage());
+		
+		Button btnComes = new Button(cButtons, SWT.PUSH);
+		btnComes.setImage(Activator.getImageDescriptor("img/comes-logo.png").createImage());
 
 		bindValues();
 		loadPatients();
