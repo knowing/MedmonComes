@@ -2,13 +2,11 @@ package net.comes.care.ui.search;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
 import net.comes.care.entity.Patient;
-import net.comes.care.entity.User;
 
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
@@ -75,7 +73,7 @@ public class PatientContentAssistenProcessor implements IContentAssistProcessor 
 				Iterable<String> tokens = splitter.split(searchText);
 				boolean match = false;
 				for (String token : tokens) {
-					match = match || p.getName().contains(token) || p.getSurname().contains(token) || p.getInsuranceNumber().contains(token);
+					match = match || p.getUser().getName().contains(token) || p.getUser().getSurname().contains(token) || p.getInsuranceNumber().contains(token);
 				}
 				return match;
 			}
@@ -84,7 +82,7 @@ public class PatientContentAssistenProcessor implements IContentAssistProcessor 
 		ICompletionProposal[] returns = new ICompletionProposal[possibilities.size()];
 		int i = 0;
 		for (Patient patient : possibilities) {
-			String suggestion = patient.getName() + " " + patient.getSurname() + " #" + patient.getInsuranceNumber();
+			String suggestion = patient.getUser().getName() + " " + patient.getUser().getSurname() + " #" + patient.getInsuranceNumber();
 			CompletionProposal proposal = new CompletionProposal(suggestion, 0, searchText.length(), suggestion.length());
 			returns[i++] = proposal;
 		}
@@ -122,20 +120,20 @@ public class PatientContentAssistenProcessor implements IContentAssistProcessor 
 		patients = new ArrayList<>();
 
 		Patient patient = new Patient();
-		patient.setName("Max");
-		patient.setSurname("Mustermann");
+		patient.getUser().setName("Max");
+		patient.getUser().setSurname("Mustermann");
 		patient.setInsuranceNumber("20-M01-1963");
 		patients.add(patient);
 		
 		patient = new Patient();
-		patient.setName("Birgit");
-		patient.setSurname("Mustermann");
+		patient.getUser().setName("Birgit");
+		patient.getUser().setSurname("Mustermann");
 		patient.setInsuranceNumber("63-K31-1953");
 		patients.add(patient);
 
 		patient = new Patient();
-		patient.setName("Heinz");
-		patient.setSurname("Huber");
+		patient.getUser().setName("Heinz");
+		patient.getUser().setSurname("Huber");
 		patient.setInsuranceNumber("35-L07-1983");
 		patients.add(patient);
 	}

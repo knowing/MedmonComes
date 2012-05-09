@@ -115,11 +115,9 @@ public class PatientView {
 		txtInsuranceId = new Text(container, SWT.BORDER);
 		txtInsuranceId.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
 		
 		Composite cButtons = new Composite(container, SWT.NONE);
-		cButtons.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1));
+		cButtons.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true, 3, 1));
 		cButtons.setLayout(new RowLayout());
 		
 		Button btnImport = new Button(cButtons, SWT.PUSH);
@@ -137,12 +135,12 @@ public class PatientView {
 
 		// Bind lastname
 		ISWTObservableValue lastNameTarget = WidgetProperties.text(SWT.Modify).observe(txtLastName);
-		IObservableValue lastNameModel = PojoProperties.value("surname").observeDetail(patientValue);
+		IObservableValue lastNameModel = PojoProperties.value("user.surname").observeDetail(patientValue);
 		dbc.bindValue(lastNameTarget, lastNameModel);
 
 		// Bind firstname
 		ISWTObservableValue firstNameTarget = WidgetProperties.text(SWT.Modify).observe(txtFirstName);
-		IObservableValue firstNameModel = PojoProperties.value("name").observeDetail(patientValue);
+		IObservableValue firstNameModel = PojoProperties.value("user.name").observeDetail(patientValue);
 		dbc.bindValue(firstNameTarget, firstNameModel);
 
 		// Bind insurance id
@@ -228,8 +226,8 @@ public class PatientView {
 		//This is for testing. Normally you would load the patient here
 		Iterator<String> itPatient = Splitter.on(' ').omitEmptyStrings().split(patientString).iterator();		
 		Patient patient = new Patient();
-		patient.setName(itPatient.next());
-		patient.setSurname(itPatient.next());
+		patient.getUser().setName(itPatient.next());
+		patient.getUser().setSurname(itPatient.next());
 		patient.setInsuranceNumber(insuranceId);
 		
 		patientValue.setValue(patient);

@@ -1,105 +1,147 @@
 package net.comes.care.entity;
 
+import java.io.Serializable;
+import javax.persistence.*;
+
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
+/**
+ * The persistent class for the patient database table.
+ * 
+ */
 @Entity
-public class Patient {
+public class Patient implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
 	private int id;
-	
-	private String gender;
-	
-	@Column(name = "date_of_birth")
+
+	private String city;
+
+	private String country;
+
 	@Temporal(TemporalType.DATE)
-	private Date birth;
-	
-	private String insurance;
-	
-	@Column(name = "insurance_number")
-	private String insuranceNumber;
-	
+	@Column(name="date_of_birth")
+	private Date dateOfBirth;
+
+	private String fax;
+
 	@Lob
 	private String freetext;
-	
-	@Column(length=30)
-	private String country;
-	
-	@Column(length=50)
-	private String street;
-	
-	@Column(length=5)
-	private int zipcode;
-	
-	@Column(length=30)
-	private String city;
-	
-	@Column(length=20)
-	private String phone;
-	
-	@Column(length=20)
+
+	private String gender;
+
+	private String insurance;
+
+	@Column(name="insurance_number")
+	private String insuranceNumber;
+
 	private String mobile;
-	
-	@Column(length=20)
-	private String fax;
-	
-	@Column(length=12)
-	private int scancode;
-	
-	//Patient group
-	
-	@Column(name="pwd_client",length=45)
+
+	private String phone;
+
+	@Column(name="pwd_client")
 	private String pwdClient;
-	
-	@OneToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH})
+
+	private String street;
+
+	private String tag;
+
+	private int zipcode;
+
+	//bi-directional many-to-one association to DoctorPatient
+	@OneToMany(mappedBy="patient")
+	private List<DoctorPatient> doctorPatients;
+
+	//bi-directional many-to-one association to KitPat
+	@OneToMany(mappedBy="patient")
+	private List<KitPat> kitPats;
+
+	//bi-directional many-to-one association to PatCase
+	@OneToMany(mappedBy="patient")
+	private List<PatCase> patCases;
+
+	//bi-directional many-to-one association to PatCritval
+	@OneToMany(mappedBy="patient")
+	private List<PatCritval> patCritvals;
+
+	//bi-directional many-to-one association to PatSurvey
+	@OneToMany(mappedBy="patient")
+	private List<PatSurvey> patSurveys;
+
+	//bi-directional one-to-one association to User
+	@OneToOne
+	@JoinColumn(name="id", nullable=false, insertable=false, updatable=false)
 	private User user;
-	
+
+	//bi-directional many-to-one association to PatientGroup
+	@ManyToOne
+	@JoinColumn(name="patient_group_id")
+	private PatientGroup patientGroup;
+
 	public Patient() {
-		//TODO Make tis constructor protected and remove new User()
-		user = new User();
-	}
-	
-	public Patient(User u) {
-		this.user = u;
 	}
 
-	protected int getId() {
-		return id;
+	public int getId() {
+		return this.id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	public String getCity() {
+		return this.city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getCountry() {
+		return this.country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public Date getDateOfBirth() {
+		return this.dateOfBirth;
+	}
+
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	public String getFax() {
+		return this.fax;
+	}
+
+	public void setFax(String fax) {
+		this.fax = fax;
+	}
+
+	public String getFreetext() {
+		return this.freetext;
+	}
+
+	public void setFreetext(String freetext) {
+		this.freetext = freetext;
+	}
+
 	public String getGender() {
-		return gender;
+		return this.gender;
 	}
 
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
 
-	public Date getBirth() {
-		return birth;
-	}
-
-	public void setBirth(Date birth) {
-		this.birth = birth;
-	}
-
 	public String getInsurance() {
-		return insurance;
+		return this.insurance;
 	}
 
 	public void setInsurance(String insurance) {
@@ -107,214 +149,117 @@ public class Patient {
 	}
 
 	public String getInsuranceNumber() {
-		return insuranceNumber;
+		return this.insuranceNumber;
 	}
 
 	public void setInsuranceNumber(String insuranceNumber) {
 		this.insuranceNumber = insuranceNumber;
 	}
 
-	public String getFreetext() {
-		return freetext;
-	}
-
-	public void setFreetext(String freetext) {
-		this.freetext = freetext;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
-	public String getStreet() {
-		return street;
-	}
-
-	public void setStreet(String street) {
-		this.street = street;
-	}
-
-	public int getZipcode() {
-		return zipcode;
-	}
-
-	public void setZipcode(int zipcode) {
-		this.zipcode = zipcode;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
 	public String getMobile() {
-		return mobile;
+		return this.mobile;
 	}
 
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
 
-	public String getFax() {
-		return fax;
+	public String getPhone() {
+		return this.phone;
 	}
 
-	public void setFax(String fax) {
-		this.fax = fax;
-	}
-
-	public int getScancode() {
-		return scancode;
-	}
-
-	public void setScancode(int scancode) {
-		this.scancode = scancode;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public String getPwdClient() {
-		return pwdClient;
+		return this.pwdClient;
 	}
 
 	public void setPwdClient(String pwdClient) {
 		this.pwdClient = pwdClient;
 	}
-	
-	
-	/* ============================= */
-	/* ====== User delegates ======= */
-	/* ============================= */
 
-	public String getEmail() {
-		return user.getEmail();
+	public String getStreet() {
+		return this.street;
 	}
 
-	public void setEmail(String email) {
-		user.setEmail(email);
+	public void setStreet(String street) {
+		this.street = street;
 	}
 
-	public String getPwd() {
-		return user.getPwd();
+	public String getTag() {
+		return this.tag;
 	}
 
-	public void setPwd(String pwd) {
-		user.setPwd(pwd);
+	public void setTag(String tag) {
+		this.tag = tag;
 	}
 
-	public String getUserGroup() {
-		return user.getUserGroup();
+	public int getZipcode() {
+		return this.zipcode;
 	}
 
-	public void setUserGroup(String userGroup) {
-		user.setUserGroup(userGroup);
+	public void setZipcode(int zipcode) {
+		this.zipcode = zipcode;
 	}
 
-	public String getLanguage() {
-		return user.getLanguage();
+	public List<DoctorPatient> getDoctorPatients() {
+		return this.doctorPatients;
 	}
 
-	public void setLanguage(String language) {
-		user.setLanguage(language);
+	public void setDoctorPatients(List<DoctorPatient> doctorPatients) {
+		this.doctorPatients = doctorPatients;
 	}
 
-	public Date getLastLogin() {
-		return user.getLastLogin();
+	public List<KitPat> getKitPats() {
+		return this.kitPats;
 	}
 
-	public void setLastLogin(Date lastLogin) {
-		user.setLastLogin(lastLogin);
+	public void setKitPats(List<KitPat> kitPats) {
+		this.kitPats = kitPats;
 	}
 
-	public Date getCreated() {
-		return user.getCreated();
+	public List<PatCase> getPatCases() {
+		return this.patCases;
 	}
 
-	public void setCreated(Date created) {
-		user.setCreated(created);
+	public void setPatCases(List<PatCase> patCases) {
+		this.patCases = patCases;
 	}
 
-	public Date getExpire() {
-		return user.getExpire();
+	public List<PatCritval> getPatCritvals() {
+		return this.patCritvals;
 	}
 
-	public void setExpire(Date expire) {
-		user.setExpire(expire);
+	public void setPatCritvals(List<PatCritval> patCritvals) {
+		this.patCritvals = patCritvals;
 	}
 
-	public int getActive() {
-		return user.getActive();
+	public List<PatSurvey> getPatSurveys() {
+		return this.patSurveys;
 	}
 
-	public void setActive(int active) {
-		user.setActive(active);
+	public void setPatSurveys(List<PatSurvey> patSurveys) {
+		this.patSurveys = patSurveys;
 	}
 
-	public String getName() {
-		return user.getName();
+	public User getUser() {
+		if(user == null)
+			this.user = new User();
+		return this.user;
 	}
 
-	public void setName(String name) {
-		user.setName(name);
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	public String getSurname() {
-		return user.getSurname();
+	public PatientGroup getPatientGroup() {
+		return this.patientGroup;
 	}
 
-	public void setSurname(String surname) {
-		user.setSurname(surname);
+	public void setPatientGroup(PatientGroup patientGroup) {
+		this.patientGroup = patientGroup;
 	}
 
-	public String getTitle() {
-		return user.getTitle();
-	}
-
-	public void setTitle(String title) {
-		user.setTitle(title);
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Patient [getId()=").append(getId()).append(", getName()=").append(getName()).append(", getSurname()=")
-				.append(getSurname()).append("]");
-		return builder.toString();
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + id;
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Patient other = (Patient) obj;
-		if (id != other.id)
-			return false;
-		return true;
-	}
-	
 }

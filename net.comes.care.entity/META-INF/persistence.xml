@@ -5,14 +5,40 @@
 	version="2.0">
 	<persistence-unit name="comes" transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<class>net.comes.care.entity.AuditLog</class>
+		<class>net.comes.care.entity.DevKit</class>
+		<class>net.comes.care.entity.Device</class>
+		<class>net.comes.care.entity.DoctorPatient</class>
+		<class>net.comes.care.entity.EquVal</class>
+		<class>net.comes.care.entity.Equipment</class>
+		<class>net.comes.care.entity.Equipmentgroup</class>
+		<class>net.comes.care.entity.KitOrg</class>
+		<class>net.comes.care.entity.KitPat</class>
+		<class>net.comes.care.entity.Log</class>
+		<class>net.comes.care.entity.Measurementkit</class>
+		<class>net.comes.care.entity.Message</class>
+		<class>net.comes.care.entity.Organisation</class>
+		<class>net.comes.care.entity.PatAnswer</class>
+		<class>net.comes.care.entity.PatCase</class>
+		<class>net.comes.care.entity.PatCritval</class>
+		<class>net.comes.care.entity.PatSurvey</class>
 		<class>net.comes.care.entity.Patient</class>
+		<class>net.comes.care.entity.PatientGroup</class>
+		<class>net.comes.care.entity.Privilege</class>
+		<class>net.comes.care.entity.PrivilegeGroup</class>
+		<class>net.comes.care.entity.SoapSession</class>
+		<class>net.comes.care.entity.Survey</class>
+		<class>net.comes.care.entity.SurveyAnswer</class>
+		<class>net.comes.care.entity.SurveyGroup</class>
+		<class>net.comes.care.entity.SurveyQuestion</class>
 		<class>net.comes.care.entity.User</class>
+		<class>net.comes.care.entity.Value</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 
 		<properties>
-			<!-- Embedded Derby Login -->
+			<!-- MySQL Login -->
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1/comes" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1/comes_0.1" />
 			<property name="javax.persistence.jdbc.user" value="comes" />
 			<property name="javax.persistence.jdbc.password" value="comes" />
 			<!-- don't need userid/password in embedded Derby -->
@@ -22,8 +48,8 @@
 				value="1" />
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
 
-			<!-- Database Schema Creation -->
-			<property name="eclipselink.ddl-generation" value="create-tables" />
+			<!-- Database Schema Creation none,create-tables, drop-and-create-tables-->
+			<property name="eclipselink.ddl-generation" value="none" />
 			<property name="eclipselink.ddl-generation.output-mode"
 				value="database" />
 
