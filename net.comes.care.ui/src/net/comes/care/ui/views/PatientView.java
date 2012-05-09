@@ -77,7 +77,7 @@ public class PatientView {
 	private TextViewer txtSearch;
 
 	@PostConstruct
-	protected void createContent(Composite parent) {
+	protected void createContent(Composite parent, PatientContentAssistenProcessor processor) {
 		Composite container = new Composite(parent, SWT.BORDER);
 		container.setLayout(new GridLayout(3, false));
 
@@ -85,7 +85,7 @@ public class PatientView {
 		lblSearch.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblSearch.setText("Suche");
 		
-		createSearch(container);
+		createSearch(container,processor);
 
 		Label lblLastName = new Label(container, SWT.NONE);
 		lblLastName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -191,13 +191,13 @@ public class PatientView {
 		dbc.bindValue(SWTObservables.observeImage(imageLabel), scaledImage, new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER), null);
 	}
 
-	private void createSearch(Composite container) {
+	private void createSearch(Composite container, PatientContentAssistenProcessor processor) {
 		txtSearch = new TextViewer(container, SWT.BORDER | SWT.SINGLE | SWT.SEARCH);
 		txtSearch.getControl().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 		txtSearch.setDocument(new Document());
 
 		final ContentAssistant assistant = new ContentAssistant();
-		assistant.setContentAssistProcessor(new PatientContentAssistenProcessor(), IDocument.DEFAULT_CONTENT_TYPE);
+		assistant.setContentAssistProcessor(processor, IDocument.DEFAULT_CONTENT_TYPE);
 		assistant.enableAutoActivation(true);
 		assistant.setAutoActivationDelay(200); //Test this
 		assistant.install(txtSearch);

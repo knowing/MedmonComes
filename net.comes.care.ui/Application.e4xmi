@@ -24,7 +24,6 @@
       <children xsi:type="menu:ToolBar" xmi:id="_g6D3RI-cEeGSFOgdbNI9Jg" elementId="toolbar:org.eclipse.ui.main.toolbar">
         <children xsi:type="menu:HandledToolItem" xmi:id="_xRYaII-4EeGZhc0mbRpzpg" label="Home" iconURI="platform:/plugin/net.comes.care.ui/icons/16/go-home.png" command="_suKGkI-4EeGZhc0mbRpzpg"/>
         <children xsi:type="menu:ToolBarSeparator" xmi:id="_n-N3kI-2EeGZhc0mbRpzpg"/>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_P7UX4I-5EeGZhc0mbRpzpg" label="Open" iconURI="platform:/plugin/net.comes.care.ui/icons/16/document-open.png" command="_EpgscI-5EeGZhc0mbRpzpg"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_5pU8gI-4EeGZhc0mbRpzpg" label="Add" iconURI="platform:/plugin/net.comes.care.ui/icons/16/list-add.png" command="_1tA38I-4EeGZhc0mbRpzpg"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_N9mG8I-5EeGZhc0mbRpzpg" label="Save" iconURI="platform:/plugin/net.comes.care.ui/icons/save_edit.gif" command="_g6D3MY-cEeGSFOgdbNI9Jg"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_WVe-8I-5EeGZhc0mbRpzpg" label="Delete" iconURI="platform:/plugin/net.comes.care.ui/icons/16/list-remove.png" command="_ABNroI-5EeGZhc0mbRpzpg"/>

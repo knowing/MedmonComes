@@ -1,13 +1,19 @@
 package net.comes.care.ui.search;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import net.comes.care.entity.Patient;
 
+import org.eclipse.e4.core.di.annotations.Creatable;
+import org.eclipse.gemini.ext.di.GeminiPersistenceContext;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ContextInformationValidator;
@@ -16,11 +22,6 @@ import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 
-import com.google.common.base.CharMatcher;
-import com.google.common.base.Predicate;
-import com.google.common.base.Splitter;
-import com.google.common.collect.Collections2;
-
 /**
  * 
  * @author Nepomuk Seiler
@@ -28,31 +29,32 @@ import com.google.common.collect.Collections2;
  * @since 2012-05-08
  * 
  */
+@Creatable
 public class PatientContentAssistenProcessor implements IContentAssistProcessor {
 
-	private static final char[] ACTIVATION_CHARS = new char[2*26 + 10];
-	
+	private static final char[] ACTIVATION_CHARS = new char[2 * 26 + 10];
+
 	static {
 		int index = 0;
 		for (char ch = 'a'; ch <= 'z'; ch++)
 			ACTIVATION_CHARS[index++] = ch;
-		
+
 		for (char ch = 'A'; ch <= 'Z'; ch++)
 			ACTIVATION_CHARS[index++] = ch;
-		
-		for (int i = 0; i < 10; i++) 
-			ACTIVATION_CHARS[index++] = String.valueOf(i).charAt(0);
-			
-	}
-	
-	private final IContextInformationValidator validator;
-	private final EntityManager em;
 
-	private List<Patient> patients;
+		for (int i = 0; i < 10; i++)
+			ACTIVATION_CHARS[index++] = String.valueOf(i).charAt(0);
+
+	}
+
+	private final IContextInformationValidator validator;
+
+	@Inject
+	@GeminiPersistenceContext(unitName = "comes")
+	private EntityManager em;
 
 	public PatientContentAssistenProcessor() {
 		validator = new ContextInformationValidator(this);
-		em = null;
 	}
 
 	@Override
@@ -60,29 +62,31 @@ public class PatientContentAssistenProcessor implements IContentAssistProcessor 
 		// 1. Get input
 		// 2. Load patients which start with <string>
 		final String searchText = viewer.getDocument().get();
-		updatePatients(searchText);
-		
-		Collection<Patient> possibilities = Collections2.filter(patients, new Predicate<Patient>() {
-			@Override
-			public boolean apply(Patient p) {
-				
-				Splitter splitter = Splitter.on(" ").
-						trimResults()
-						.trimResults(CharMatcher.is('#'))
-						.omitEmptyStrings();
-				Iterable<String> tokens = splitter.split(searchText);
-				boolean match = false;
-				for (String token : tokens) {
-					match = match || p.getUser().getName().contains(token) || p.getUser().getSurname().contains(token) || p.getInsuranceNumber().contains(token);
-				}
-				return match;
-			}
-		});
 
-		ICompletionProposal[] returns = new ICompletionProposal[possibilities.size()];
+		em.getTransaction().begin();
+
+		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+		CriteriaQuery<Patient> query = criteriaBuilder.createQuery(Patient.class);
+
+		//TODO Query does not filter for insurance ids and shows all users, not only patients
+		/* === Query database for possible patients === */
+		Root<Patient> patientRoot = query.from(Patient.class);
+		Join<Object, Object> patientJoin = patientRoot.join("user");
+		Predicate nameLike = criteriaBuilder.like(patientJoin.<String> get("name"), "%" + searchText + "%"); //Starts or end with
+		Predicate surnameLike = criteriaBuilder.like(patientJoin.<String> get("surname"), "%" + searchText + "%");
+		// Predicate insuranceLike =
+		// criteriaBuilder.like(patientJoin.<String>get("insuranceNumber"),
+		// searchText);
+		Predicate predicate = criteriaBuilder.or(nameLike, surnameLike);
+		query = query.select(patientRoot).where(predicate);
+		List<Patient> patients = em.createQuery(query).getResultList();
+
+		em.getTransaction().commit();
+
+		ICompletionProposal[] returns = new ICompletionProposal[patients.size()];
 		int i = 0;
-		for (Patient patient : possibilities) {
-			String suggestion = patient.getUser().getName() + " " + patient.getUser().getSurname() + " #" + patient.getInsuranceNumber();
+		for (Patient patient : patients) {
+			String suggestion = patient.getUser().getSurname() + " " + patient.getUser().getName() + " #" + patient.getInsuranceNumber();
 			CompletionProposal proposal = new CompletionProposal(suggestion, 0, searchText.length(), suggestion.length());
 			returns[i++] = proposal;
 		}
@@ -114,28 +118,6 @@ public class PatientContentAssistenProcessor implements IContentAssistProcessor 
 	public IContextInformation[] computeContextInformation(ITextViewer viewer, int offset) {
 		// Show patient picture and some data
 		return null;
-	}
-
-	private void updatePatients(String input) {
-		patients = new ArrayList<>();
-
-		Patient patient = new Patient();
-		patient.getUser().setName("Max");
-		patient.getUser().setSurname("Mustermann");
-		patient.setInsuranceNumber("20-M01-1963");
-		patients.add(patient);
-		
-		patient = new Patient();
-		patient.getUser().setName("Birgit");
-		patient.getUser().setSurname("Mustermann");
-		patient.setInsuranceNumber("63-K31-1953");
-		patients.add(patient);
-
-		patient = new Patient();
-		patient.getUser().setName("Heinz");
-		patient.getUser().setSurname("Huber");
-		patient.setInsuranceNumber("35-L07-1983");
-		patients.add(patient);
 	}
 
 }
