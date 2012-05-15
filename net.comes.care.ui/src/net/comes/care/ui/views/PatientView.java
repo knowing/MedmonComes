@@ -23,6 +23,7 @@ import org.eclipse.gemini.ext.di.GeminiPersistenceContext;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.TextViewer;
@@ -31,6 +32,8 @@ import org.eclipse.osgi.internal.signedcontent.Base64;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.layout.GridData;
@@ -77,7 +80,7 @@ public class PatientView {
 	private TextViewer txtSearch;
 
 	@PostConstruct
-	protected void createContent(Composite parent, PatientContentAssistenProcessor processor) {
+	protected void createContent(final Composite parent, PatientContentAssistenProcessor processor) {
 		Composite container = new Composite(parent, SWT.BORDER);
 		container.setLayout(new GridLayout(3, false));
 
@@ -122,9 +125,21 @@ public class PatientView {
 		
 		Button btnImport = new Button(cButtons, SWT.PUSH);
 		btnImport.setImage(Activator.getImageDescriptor("img/import.png").createImage());
+		btnImport.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				MessageDialog.openInformation(parent.getShell(), "Not implemented yet", "Import sensor data here");
+			}
+		});
 		
 		Button btnComes = new Button(cButtons, SWT.PUSH);
 		btnComes.setImage(Activator.getImageDescriptor("img/comes-logo.png").createImage());
+		btnComes.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				MessageDialog.openInformation(parent.getShell(), "Not implemented yet", "Open COMES page");
+			}
+		});
 
 		bindValues();
 		loadPatients();
