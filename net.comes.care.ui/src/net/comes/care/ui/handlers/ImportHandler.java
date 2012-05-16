@@ -15,7 +15,6 @@ public class ImportHandler {
 
 	@Execute
 	public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell, ISensorDirectoryService sensorDirectoryService) {
-		System.err.println("Execute");
 		new WizardDialog(shell, new ImportWizard(sensorDirectoryService)).open();
 	}
 }

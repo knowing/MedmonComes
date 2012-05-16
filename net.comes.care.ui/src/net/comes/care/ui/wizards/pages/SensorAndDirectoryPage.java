@@ -73,7 +73,6 @@ public class SensorAndDirectoryPage extends WizardPage implements IValidationPag
 					selectedSensor = (ISensor) selection.getFirstElement();
 				else
 					selectedSensor = null;
-				super.widgetSelected(e);
 			}
 		});
 		sensorTableViewer.setInput(sensorDirectory.getSensors());

@@ -1,12 +1,14 @@
 package net.comes.care.ui.wizards;
 
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
 public class ValidationListener extends SelectionAdapter implements
-		ModifyListener {
+		ModifyListener, ISelectionChangedListener {
 
 	/** The <code>IValidationPage</code>. */
 	private IValidationPage validationPage;
@@ -31,7 +33,11 @@ public class ValidationListener extends SelectionAdapter implements
 	 */
 	public void widgetSelected(SelectionEvent e) {
 		validationPage.checkContents();
+	}
 
+	@Override
+	public void selectionChanged(SelectionChangedEvent event) {
+		validationPage.checkContents();
 	}
 
 }

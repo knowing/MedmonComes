@@ -1,5 +1,14 @@
 package net.comes.care.ui.wizards;
 
+import java.io.IOException;
+import java.net.URI;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.comes.care.ui.wizards.pages.DataPage;
 import net.comes.care.ui.wizards.pages.SensorAndDirectoryPage;
 
@@ -28,11 +37,29 @@ public class ImportWizard extends Wizard {
 	public IWizardPage getNextPage(IWizardPage page) {
 		if(page instanceof SensorAndDirectoryPage) {
 			ISensor sensor = ((SensorAndDirectoryPage) page).getSelectedSensor();
+			String directory = ((SensorAndDirectoryPage) page).getSelectedDirectory();
 			DataPage dataPage = (DataPage) super.getNextPage(page);
-			dataPage.setInput(sensor, new Object[0]);
+			updateDataPage(dataPage, sensor, directory);
 			return dataPage;
 		}
 		return super.getNextPage(page);
+	}
+	
+	private void updateDataPage(DataPage dataPage, ISensor sensor, String directory) {
+		List<URI> uriList = new ArrayList<URI>();
+		try (DirectoryStream<Path> directoyStream = Files.newDirectoryStream(Paths.get(directory))) {
+			String filePrefix = sensor.getFilePrefix();
+			for (Path file : directoyStream) {
+				// Don't use file.endsWith() -> checks the last foldername
+				// of the path not the prefix of the file
+				if (file.toString().endsWith(filePrefix))
+					uriList.add(file.toUri());
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		dataPage.setInput(null, uriList);
 	}
 
 	@Override

@@ -68,19 +68,40 @@ public class DataPage extends WizardPage implements IValidationPage {
 		clmFile.setResizable(false);
 		clmFile.setWidth(300);
 		clmFile.setText("Datei");
+		clmViewerFile.setLabelProvider(new CellLabelProvider() {
+			@Override
+			public void update(ViewerCell cell) {
+				URI uri = ((URI) cell.getElement());
+				Path fileName = Paths.get(uri).getFileName();
+				cell.setText(fileName.toString());
+			}
+		});
 
 		TableViewerColumn clmViewerFrom = new TableViewerColumn(tableViewer, SWT.NONE);
 		TableColumn clmFrom = clmViewerFrom.getColumn();
 		clmFrom.setResizable(false);
 		clmFrom.setWidth(120);
 		clmFrom.setText("Von");
+		clmViewerFrom.setLabelProvider(new CellLabelProvider() {
+			@Override
+			public void update(ViewerCell cell) {
+			}
+		});
 
 		TableViewerColumn clmViewerTo = new TableViewerColumn(tableViewer, SWT.NONE);
 		TableColumn clmTo = clmViewerTo.getColumn();
 		clmTo.setResizable(false);
 		clmTo.setWidth(120);
 		clmTo.setText("Bis");
+		clmViewerTo.setLabelProvider(new CellLabelProvider() {
+			@Override
+			public void update(ViewerCell cell) {
+			}
+		});
+		
+		tableViewer.setContentProvider(new ArrayContentProvider());
 
+		//TODO register ISelectionChangedListener -> Extend ValidationListener
 		table.addSelectionListener(new ValidationListener(this) {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -90,25 +111,6 @@ public class DataPage extends WizardPage implements IValidationPage {
 				else
 					selectedURI = null;
 				super.widgetSelected(e);
-			}
-		});
-		tableViewer.setContentProvider(ArrayContentProvider.getInstance());
-		clmViewerFile.setLabelProvider(new CellLabelProvider() {
-			@Override
-			public void update(ViewerCell cell) {
-				URI uri = ((URI) cell.getElement());
-				Path fileName = Paths.get(uri).getFileName();
-				cell.setText(fileName.toString());
-			}
-		});
-		clmViewerFrom.setLabelProvider(new CellLabelProvider() {
-			@Override
-			public void update(ViewerCell cell) {
-			}
-		});
-		clmViewerTo.setLabelProvider(new CellLabelProvider() {
-			@Override
-			public void update(ViewerCell cell) {
 			}
 		});
 
