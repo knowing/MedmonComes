@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import net.comes.care.entity.Patient;
 import net.comes.care.ui.Activator;
 import net.comes.care.ui.search.PatientContentAssistenProcessor;
+import net.comes.care.ui.wizards.ImportWizard;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
@@ -19,6 +20,7 @@ import org.eclipse.core.databinding.beans.PojoProperties;
 import org.eclipse.core.databinding.observable.value.ComputedValue;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.WritableValue;
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.gemini.ext.di.GeminiPersistenceContext;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
@@ -27,11 +29,14 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.TextViewer;
+import org.eclipse.jface.text.contentassist.ContentAssistEvent;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
+import org.eclipse.jface.text.contentassist.ICompletionListener;
+import org.eclipse.jface.text.contentassist.ICompletionListenerExtension2;
+import org.eclipse.jface.text.contentassist.ICompletionProposal;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.osgi.internal.signedcontent.Base64;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.KeyAdapter;
-import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
@@ -65,19 +70,23 @@ public class PatientView {
 	@GeminiPersistenceContext(unitName = "comes")
 	private EntityManager em;
 
+	@Inject
+	private IEventBroker broker;
+
 	private DataBindingContext dbc;
 	private IObservableValue scaledImage;
 	private final WritableValue patientValue = new WritableValue();
 	private Image dummyPortrait;
 
+	private Button btnImport;
 	private Label imageLabel;
 	private Text txtLastName;
 	private Text txtFirstName;
 	private Text txtInsuranceId;
 
-	private List<Patient> patients;
-
 	private TextViewer txtSearch;
+
+	
 
 	@PostConstruct
 	protected void createContent(final Composite parent, PatientContentAssistenProcessor processor) {
@@ -87,8 +96,8 @@ public class PatientView {
 		Label lblSearch = new Label(container, SWT.NONE);
 		lblSearch.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblSearch.setText("Suche");
-		
-		createSearch(container,processor);
+
+		createSearch(container, processor);
 
 		Label lblLastName = new Label(container, SWT.NONE);
 		lblLastName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -118,20 +127,22 @@ public class PatientView {
 		txtInsuranceId = new Text(container, SWT.BORDER);
 		txtInsuranceId.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		new Label(container, SWT.NONE);
-		
+
 		Composite cButtons = new Composite(container, SWT.NONE);
 		cButtons.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true, 3, 1));
 		cButtons.setLayout(new RowLayout());
-		
-		Button btnImport = new Button(cButtons, SWT.PUSH);
+
+		btnImport = new Button(cButtons, SWT.PUSH);
 		btnImport.setImage(Activator.getImageDescriptor("img/import.png").createImage());
 		btnImport.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				MessageDialog.openInformation(parent.getShell(), "Not implemented yet", "Import sensor data here");
+				WizardDialog wizardDialog = new WizardDialog(parent.getShell(), new ImportWizard());
+				wizardDialog.open();
 			}
 		});
-		
+		btnImport.setEnabled(false);
+
 		Button btnComes = new Button(cButtons, SWT.PUSH);
 		btnComes.setImage(Activator.getImageDescriptor("img/comes-logo.png").createImage());
 		btnComes.addSelectionListener(new SelectionAdapter() {
@@ -142,7 +153,6 @@ public class PatientView {
 		});
 
 		bindValues();
-		loadPatients();
 	}
 
 	private void bindValues() {
@@ -214,43 +224,48 @@ public class PatientView {
 		final ContentAssistant assistant = new ContentAssistant();
 		assistant.setContentAssistProcessor(processor, IDocument.DEFAULT_CONTENT_TYPE);
 		assistant.enableAutoActivation(true);
-		assistant.setAutoActivationDelay(200); //Test this
+		assistant.setAutoActivationDelay(200); // Test this
 		assistant.install(txtSearch);
-
-		txtSearch.getControl().addKeyListener(new KeyAdapter() {
-			public void keyPressed(KeyEvent e) {
-				switch (e.keyCode) {
-				case 13:
-					loadPatient();
-					break;
-				default:
-					// ignore everything else
-				}
-			}
-		});
+		assistant.addCompletionListener(new CompletionListener());
 	}
-	
-	private void loadPatient() {
-		String fullSearch = txtSearch.getDocument().get();
+
+	private void loadPatient(String fullSearch) {
 		Splitter s1 = Splitter.on('#').omitEmptyStrings();
 		Iterator<String> itPatientInsurance = s1.split(fullSearch).iterator();
 		String patientString = itPatientInsurance.next();
 		String insuranceId = itPatientInsurance.next();
-		
-		
-		//This is for testing. Normally you would load the patient here
-		Iterator<String> itPatient = Splitter.on(' ').omitEmptyStrings().split(patientString).iterator();		
-		Patient patient = new Patient();
-		patient.getUser().setName(itPatient.next());
-		patient.getUser().setSurname(itPatient.next());
-		patient.setInsuranceNumber(insuranceId);
-		
+
+		// This is for testing. Normally you would load the patient here
+		List<Patient> resultList = em.createQuery("SELECT p FROM Patient p WHERE p.insuranceNumber = :insuranceId")
+				.setParameter("insuranceId", insuranceId).getResultList();
+
+		// Assuming insuranceId is unique
+		Patient patient = resultList.get(0);
 		patientValue.setValue(patient);
-		
+		broker.send("patient", patient);
+		btnImport.setEnabled(true);
 	}
 
-	private void loadPatients() {
-		patients = em.createQuery("SELECT p FROM Patient p").getResultList();
+	private class CompletionListener implements ICompletionListener, ICompletionListenerExtension2 {
+
+		@Override
+		public void applied(ICompletionProposal proposal) {
+			loadPatient(proposal.getDisplayString());
+		}
+
+		@Override
+		public void assistSessionStarted(ContentAssistEvent event) {
+		}
+
+		@Override
+		public void assistSessionEnded(ContentAssistEvent event) {
+		}
+
+		@Override
+		public void selectionChanged(ICompletionProposal proposal, boolean smartToggle) {
+			// this works only with keyboard
+		}
+
 	}
 
 }

@@ -1,10 +1,15 @@
 package net.comes.care.ui.views;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import net.comes.care.entity.Patient;
+
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -12,15 +17,18 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.osgi.service.event.Event;
+import org.osgi.service.event.EventHandler;
 
-public class DataView {
+public class DataView implements EventHandler {
 
 
 	public static final String ID = "net.comes.care.ui.view.data";
 	private TreeViewer dataViewer;
+	private Patient patient;
 	
 	@PostConstruct
-	protected void createContent(Composite parent) {
+	protected void createContent(Composite parent, IEventBroker broker) {
 		dataViewer = new TreeViewer(parent, SWT.NONE);
 		
 		//InputProvider
@@ -49,14 +57,17 @@ public class DataView {
 			}
 		});
 		
-		testInput();
+		broker.subscribe("patient", this);
 	}
 	
-	private void testInput() {
+	@Override
+	public void handleEvent(Event event) {
+		patient = (Patient) event.getProperty(IEventBroker.DATA);
 		List<String> sampleInput = new ArrayList<>();
-		sampleInput.add("Data01 2012-03-04");
-		sampleInput.add("Data02 2012-03-05");
-		sampleInput.add("Data03 2012-03-06");
+		DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
+		sampleInput.add("Data01 " + df.format(patient.getDateOfBirth()));
+		sampleInput.add("Data02 " + df.format(patient.getDateOfBirth()));
+		sampleInput.add("Data03 " + df.format(patient.getDateOfBirth()));
 		dataViewer.setInput(sampleInput);
 	}
 	
