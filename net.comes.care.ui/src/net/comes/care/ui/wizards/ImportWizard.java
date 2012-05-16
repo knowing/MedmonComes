@@ -21,6 +21,9 @@ import de.lmu.ifi.dbs.medmon.sensor.core.ISensorDirectoryService;
 public class ImportWizard extends Wizard {
 
 	private final ISensorDirectoryService sensorDirectoryService;
+	
+	private SensorAndDirectoryPage pageSensorAndDirectory;
+	private DataPage pageDataPage;
 
 	public ImportWizard(ISensorDirectoryService sensorDirectoryService) {
 		this.sensorDirectoryService = sensorDirectoryService;
@@ -29,8 +32,8 @@ public class ImportWizard extends Wizard {
 	
 	@Override
 	public void addPages() {
-		addPage(new SensorAndDirectoryPage(sensorDirectoryService));
-		addPage(new DataPage());
+		addPage(pageSensorAndDirectory = new SensorAndDirectoryPage(sensorDirectoryService));
+		addPage(pageDataPage = new DataPage());
 	}
 	
 	@Override
@@ -64,6 +67,12 @@ public class ImportWizard extends Wizard {
 
 	@Override
 	public boolean performFinish() {
+		ISensor sensor = pageSensorAndDirectory.getSelectedSensor();
+		URI fileURI = pageDataPage.getSelectedURI();
+		
+		System.err.println("Sensor: " + sensor);
+		System.err.println("File: " + fileURI);
+		
 		return false;
 	}
 

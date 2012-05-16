@@ -1,10 +1,10 @@
 package net.comes.care.ui.viewer;
 
 import net.comes.care.ui.Activator;
+import net.comes.care.ui.preferences.SensorPreferences;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.preferences.ConfigurationScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.CellEditor;
@@ -32,12 +32,12 @@ public class SensorPathEditingSupport extends EditingSupport {
 
 	@Override
 	protected Object getValue(Object element) {
-		return getPreferenceNode(element).get("path", "");
+		return SensorPreferences.getPreferenceNode((ISensor) element).get("path", "");
 	}
 
 	@Override
 	protected void setValue(Object element, Object value) {
-		IEclipsePreferences config = getPreferenceNode(element);
+		IEclipsePreferences config = SensorPreferences.getPreferenceNode((ISensor) element);
 		config.put("path", value.toString());
 		try {
 			config.flush();
@@ -50,17 +50,4 @@ public class SensorPathEditingSupport extends EditingSupport {
 		getViewer().refresh();
 	}
 
-	private static IEclipsePreferences getPreferenceNode(Object element) {
-		ISensor sensor = (ISensor) element;
-		return ConfigurationScope.INSTANCE.getNode("medmon.sensor." + sensor.getId());
-	}
-	
-	/**
-	 * Looks up the sensor path in the eclipse preferences
-	 * @param sensor
-	 * @return path or empty string
-	 */
-	public static String getSensorPath(ISensor sensor) {
-		return getPreferenceNode(sensor).get("path", "");
-	}
 }

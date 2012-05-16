@@ -3,14 +3,12 @@ package net.comes.care.ui.wizards.pages;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import javax.inject.Inject;
-
+import net.comes.care.ui.preferences.SensorPreferences;
 import net.comes.care.ui.util.JFaceUtil;
 import net.comes.care.ui.viewer.SensorTableViewer;
 import net.comes.care.ui.wizards.IValidationPage;
 import net.comes.care.ui.wizards.ValidationListener;
 
-import org.eclipse.e4.core.di.annotations.Creatable;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.wizard.WizardPage;
@@ -27,20 +25,19 @@ import org.eclipse.swt.widgets.Text;
 import de.lmu.ifi.dbs.medmon.sensor.core.ISensor;
 import de.lmu.ifi.dbs.medmon.sensor.core.ISensorDirectoryService;
 
-@Creatable
 public class SensorAndDirectoryPage extends WizardPage implements IValidationPage {
 
-	private static String		ERROR_NO_DIRECTORY_CHOOSEN	= "Keine Verzeichnis ausgew\u00e4hlt";
-	private static String		ERROR_NO_SENSOR_SELECTED	= "Kein Sensor ausgew\u00e4hlt";
+	private static String ERROR_NO_DIRECTORY_CHOOSEN = "Keine Verzeichnis ausgew\u00e4hlt";
+	private static String ERROR_NO_SENSOR_SELECTED = "Kein Sensor ausgew\u00e4hlt";
 
-	private ISensor				selectedSensor				= null;
-	private boolean				isDirectorySectionEnabled	= false;
-	private SortedSet<String>	errors						= new TreeSet<String>();
+	private ISensor selectedSensor = null;
+	private boolean isDirectorySectionEnabled = false;
+	private SortedSet<String> errors = new TreeSet<String>();
 
-	private Button				btnChooseDirectory;
-	private TableViewer	sensorTableViewer;
-	private Text				txtSelectedDirectory;
-	
+	private Button btnChooseDirectory;
+	private TableViewer sensorTableViewer;
+	private Text txtSelectedDirectory;
+
 	private final ISensorDirectoryService sensorDirectory;
 
 	/**
@@ -69,10 +66,15 @@ public class SensorAndDirectoryPage extends WizardPage implements IValidationPag
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				IStructuredSelection selection = (IStructuredSelection) sensorTableViewer.getSelection();
-				if (!selection.isEmpty())
+				if (!selection.isEmpty()) {
 					selectedSensor = (ISensor) selection.getFirstElement();
-				else
+					String sensorPath = SensorPreferences.getSensorPath(selectedSensor);
+					txtSelectedDirectory.setText(sensorPath);
+				} else {
 					selectedSensor = null;
+					txtSelectedDirectory.setText("");
+				}
+
 			}
 		});
 		sensorTableViewer.setInput(sensorDirectory.getSensors());
@@ -97,14 +99,17 @@ public class SensorAndDirectoryPage extends WizardPage implements IValidationPag
 				checkContents();
 			}
 		});
-
+		selectedSensor = JFaceUtil.initializeViewerSelection(ISensor.class, sensorTableViewer);
+		if(selectedSensor != null) {
+			String sensorPath = SensorPreferences.getSensorPath(selectedSensor);
+			txtSelectedDirectory.setText(sensorPath);
+		}
+			
 		checkContents();
 	}
 
 	@Override
 	public void checkContents() {
-
-		selectedSensor = JFaceUtil.initializeViewerSelection(ISensor.class, sensorTableViewer);
 
 		if (isDirectorySectionEnabled) {
 			if (txtSelectedDirectory.getText() == null || txtSelectedDirectory.getText().isEmpty())

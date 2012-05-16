@@ -1,6 +1,7 @@
 package net.comes.care.ui.viewer;
 
 import net.comes.care.ui.Activator;
+import net.comes.care.ui.preferences.SensorPreferences;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellLabelProvider;
@@ -76,7 +77,7 @@ public class SensorTableViewer extends TableViewer {
 			case 1:
 				return sensor.getVersion();
 			case 2:
-				return SensorPathEditingSupport.getSensorPath(sensor);
+				return SensorPreferences.getSensorPath(sensor);
 			default:
 				return element.toString();
 			}
