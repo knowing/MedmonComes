@@ -22,6 +22,7 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.gemini.ext.di.GeminiPersistenceContext;
+import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
@@ -72,7 +73,7 @@ public class PatientView {
 
 	@Inject
 	private IEventBroker broker;
-
+	
 	private DataBindingContext dbc;
 	private IObservableValue scaledImage;
 	private final WritableValue patientValue = new WritableValue();
@@ -85,8 +86,6 @@ public class PatientView {
 	private Text txtInsuranceId;
 
 	private TextViewer txtSearch;
-
-	
 
 	@PostConstruct
 	protected void createContent(final Composite parent, PatientContentAssistenProcessor processor) {
