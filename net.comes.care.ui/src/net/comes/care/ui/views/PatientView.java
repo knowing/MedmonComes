@@ -10,9 +10,12 @@ import javax.persistence.EntityManager;
 
 import net.comes.care.entity.Patient;
 import net.comes.care.ui.Activator;
+import net.comes.care.ui.handlers.ImportHandler;
 import net.comes.care.ui.search.PatientContentAssistenProcessor;
 import net.comes.care.ui.wizards.ImportWizard;
 
+import org.eclipse.core.commands.Command;
+import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.PojoObservables;
@@ -20,9 +23,10 @@ import org.eclipse.core.databinding.beans.PojoProperties;
 import org.eclipse.core.databinding.observable.value.ComputedValue;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.WritableValue;
+import org.eclipse.e4.core.commands.ECommandService;
+import org.eclipse.e4.core.commands.EHandlerService;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.gemini.ext.di.GeminiPersistenceContext;
-import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
@@ -53,6 +57,8 @@ import org.eclipse.swt.widgets.Text;
 
 import com.google.common.base.Splitter;
 
+import de.lmu.ifi.dbs.medmon.sensor.core.ISensorDirectoryService;
+
 /**
  * 
  * @author Nepomuk Seiler
@@ -74,6 +80,9 @@ public class PatientView {
 	@Inject
 	private IEventBroker broker;
 	
+	@Inject
+	private ISensorDirectoryService sensorDirectory;
+	
 	private DataBindingContext dbc;
 	private IObservableValue scaledImage;
 	private final WritableValue patientValue = new WritableValue();
@@ -88,7 +97,7 @@ public class PatientView {
 	private TextViewer txtSearch;
 
 	@PostConstruct
-	protected void createContent(final Composite parent, PatientContentAssistenProcessor processor) {
+	protected void createContent(final Composite parent, PatientContentAssistenProcessor processor, final EHandlerService handlerService, final ECommandService commandService) {
 		Composite container = new Composite(parent, SWT.BORDER);
 		container.setLayout(new GridLayout(3, false));
 
@@ -136,8 +145,8 @@ public class PatientView {
 		btnImport.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				WizardDialog wizardDialog = new WizardDialog(parent.getShell(), new ImportWizard());
-				wizardDialog.open();
+				ParameterizedCommand cmd = commandService.createCommand("net.comes.care.ui.data.import", null);
+				handlerService.executeHandler(cmd);
 			}
 		});
 		btnImport.setEnabled(false);

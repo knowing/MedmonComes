@@ -37,6 +37,7 @@
   <handlers xmi:id="_4BElQI-4EeGZhc0mbRpzpg" contributionURI="bundleclass://net.comes.care.ui/net.comes.care.ui.handlers.PatientAddHandler" command="_1tA38I-4EeGZhc0mbRpzpg"/>
   <handlers xmi:id="__hK5oI-4EeGZhc0mbRpzpg" contributionURI="bundleclass://net.comes.care.ui/net.comes.care.ui.handlers.DeletePatientHandler" command="_ABNroI-5EeGZhc0mbRpzpg"/>
   <handlers xmi:id="_G8JdcI-5EeGZhc0mbRpzpg" contributionURI="bundleclass://net.comes.care.ui/net.comes.care.ui.handlers.PatientOpenHandler" command="_EpgscI-5EeGZhc0mbRpzpg"/>
+  <handlers xmi:id="_UROrgJ9MEeGuPI2Q4EkSeg" contributionURI="bundleclass://net.comes.care.ui/net.comes.care.ui.handlers.ImportHandler" command="_aSBlwJ9LEeGuPI2Q4EkSeg"/>
   <bindingTables xmi:id="_g6D3LI-cEeGSFOgdbNI9Jg" bindingContext="_g6D3IY-cEeGSFOgdbNI9Jg">
     <bindings xmi:id="_g6D3LY-cEeGSFOgdbNI9Jg" keySequence="Ctrl+Q" command="_g6D3Ko-cEeGSFOgdbNI9Jg"/>
     <bindings xmi:id="_g6D3M4-cEeGSFOgdbNI9Jg" keySequence="Ctrl+S" command="_g6D3MY-cEeGSFOgdbNI9Jg"/>
@@ -52,6 +53,7 @@
   <commands xmi:id="_1tA38I-4EeGZhc0mbRpzpg" elementId="net.comes.care.ui.patient.add" commandName="patientAddCommand"/>
   <commands xmi:id="_ABNroI-5EeGZhc0mbRpzpg" elementId="net.comes.care.ui.patient.delete" commandName="patientDeleteCommand"/>
   <commands xmi:id="_EpgscI-5EeGZhc0mbRpzpg" elementId="net.comes.care.ui.patient.open" commandName="patientOpenCommand"/>
+  <commands xmi:id="_aSBlwJ9LEeGuPI2Q4EkSeg" elementId="net.comes.care.ui.data.import" commandName="dataImportCommand" description=""/>
   <addons xmi:id="_g6D3JI-cEeGSFOgdbNI9Jg" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_g6D3JY-cEeGSFOgdbNI9Jg" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_g6D3Jo-cEeGSFOgdbNI9Jg" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

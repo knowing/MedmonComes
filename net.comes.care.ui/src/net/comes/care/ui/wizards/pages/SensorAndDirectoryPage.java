@@ -3,10 +3,14 @@ package net.comes.care.ui.wizards.pages;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.inject.Inject;
+
 import net.comes.care.ui.util.JFaceUtil;
+import net.comes.care.ui.viewer.SensorTableViewer;
 import net.comes.care.ui.wizards.IValidationPage;
 import net.comes.care.ui.wizards.ValidationListener;
 
+import org.eclipse.e4.core.di.annotations.Creatable;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.wizard.WizardPage;
@@ -21,7 +25,9 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 
 import de.lmu.ifi.dbs.medmon.sensor.core.ISensor;
+import de.lmu.ifi.dbs.medmon.sensor.core.ISensorDirectoryService;
 
+@Creatable
 public class SensorAndDirectoryPage extends WizardPage implements IValidationPage {
 
 	private static String		ERROR_NO_DIRECTORY_CHOOSEN	= "Keine Verzeichnis ausgew\u00e4hlt";
@@ -34,12 +40,15 @@ public class SensorAndDirectoryPage extends WizardPage implements IValidationPag
 	private Button				btnChooseDirectory;
 	private TableViewer	sensorTableViewer;
 	private Text				txtSelectedDirectory;
+	
+	private final ISensorDirectoryService sensorDirectory;
 
 	/**
 	 * Create the wizard.
 	 */
-	public SensorAndDirectoryPage() {
+	public SensorAndDirectoryPage(ISensorDirectoryService sensorDirectory) {
 		super("ImportDataSensorAndDirectoryPage");
+		this.sensorDirectory = sensorDirectory;
 		setTitle("Sensor ausw\u00e4hlen");
 		setDescription("W\u00e4hlen Sie einen Sensor aus von dem Sie die Daten verwenden m\u00f6chten.");
 	}
@@ -53,7 +62,7 @@ public class SensorAndDirectoryPage extends WizardPage implements IValidationPag
 		setControl(container);
 		container.setLayout(new GridLayout(2, false));
 
-		sensorTableViewer = new TableViewer(container, SWT.SINGLE | SWT.BORDER | SWT.FULL_SELECTION);
+		sensorTableViewer = new SensorTableViewer(container, SWT.SINGLE | SWT.BORDER | SWT.FULL_SELECTION);
 		Table table = sensorTableViewer.getTable();
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		table.addSelectionListener(new ValidationListener(this) {
@@ -67,6 +76,7 @@ public class SensorAndDirectoryPage extends WizardPage implements IValidationPag
 				super.widgetSelected(e);
 			}
 		});
+		sensorTableViewer.setInput(sensorDirectory.getSensors());
 
 		txtSelectedDirectory = new Text(container, SWT.BORDER);
 		txtSelectedDirectory.setEditable(false);
