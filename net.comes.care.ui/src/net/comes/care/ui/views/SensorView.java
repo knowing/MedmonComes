@@ -5,6 +5,7 @@ import javax.inject.Inject;
 
 import net.comes.care.ui.viewer.SensorTableViewer;
 
+import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.UIEventTopic;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
@@ -41,7 +42,7 @@ public class SensorView {
 
 	
 	@Inject
-	protected void sensorChanged(final @UIEventTopic(ISensorDirectoryService.SENSOR_TOPIC) ISensor sensor) {
+	protected void sensorChanged(final @Optional @UIEventTopic(ISensorDirectoryService.SENSOR_TOPIC) ISensor sensor) {
 		if(sensorTableViewer == null || sensorTableViewer.getControl().isDisposed())
 			return;
 		
