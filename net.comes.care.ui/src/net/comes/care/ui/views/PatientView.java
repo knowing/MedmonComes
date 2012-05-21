@@ -12,7 +12,7 @@ import net.comes.care.entity.Patient;
 import net.comes.care.ui.Activator;
 import net.comes.care.ui.handlers.ImportHandler;
 import net.comes.care.ui.search.PatientContentAssistenProcessor;
-import net.comes.care.ui.wizards.ImportWizard;
+import net.comes.care.ui.wizards.OldImportWizard;
 
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ParameterizedCommand;
