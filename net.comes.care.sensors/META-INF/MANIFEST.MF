@@ -5,5 +5,6 @@ Bundle-SymbolicName: net.comes.care.sensors
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: de.lmu.ifi.dbs.medmon.sensor.core;bundle-version="1.0.0"
-Import-Package: org.osgi.framework;version="1.7.0"
+Import-Package: org.osgi.framework;version="1.7.0",
+ weka.core
 Service-Component: OSGI-INF/sendsorAcelerometer.xml
