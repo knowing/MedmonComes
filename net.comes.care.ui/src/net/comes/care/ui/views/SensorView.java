@@ -7,7 +7,11 @@ import net.comes.care.ui.viewer.SensorTableViewer;
 
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.UIEventTopic;
+import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -24,6 +28,9 @@ public class SensorView {
 	@Inject
 	private ISensorDirectoryService sensorDirectory;
 
+	@Inject
+	private ESelectionService selectionService;
+
 	private Text txtSearch;
 	private SensorTableViewer sensorTableViewer;
 
@@ -36,25 +43,36 @@ public class SensorView {
 
 		sensorTableViewer = new SensorTableViewer(parent, SWT.BORDER | SWT.FULL_SELECTION);
 		sensorTableViewer.getTable().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		
-		sensorTableViewer.setInput(sensorDirectory.getSensors());	
+		sensorTableViewer.setInput(sensorDirectory.getSensors());
+		sensorTableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				if(event.getSelection().isEmpty()) {
+					selectionService.setSelection(null);
+					return;
+				}
+				IStructuredSelection selection = (IStructuredSelection) event.getSelection();
+				ISensor sensor = (ISensor) selection.getFirstElement();
+				selectionService.setSelection(sensor);
+			}
+		});
 	}
 
-	
 	@Inject
 	protected void sensorChanged(final @Optional @UIEventTopic(ISensorDirectoryService.SENSOR_TOPIC) ISensor sensor) {
-		if(sensorTableViewer == null || sensorTableViewer.getControl().isDisposed())
+		if (sensorTableViewer == null || sensorTableViewer.getControl().isDisposed())
 			return;
-		
-		//Even it's a UIEventTopic it isn't always synced.
+
+		// Even it's a UIEventTopic it isn't always synced.
 		sensorTableViewer.getControl().getDisplay().asyncExec(new Runnable() {
 			@Override
 			public void run() {
 				sensorTableViewer.setInput(sensorDirectory.getSensors());
-				MessageDialog.openConfirm(txtSearch.getShell(), "Sensor changed", "Sensor " + sensor.getName());				
+				MessageDialog.openConfirm(txtSearch.getShell(), "Sensor changed", "Sensor " + sensor.getName());
 			}
 		});
 
 	}
-	
+
 }

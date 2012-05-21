@@ -10,11 +10,9 @@ import javax.persistence.EntityManager;
 
 import net.comes.care.entity.Patient;
 import net.comes.care.ui.Activator;
-import net.comes.care.ui.handlers.ImportHandler;
+import net.comes.care.ui.preferences.PatientPreferences;
 import net.comes.care.ui.search.PatientContentAssistenProcessor;
-import net.comes.care.ui.wizards.OldImportWizard;
 
-import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
@@ -23,9 +21,13 @@ import org.eclipse.core.databinding.beans.PojoProperties;
 import org.eclipse.core.databinding.observable.value.ComputedValue;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.WritableValue;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.e4.core.commands.ECommandService;
 import org.eclipse.e4.core.commands.EHandlerService;
+import org.eclipse.e4.core.di.extensions.Preference;
 import org.eclipse.e4.core.services.events.IEventBroker;
+import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.gemini.ext.di.GeminiPersistenceContext;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
@@ -39,7 +41,6 @@ import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.jface.text.contentassist.ICompletionListener;
 import org.eclipse.jface.text.contentassist.ICompletionListenerExtension2;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
-import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.osgi.internal.signedcontent.Base64;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -54,6 +55,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.osgi.service.prefs.BackingStoreException;
 
 import com.google.common.base.Splitter;
 
@@ -79,10 +81,17 @@ public class PatientView {
 
 	@Inject
 	private IEventBroker broker;
-	
+
 	@Inject
 	private ISensorDirectoryService sensorDirectory;
+
+	@Inject
+	@Preference(nodePath = PatientPreferences.NODE_PATH)
+	private IEclipsePreferences preferences;
 	
+	@Inject
+	private ESelectionService selectionService;
+
 	private DataBindingContext dbc;
 	private IObservableValue scaledImage;
 	private final WritableValue patientValue = new WritableValue();
@@ -90,14 +99,12 @@ public class PatientView {
 
 	private Button btnImport;
 	private Label imageLabel;
-	private Text txtLastName;
-	private Text txtFirstName;
-	private Text txtInsuranceId;
-
+	private Text txtLastName, txtFirstName, txtInsuranceId;
 	private TextViewer txtSearch;
 
 	@PostConstruct
-	protected void createContent(final Composite parent, PatientContentAssistenProcessor processor, final EHandlerService handlerService, final ECommandService commandService) {
+	protected void createContent(final Composite parent, PatientContentAssistenProcessor processor, final EHandlerService handlerService,
+			final ECommandService commandService) {
 		Composite container = new Composite(parent, SWT.BORDER);
 		container.setLayout(new GridLayout(3, false));
 
@@ -156,11 +163,17 @@ public class PatientView {
 		btnComes.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				MessageDialog.openInformation(parent.getShell(), "Not implemented yet", "Open COMES page");
+				MessageDialog.openInformation(parent.getShell(), "Not implemented yet", "Open COMES page ");
 			}
 		});
 
 		bindValues();
+		loadPatient(preferences.getInt(PatientPreferences.LAST_PATIENT_ID, 0));
+	}
+
+	@Focus
+	protected void focus() {
+		txtSearch.getControl().setFocus();
 	}
 
 	private void bindValues() {
@@ -237,6 +250,13 @@ public class PatientView {
 		assistant.addCompletionListener(new CompletionListener());
 	}
 
+	private void loadPatient(int id) {
+		if (id < 1)
+			return;
+		Patient patient = em.find(Patient.class, id);
+		updatePatient(patient);
+	}
+
 	private void loadPatient(String fullSearch) {
 		Splitter s1 = Splitter.on('#').omitEmptyStrings();
 		Iterator<String> itPatientInsurance = s1.split(fullSearch).iterator();
@@ -249,9 +269,20 @@ public class PatientView {
 
 		// Assuming insuranceId is unique
 		Patient patient = resultList.get(0);
+		updatePatient(patient);
+	}
+
+	private void updatePatient(Patient patient) {
 		patientValue.setValue(patient);
+		preferences.putInt(PatientPreferences.LAST_PATIENT_ID, patient.getId());
 		broker.send("patient", patient);
+		selectionService.setSelection(patient);
 		btnImport.setEnabled(true);
+		try {
+			preferences.flush();
+		} catch (BackingStoreException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private class CompletionListener implements ICompletionListener, ICompletionListenerExtension2 {

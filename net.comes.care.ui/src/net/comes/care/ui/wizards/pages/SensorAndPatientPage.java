@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.comes.care.entity.Patient;
 import net.comes.care.ui.preferences.SensorPreferences;
 import net.comes.care.ui.wizards.IValidationPage;
 
@@ -19,6 +20,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -32,7 +34,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 
 import de.lmu.ifi.dbs.medmon.sensor.core.ISensor;
@@ -40,17 +41,25 @@ import de.lmu.ifi.dbs.medmon.sensor.core.ISensorDirectoryService;
 
 public class SensorAndPatientPage extends WizardPage implements IValidationPage {
 
+	private final ISensorDirectoryService sensorDirectory;
+	private Patient patient;
+	private ISensor sensor;
+
 	private Text txtPatient;
 	private ComboViewer sensorComboViewer;
-	private final ISensorDirectoryService sensorDirectory;
 	private TableViewer dataViewer;
 
 	/**
 	 * Create the wizard.
+	 * 
+	 * @param patient
+	 * @param sensor
 	 */
-	public SensorAndPatientPage(ISensorDirectoryService sensorDirectory) {
+	public SensorAndPatientPage(ISensorDirectoryService sensorDirectory, Patient patient, ISensor sensor) {
 		super("SensorAndPatientPage");
 		this.sensorDirectory = sensorDirectory;
+		this.patient = patient;
+		this.sensor = sensor;
 		setTitle("Auswahl der Daten");
 		setDescription("Bitte waehlen Sie einen Patienten und einen Sensor aus.");
 	}
@@ -62,9 +71,8 @@ public class SensorAndPatientPage extends WizardPage implements IValidationPage 
 	 */
 	public void createControl(Composite parent) {
 		Composite container = new Composite(parent, SWT.NULL);
-
-		setControl(container);
 		container.setLayout(new GridLayout(3, false));
+		setControl(container);
 
 		Label lblPatient = new Label(container, SWT.NONE);
 		lblPatient.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -75,6 +83,7 @@ public class SensorAndPatientPage extends WizardPage implements IValidationPage 
 
 		Button btnChoose = new Button(container, SWT.NONE);
 		btnChoose.setText("Auswaehlen");
+		btnChoose.setEnabled(false);
 
 		Label lblSensor = new Label(container, SWT.NONE);
 		lblSensor.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -118,6 +127,15 @@ public class SensorAndPatientPage extends WizardPage implements IValidationPage 
 		dataViewer = new TableViewer(grpData, SWT.NONE | SWT.FULL_SELECTION);
 		dataViewer.setContentProvider(new ArrayContentProvider());
 		dataViewer.setLabelProvider(new DataLabelProvider());
+
+		// Initial Selection
+		if (patient != null) {
+			txtPatient.setText(patient.getUser().getName() + " " + patient.getUser().getSurname());
+		}
+		if (sensor != null) {
+			sensorComboViewer.setSelection(new StructuredSelection(sensor));
+			updateDataViewer(sensor, SensorPreferences.getSensorPath(sensor));
+		}
 
 	}
 

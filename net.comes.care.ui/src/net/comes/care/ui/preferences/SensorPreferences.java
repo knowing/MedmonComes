@@ -7,13 +7,16 @@ import de.lmu.ifi.dbs.medmon.sensor.core.ISensor;
 
 public class SensorPreferences {
 
+	public static final String NODE_PATH = "medmon.sensor";
+	public static final String SENSOR_PATH = "path";
+	
 	/**
 	 * 
 	 * @param sensor
 	 * @return 
 	 */
 	public static IEclipsePreferences getPreferenceNode(ISensor sensor) {
-		return ConfigurationScope.INSTANCE.getNode("medmon.sensor." + sensor.getId());
+		return ConfigurationScope.INSTANCE.getNode(NODE_PATH + "." + sensor.getId());
 	}
 	
 	/**
@@ -22,6 +25,6 @@ public class SensorPreferences {
 	 * @return path or empty string
 	 */
 	public static String getSensorPath(ISensor sensor) {
-		return getPreferenceNode(sensor).get("path", "");
+		return getPreferenceNode(sensor).get(SENSOR_PATH, "");
 	}
 }
