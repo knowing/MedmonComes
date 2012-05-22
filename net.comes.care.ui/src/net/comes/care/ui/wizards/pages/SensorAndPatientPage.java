@@ -15,6 +15,7 @@ import net.comes.care.ui.wizards.IValidationPage;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
@@ -159,6 +160,23 @@ public class SensorAndPatientPage extends WizardPage implements IValidationPage 
 			e.printStackTrace();
 		}
 		dataViewer.setInput(uriList);
+	}
+	
+	public List<URI> getSelectedFiles() {
+		ISelection selection = dataViewer.getSelection();
+		if(selection.isEmpty())
+			return (List<URI>) dataViewer.getInput();
+		IStructuredSelection sel = (IStructuredSelection) selection;
+		return sel.toList();
+	}
+	
+	public Patient getSelectedPatient() {
+		return patient;
+	}
+
+	public ISensor getSelectedSensor() {
+		IStructuredSelection selection = (IStructuredSelection) sensorComboViewer.getSelection();
+		return (ISensor) selection.getFirstElement();
 	}
 
 	private class DataLabelProvider extends LabelProvider implements ITableLabelProvider {
