@@ -9,6 +9,7 @@ public class SensorPreferences {
 
 	public static final String NODE_PATH = "medmon.sensor";
 	public static final String SENSOR_PATH = "path";
+	public static final String LAST_SENSOR_ID = "id";
 	
 	/**
 	 * 

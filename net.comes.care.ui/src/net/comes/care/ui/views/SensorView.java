@@ -3,20 +3,25 @@ package net.comes.care.ui.views;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import net.comes.care.ui.preferences.SensorPreferences;
 import net.comes.care.ui.viewer.SensorTableViewer;
 
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.e4.core.di.annotations.Optional;
+import org.eclipse.e4.core.di.extensions.Preference;
 import org.eclipse.e4.ui.di.UIEventTopic;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
+import org.osgi.service.prefs.BackingStoreException;
 
 import de.lmu.ifi.dbs.medmon.sensor.core.ISensor;
 import de.lmu.ifi.dbs.medmon.sensor.core.ISensorDirectoryService;
@@ -30,6 +35,10 @@ public class SensorView {
 
 	@Inject
 	private ESelectionService selectionService;
+	
+	@Inject
+	@Preference(nodePath = SensorPreferences.NODE_PATH)
+	private IEclipsePreferences preferences;
 
 	private Text txtSearch;
 	private SensorTableViewer sensorTableViewer;
@@ -55,8 +64,23 @@ public class SensorView {
 				IStructuredSelection selection = (IStructuredSelection) event.getSelection();
 				ISensor sensor = (ISensor) selection.getFirstElement();
 				selectionService.setSelection(sensor);
+				preferences.put(SensorPreferences.LAST_SENSOR_ID, sensor.getId());
+				try {
+					preferences.flush();
+				} catch (BackingStoreException e) {
+					e.printStackTrace();
+				}
 			}
 		});
+		
+		String id = preferences.get(SensorPreferences.LAST_SENSOR_ID, null);
+		if(id == null)
+			return;
+		
+		for(ISensor sensor : sensorDirectory.getSensors()) {
+			if(sensor.getId().equals(id))
+				sensorTableViewer.setSelection(new StructuredSelection(sensor));
+		}
 	}
 
 	@Inject
