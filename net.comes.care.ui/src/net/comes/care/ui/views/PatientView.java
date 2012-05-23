@@ -99,7 +99,7 @@ public class PatientView {
 
 	private Button btnImport;
 	private Label imageLabel;
-	private Text txtLastName, txtFirstName, txtInsuranceId;
+	private Text txtLastName, txtFirstName, txtInsuranceId,txtPatientGroup;
 	private TextViewer txtSearch;
 
 	@PostConstruct
@@ -123,7 +123,7 @@ public class PatientView {
 
 		imageLabel = new Label(container, SWT.BORDER | SWT.SHADOW_IN);
 		imageLabel.setAlignment(SWT.CENTER);
-		GridData gd_imgPatient = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 3);
+		GridData gd_imgPatient = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 4);
 		gd_imgPatient.heightHint = 120;
 		gd_imgPatient.widthHint = 120;
 		imageLabel.setLayoutData(gd_imgPatient);
@@ -141,8 +141,15 @@ public class PatientView {
 		lblInsuranceId.setText("VersicherungsNr.");
 		txtInsuranceId = new Text(container, SWT.BORDER);
 		txtInsuranceId.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
-		new Label(container, SWT.NONE);
-
+		
+		Label lblPatientGroup = new Label(container, SWT.NONE);
+		lblPatientGroup.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
+		lblPatientGroup.setText("Gruppe");
+		
+		txtPatientGroup = new Text(container, SWT.BORDER);
+		txtPatientGroup.setText("Group");
+		txtPatientGroup.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
+		
 		Composite cButtons = new Composite(container, SWT.NONE);
 		cButtons.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true, 3, 1));
 		cButtons.setLayout(new RowLayout());
@@ -194,6 +201,12 @@ public class PatientView {
 		ISWTObservableValue insuranceIdTarget = WidgetProperties.text(SWT.Modify).observe(txtInsuranceId);
 		IObservableValue insuranceIdModel = PojoProperties.value("insuranceNumber").observeDetail(patientValue);
 		dbc.bindValue(insuranceIdTarget, insuranceIdModel);
+		
+		// Bind patient group
+		ISWTObservableValue patientGroupTarget = WidgetProperties.text(SWT.Modify).observe(txtPatientGroup);
+		IObservableValue patientGroupModel = PojoProperties.value("patientGroup.name").observeDetail(patientValue);
+		dbc.bindValue(patientGroupTarget, patientGroupModel);
+		
 
 		// Binding the patient image
 		final IObservableValue imageObservableValue = PojoObservables.observeDetailValue(patientValue, "jpegString", String.class);
