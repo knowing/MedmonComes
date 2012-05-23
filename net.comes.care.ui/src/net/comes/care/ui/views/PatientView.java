@@ -80,9 +80,6 @@ public class PatientView {
 	private EntityManager em;
 
 	@Inject
-	private IEventBroker broker;
-
-	@Inject
 	private ISensorDirectoryService sensorDirectory;
 
 	@Inject
@@ -289,7 +286,6 @@ public class PatientView {
 	private void updatePatient(Patient patient) {
 		patientValue.setValue(patient);
 		preferences.putInt(PatientPreferences.LAST_PATIENT_ID, patient.getId());
-		broker.send("patient", patient);
 		selectionService.setSelection(patient);
 		btnImport.setEnabled(true);
 		try {

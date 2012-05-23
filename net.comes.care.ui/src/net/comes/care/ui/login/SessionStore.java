@@ -8,7 +8,7 @@ public class SessionStore {
 
 	private static SessionStore store;
 
-	private Optional<Session> session;
+	private Optional<Session> session = Optional.absent();
 
 	private SessionStore() {
 	}

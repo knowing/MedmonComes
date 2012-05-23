@@ -6,9 +6,12 @@ import javax.inject.Inject;
 import net.comes.care.ui.login.SessionStore;
 import net.comes.care.ui.preferences.SensorPreferences;
 import net.comes.care.ui.viewer.SensorTableViewer;
+import net.comes.care.ws.sycare.DeviceManufacturers;
 import net.comes.care.ws.sycare.DeviceType;
 import net.comes.care.ws.sycare.DeviceTypes;
+import net.comes.care.ws.sycare.GetDeviceManufacturersRequest;
 import net.comes.care.ws.sycare.GetDeviceTypesRequest;
+import net.comes.care.ws.sycare.Session;
 import net.comes.care.ws.sycare.service.Sycare;
 
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
@@ -92,7 +95,6 @@ public class SensorView {
 			if(sensor.getId().equals(id))
 				sensorTableViewer.setSelection(new StructuredSelection(sensor));
 		}
-		
 	}
 
 	@Inject
