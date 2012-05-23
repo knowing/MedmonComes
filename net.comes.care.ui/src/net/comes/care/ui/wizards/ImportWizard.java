@@ -13,6 +13,7 @@ import java.util.List;
 
 import net.comes.care.entity.Patient;
 import net.comes.care.ui.wizards.pages.SensorAndPatientPage;
+import net.comes.care.ws.sycare.service.Sycare;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.Wizard;
@@ -32,6 +33,7 @@ public class ImportWizard extends Wizard {
 	private final ISensor sensor;
 
 	private SensorAndPatientPage page;
+	private final Sycare sycare;
 
 	/**
 	 * 
@@ -41,8 +43,9 @@ public class ImportWizard extends Wizard {
 	 * @param sensor
 	 *            - can be null
 	 */
-	public ImportWizard(ISensorDirectoryService directoryService, Patient patient, ISensor sensor) {
+	public ImportWizard(ISensorDirectoryService directoryService, Sycare sycare, Patient patient, ISensor sensor) {
 		this.directoryService = directoryService;
+		this.sycare = sycare;
 		this.patient = patient;
 		this.sensor = sensor;
 		setWindowTitle("Datenimport");

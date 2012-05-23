@@ -6,6 +6,7 @@ import net.comes.care.entity.Patient;
 import net.comes.care.ui.views.PatientView;
 import net.comes.care.ui.views.SensorView;
 import net.comes.care.ui.wizards.ImportWizard;
+import net.comes.care.ws.sycare.service.Sycare;
 
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.services.IServiceConstants;
@@ -18,13 +19,12 @@ import de.lmu.ifi.dbs.medmon.sensor.core.ISensorDirectoryService;
 
 public class ImportHandler {
 
-
 	@Execute
-	public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell, ISensorDirectoryService sensorDirectoryService,
+	public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell, ISensorDirectoryService sensorDirectoryService, Sycare sycare,
 			ESelectionService selectionService) {
 		Patient patient = (Patient) selectionService.getSelection(PatientView.ID);
 		ISensor sensor = (ISensor) selectionService.getSelection(SensorView.ID);
-		new WizardDialog(shell, new ImportWizard(sensorDirectoryService, patient, sensor)).open();
+		new WizardDialog(shell, new ImportWizard(sensorDirectoryService, sycare, patient, sensor)).open();
 	}
-	
+
 }

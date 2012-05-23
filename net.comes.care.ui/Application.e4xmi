@@ -22,7 +22,7 @@
     </mainMenu>
     <trimBars xmi:id="_g6D3Q4-cEeGSFOgdbNI9Jg">
       <children xsi:type="menu:ToolBar" xmi:id="_g6D3RI-cEeGSFOgdbNI9Jg" elementId="toolbar:org.eclipse.ui.main.toolbar">
-        <children xsi:type="menu:HandledToolItem" xmi:id="_xRYaII-4EeGZhc0mbRpzpg" label="Home" iconURI="platform:/plugin/net.comes.care.ui/icons/16/go-home.png" command="_suKGkI-4EeGZhc0mbRpzpg"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_xRYaII-4EeGZhc0mbRpzpg" label="Login" iconURI="platform:/plugin/net.comes.care.ui/icons/16/comes-logo.png" command="_suKGkI-4EeGZhc0mbRpzpg"/>
         <children xsi:type="menu:ToolBarSeparator" xmi:id="_n-N3kI-2EeGZhc0mbRpzpg"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_5pU8gI-4EeGZhc0mbRpzpg" label="Add" iconURI="platform:/plugin/net.comes.care.ui/icons/16/list-add.png" command="_1tA38I-4EeGZhc0mbRpzpg"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_N9mG8I-5EeGZhc0mbRpzpg" label="Save" iconURI="platform:/plugin/net.comes.care.ui/icons/save_edit.gif" command="_g6D3MY-cEeGSFOgdbNI9Jg"/>
@@ -33,7 +33,7 @@
   <handlers xmi:id="_g6D3K4-cEeGSFOgdbNI9Jg" contributionURI="bundleclass://net.comes.care.ui/net.comes.care.ui.handlers.QuitHandler" command="_g6D3Ko-cEeGSFOgdbNI9Jg"/>
   <handlers xmi:id="_g6D3Mo-cEeGSFOgdbNI9Jg" contributionURI="bundleclass://net.comes.care.ui/net.comes.care.ui.handlers.SaveHandler" command="_g6D3MY-cEeGSFOgdbNI9Jg"/>
   <handlers xmi:id="_g6D3NY-cEeGSFOgdbNI9Jg" contributionURI="bundleclass://net.comes.care.ui/net.comes.care.ui.handlers.AboutHandler" command="_g6D3NI-cEeGSFOgdbNI9Jg"/>
-  <handlers xmi:id="_vQlnEI-4EeGZhc0mbRpzpg" contributionURI="bundleclass://net.comes.care.ui/net.comes.care.ui.handlers.HomeHandler" command="_suKGkI-4EeGZhc0mbRpzpg"/>
+  <handlers xmi:id="_vQlnEI-4EeGZhc0mbRpzpg" contributionURI="bundleclass://net.comes.care.ui/net.comes.care.ui.handlers.ComesLoginHandler" command="_suKGkI-4EeGZhc0mbRpzpg"/>
   <handlers xmi:id="_4BElQI-4EeGZhc0mbRpzpg" contributionURI="bundleclass://net.comes.care.ui/net.comes.care.ui.handlers.PatientAddHandler" command="_1tA38I-4EeGZhc0mbRpzpg"/>
   <handlers xmi:id="__hK5oI-4EeGZhc0mbRpzpg" contributionURI="bundleclass://net.comes.care.ui/net.comes.care.ui.handlers.DeletePatientHandler" command="_ABNroI-5EeGZhc0mbRpzpg"/>
   <handlers xmi:id="_G8JdcI-5EeGZhc0mbRpzpg" contributionURI="bundleclass://net.comes.care.ui/net.comes.care.ui.handlers.PatientOpenHandler" command="_EpgscI-5EeGZhc0mbRpzpg"/>
@@ -49,7 +49,7 @@
   <commands xmi:id="_g6D3Ko-cEeGSFOgdbNI9Jg" elementId="net.comes.care.ui.quitCommand" commandName="quitCommand"/>
   <commands xmi:id="_g6D3MY-cEeGSFOgdbNI9Jg" elementId="net.comes.care.ui.saveCommand" commandName="saveCommand"/>
   <commands xmi:id="_g6D3NI-cEeGSFOgdbNI9Jg" elementId="net.comes.care.ui.aboutCommand" commandName="aboutCommand"/>
-  <commands xmi:id="_suKGkI-4EeGZhc0mbRpzpg" elementId="net.comes.care.ui.homeCommand" commandName="homeCommand"/>
+  <commands xmi:id="_suKGkI-4EeGZhc0mbRpzpg" elementId="net.comes.care.ui.comesLoginCommand" commandName="comesLoginCommand"/>
   <commands xmi:id="_1tA38I-4EeGZhc0mbRpzpg" elementId="net.comes.care.ui.patient.add" commandName="patientAddCommand"/>
   <commands xmi:id="_ABNroI-5EeGZhc0mbRpzpg" elementId="net.comes.care.ui.patient.delete" commandName="patientDeleteCommand"/>
   <commands xmi:id="_EpgscI-5EeGZhc0mbRpzpg" elementId="net.comes.care.ui.patient.open" commandName="patientOpenCommand"/>

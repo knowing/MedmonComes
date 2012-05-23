@@ -159,11 +159,12 @@ public class PatientView {
 		btnImport.setEnabled(false);
 
 		Button btnComes = new Button(cButtons, SWT.PUSH);
-		btnComes.setImage(Activator.getImageDescriptor("img/comes-logo.png").createImage());
+		btnComes.setImage(Activator.getImageDescriptor("img/comes-logo-flat.png").createImage());
 		btnComes.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				MessageDialog.openInformation(parent.getShell(), "Not implemented yet", "Open COMES page ");
+				ParameterizedCommand cmd = commandService.createCommand("net.comes.care.ui.comesLoginCommand", null);
+				handlerService.executeHandler(cmd);
 			}
 		});
 

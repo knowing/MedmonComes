@@ -3,8 +3,13 @@ package net.comes.care.ui.views;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import net.comes.care.ui.login.SessionStore;
 import net.comes.care.ui.preferences.SensorPreferences;
 import net.comes.care.ui.viewer.SensorTableViewer;
+import net.comes.care.ws.sycare.DeviceType;
+import net.comes.care.ws.sycare.DeviceTypes;
+import net.comes.care.ws.sycare.GetDeviceTypesRequest;
+import net.comes.care.ws.sycare.service.Sycare;
 
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.e4.core.di.annotations.Optional;
@@ -22,6 +27,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.osgi.service.prefs.BackingStoreException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.lmu.ifi.dbs.medmon.sensor.core.ISensor;
 import de.lmu.ifi.dbs.medmon.sensor.core.ISensorDirectoryService;
@@ -29,12 +36,16 @@ import de.lmu.ifi.dbs.medmon.sensor.core.ISensorDirectoryService;
 public class SensorView {
 
 	public static final String ID = "net.comes.care.ui.view.sensor";
+	private final Logger log = LoggerFactory.getLogger(SensorView.class);
 
 	@Inject
 	private ISensorDirectoryService sensorDirectory;
 
 	@Inject
 	private ESelectionService selectionService;
+	
+	@Inject
+	private Sycare sycare;
 	
 	@Inject
 	@Preference(nodePath = SensorPreferences.NODE_PATH)
@@ -81,6 +92,7 @@ public class SensorView {
 			if(sensor.getId().equals(id))
 				sensorTableViewer.setSelection(new StructuredSelection(sensor));
 		}
+		
 	}
 
 	@Inject
