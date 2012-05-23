@@ -3,6 +3,10 @@
 
 <product name="net.comes.care.ui" id="net.comes.care.ui.product" application="org.eclipse.e4.ui.workbench.swt.E4Application" version="1.0.0.qualifier" useFeatures="true" includeLaunchers="true">
 
+   <aboutInfo>
+      <image path="/net.comes.care.ui/img/comes-logo-round.png"/>
+   </aboutInfo>
+
    <configIni use="default">
    </configIni>
 
@@ -11,14 +15,21 @@
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 
-   <windowImages/>
+   <windowImages i16="/net.comes.care.ui/icons/16/comes-logo.png" i32="/net.comes.care.ui/icons/32/comes-logo.png" i48="/net.comes.care.ui/icons/48/comes-logo.png"/>
 
+   <splash
+      startupProgressRect="5,275,445,15"
+      startupMessageRect="7,252,445,20"
+      startupForegroundColor="000000" />
    <launcher>
       <solaris/>
       <win useIco="false">
-         <bmp/>
+         <bmp
+            winSmallHigh="/net.comes.care.ui/icons/16/comes-logo.bmp"
+            winSmallLow="/net.comes.care.ui/icons/16/comes-logo.bmp"/>
       </win>
    </launcher>
+
 
    <vm>
    </vm>
@@ -118,6 +129,7 @@
       <feature id="org.eclipse.e4.rcp" version="1.1.0.v20120131-1846-8yEEFyfGGdfiIUCM1VKqVel"/>
       <feature id="org.eclipse.emf.common" version="2.8.0.v20120315-1035"/>
       <feature id="org.eclipse.emf.ecore" version="2.8.0.v20120315-1035"/>
+      <feature id="org.apache.cxf" version="2.5.2"/>
    </features>
 
    <configurations>

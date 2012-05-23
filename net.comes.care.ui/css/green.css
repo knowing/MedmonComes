@@ -9,10 +9,18 @@ SashForm {
 	background-color: #fff;
 }
 
+
 .MTrimBar {
 	background-color: gradient linear #92bb02 white 100%;
 	color: white;
 }
+
+/*
+ToolBar {
+	background-color: gradient linear #92bb02 white 100%;
+	color: white;
+}
+*/
 
 Shell {
     background-color: white;

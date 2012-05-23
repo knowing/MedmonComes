@@ -100,4 +100,25 @@
          version="0.0.0"
          unpack="false"/>
 
+   <plugin
+         id="de.lmu.ifi.dbs.knowing.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.sendsor.accelerationSensor"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.scala-ide.scala.library"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
 </feature>

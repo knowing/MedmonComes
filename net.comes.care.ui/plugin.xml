@@ -21,5 +21,12 @@
          </property>
       </product>
    </extension>
+   <extension
+         point="org.eclipse.ui.splashHandlers">
+      <splashHandler
+            class="net.comes.care.ui.splashHandlers.InteractiveSplashHandler"
+            id="net.comes.care.ui.splashHandlers.interactive">
+      </splashHandler>
+   </extension>
 
 </plugin>

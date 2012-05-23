@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_g6D3II-cEeGSFOgdbNI9Jg" elementId="org.eclipse.e4.ide.application" bindingContexts="_g6D3IY-cEeGSFOgdbNI9Jg">
-  <children xsi:type="basic:TrimmedWindow" xmi:id="_g6D3N4-cEeGSFOgdbNI9Jg" label="net.comes.care.ui" width="500" height="400">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_g6D3N4-cEeGSFOgdbNI9Jg" label="net.comes.care.ui" iconURI="" width="500" height="400">
     <children xsi:type="basic:PartSashContainer" xmi:id="_8HlwsI-iEeGSFOgdbNI9Jg" selectedElement="_9aVyAI-iEeGSFOgdbNI9Jg">
       <children xsi:type="basic:PartSashContainer" xmi:id="_9aVyAI-iEeGSFOgdbNI9Jg" selectedElement="__8HLMI-iEeGSFOgdbNI9Jg" horizontal="true">
         <children xsi:type="basic:Part" xmi:id="__8HLMI-iEeGSFOgdbNI9Jg" elementId="net.comes.care.ui.view.patient" contributionURI="bundleclass://net.comes.care.ui/net.comes.care.ui.views.PatientView" label="Patient" iconURI="platform:/plugin/net.comes.care.ui/icons/16/stock_person.png"/>
@@ -11,15 +11,6 @@
       </children>
       <children xsi:type="basic:Part" xmi:id="_-OKboI-iEeGSFOgdbNI9Jg" elementId="net.comes.care.ui.view.presenter" contributionURI="bundleclass://net.comes.care.ui/net.comes.care.ui.views.PresenterView" label="Presenter"/>
     </children>
-    <mainMenu xmi:id="_g6D3OI-cEeGSFOgdbNI9Jg" elementId="menu:org.eclipse.ui.main.menu">
-      <children xsi:type="menu:Menu" xmi:id="_g6D3OY-cEeGSFOgdbNI9Jg" label="File">
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_g6D3O4-cEeGSFOgdbNI9Jg" label="Save" iconURI="platform:/plugin/net.comes.care.ui/icons/save_edit.gif" command="_g6D3MY-cEeGSFOgdbNI9Jg"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_g6D3PI-cEeGSFOgdbNI9Jg" label="Quit" command="_g6D3Ko-cEeGSFOgdbNI9Jg"/>
-      </children>
-      <children xsi:type="menu:Menu" xmi:id="_g6D3PY-cEeGSFOgdbNI9Jg" label="Help">
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_g6D3Po-cEeGSFOgdbNI9Jg" label="About" command="_g6D3NI-cEeGSFOgdbNI9Jg"/>
-      </children>
-    </mainMenu>
     <trimBars xmi:id="_g6D3Q4-cEeGSFOgdbNI9Jg">
       <children xsi:type="menu:ToolBar" xmi:id="_g6D3RI-cEeGSFOgdbNI9Jg" elementId="toolbar:org.eclipse.ui.main.toolbar">
         <children xsi:type="menu:HandledToolItem" xmi:id="_xRYaII-4EeGZhc0mbRpzpg" label="Login" iconURI="platform:/plugin/net.comes.care.ui/icons/16/comes-logo.png" command="_suKGkI-4EeGZhc0mbRpzpg"/>
