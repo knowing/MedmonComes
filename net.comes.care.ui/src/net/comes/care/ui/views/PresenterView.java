@@ -24,6 +24,7 @@ public class PresenterView {
 	protected void createContent(Composite parent) {
 		Composite container = new Composite(parent, SWT.BORDER);
 		container.setLayout(new FillLayout());
+		
 
 		ImageDescriptor imgDescr = Activator.getImageDescriptor("img/sample_data.jpg");
 		sampleImage = imgDescr.createImage();

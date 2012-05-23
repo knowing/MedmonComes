@@ -2,10 +2,7 @@ package net.comes.care.ui.wizards;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.io.Writer;
 import java.net.URI;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -22,6 +19,7 @@ import org.eclipse.swt.widgets.FileDialog;
 
 import weka.core.Instances;
 import weka.core.converters.ArffSaver;
+import de.lmu.ifi.dbs.knowing.core.service.IEvaluateService;
 import de.lmu.ifi.dbs.medmon.sensor.core.IConverter;
 import de.lmu.ifi.dbs.medmon.sensor.core.ISensor;
 import de.lmu.ifi.dbs.medmon.sensor.core.ISensorDirectoryService;
@@ -34,6 +32,7 @@ public class ImportWizard extends Wizard {
 
 	private SensorAndPatientPage page;
 	private final Sycare sycare;
+	private final IEvaluateService evaluate;
 
 	/**
 	 * 
@@ -43,9 +42,10 @@ public class ImportWizard extends Wizard {
 	 * @param sensor
 	 *            - can be null
 	 */
-	public ImportWizard(ISensorDirectoryService directoryService, Sycare sycare, Patient patient, ISensor sensor) {
+	public ImportWizard(ISensorDirectoryService directoryService, Sycare sycare, IEvaluateService evaluate, Patient patient, ISensor sensor) {
 		this.directoryService = directoryService;
 		this.sycare = sycare;
+		this.evaluate = evaluate;
 		this.patient = patient;
 		this.sensor = sensor;
 		setWindowTitle("Datenimport");

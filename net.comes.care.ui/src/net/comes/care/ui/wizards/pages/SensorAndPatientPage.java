@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.comes.care.entity.Patient;
+import net.comes.care.ui.Activator;
 import net.comes.care.ui.preferences.SensorPreferences;
 import net.comes.care.ui.wizards.IValidationPage;
 
@@ -49,6 +50,7 @@ public class SensorAndPatientPage extends WizardPage implements IValidationPage 
 	private Text txtPatient;
 	private ComboViewer sensorComboViewer;
 	private TableViewer dataViewer;
+	private Button btnEvaluation;
 
 	/**
 	 * Create the wizard.
@@ -63,6 +65,7 @@ public class SensorAndPatientPage extends WizardPage implements IValidationPage 
 		this.sensor = sensor;
 		setTitle("Auswahl der Daten");
 		setDescription("Bitte waehlen Sie einen Patienten und einen Sensor aus.");
+		setImageDescriptor(Activator.getImageDescriptor("img/comes-logo-flat.png"));
 	}
 
 	/**
@@ -126,6 +129,12 @@ public class SensorAndPatientPage extends WizardPage implements IValidationPage 
 		grpData.setText("Daten");
 
 		dataViewer = new TableViewer(grpData, SWT.NONE | SWT.FULL_SELECTION);
+		
+		btnEvaluation = new Button(container, SWT.CHECK);
+		btnEvaluation.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		btnEvaluation.setText("Auswertung");
+		
+		
 		dataViewer.setContentProvider(new ArrayContentProvider());
 		dataViewer.setLabelProvider(new DataLabelProvider());
 
@@ -177,6 +186,10 @@ public class SensorAndPatientPage extends WizardPage implements IValidationPage 
 	public ISensor getSelectedSensor() {
 		IStructuredSelection selection = (IStructuredSelection) sensorComboViewer.getSelection();
 		return (ISensor) selection.getFirstElement();
+	}
+	
+	public boolean isEvaluate() {
+		return btnEvaluation.getSelection();
 	}
 
 	private class DataLabelProvider extends LabelProvider implements ITableLabelProvider {

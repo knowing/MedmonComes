@@ -14,6 +14,7 @@ import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 
+import de.lmu.ifi.dbs.knowing.core.service.IEvaluateService;
 import de.lmu.ifi.dbs.medmon.sensor.core.ISensor;
 import de.lmu.ifi.dbs.medmon.sensor.core.ISensorDirectoryService;
 
@@ -21,10 +22,10 @@ public class ImportHandler {
 
 	@Execute
 	public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell, ISensorDirectoryService sensorDirectoryService, Sycare sycare,
-			ESelectionService selectionService) {
+			ESelectionService selectionService, IEvaluateService evaluate) {
 		Patient patient = (Patient) selectionService.getSelection(PatientView.ID);
 		ISensor sensor = (ISensor) selectionService.getSelection(SensorView.ID);
-		new WizardDialog(shell, new ImportWizard(sensorDirectoryService, sycare, patient, sensor)).open();
+		new WizardDialog(shell, new ImportWizard(sensorDirectoryService, sycare,evaluate, patient, sensor)).open();
 	}
 
 }
