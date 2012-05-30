@@ -1,22 +1,17 @@
 package net.comes.care.ui.login;
 
+import javax.inject.Singleton;
+
 import com.google.common.base.Optional;
 
 import net.comes.care.ws.sycare.Session;
 
+@Singleton
 public class SessionStore {
-
-	private static SessionStore store;
 
 	private Optional<Session> session = Optional.absent();
 
-	private SessionStore() {
-	}
-
-	public static SessionStore getInstance() {
-		if (store == null)
-			store = new SessionStore();
-		return store;
+	protected SessionStore() {
 	}
 
 	public Optional<Session> getSession() {

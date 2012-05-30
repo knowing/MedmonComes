@@ -16,16 +16,15 @@ public class ComesLoginHandler {
 
 	@Inject
 	private Sycare sycare;
-	
+
 	@Execute
-	public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell) {
+	public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell, SessionStore store) {
 		UserPasswordDialog dialog = new UserPasswordDialog(shell, sycare);
-		if(dialog.open() == UserPasswordDialog.CANCEL)
+		if (dialog.open() == UserPasswordDialog.CANCEL)
 			return;
-		
+
 		Session session = dialog.getSession();
-		SessionStore store = SessionStore.getInstance();
 		store.setSession(session);
-		
+
 	}
 }
