@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_U_bh4KpbEeGUM9mJNOWIww" elementId="org.eclipse.e4.ide.application" bindingContexts="_U_bh4apbEeGUM9mJNOWIww">
   <children xsi:type="basic:TrimmedWindow" xmi:id="_U_cI_apbEeGUM9mJNOWIww" label="net.comes.care.patient" width="500" height="400">
-    <children xsi:type="basic:Part" xmi:id="_cx_CwKpcEeGUM9mJNOWIww" contributionURI="bundleclass://net.comes.care.patient/net.comes.care.patient.views.SensorView" label="Sensor"/>
-    <children xsi:type="basic:Part" xmi:id="_d3aZwKpcEeGUM9mJNOWIww" contributionURI="bundleclass://net.comes.care.patient/net.comes.care.patient.views.DataView" label="Data"/>
-    <children xsi:type="basic:Part" xmi:id="_eOYIQKpcEeGUM9mJNOWIww" contributionURI="bundleclass://net.comes.care.patient/net.comes.care.patient.views.MessagesView" label="Messages"/>
-    <trimBars xmi:id="_U_cwCqpbEeGUM9mJNOWIww">
-      <children xsi:type="menu:ToolBar" xmi:id="_U_cwC6pbEeGUM9mJNOWIww" elementId="toolbar:org.eclipse.ui.main.toolbar">
-        <children xsi:type="menu:HandledToolItem" xmi:id="_U_cwDKpbEeGUM9mJNOWIww" iconURI="platform:/plugin/net.comes.care.patient/icons/sample.gif" command="_U_cI9KpbEeGUM9mJNOWIww"/>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_U_dXEKpbEeGUM9mJNOWIww" iconURI="platform:/plugin/net.comes.care.patient/icons/save_edit.gif" command="_U_cI96pbEeGUM9mJNOWIww"/>
-      </children>
+    <children xsi:type="basic:PartSashContainer" xmi:id="_HuzPsK2EEeGDq5L5Yjmzhg" horizontal="true">
+      <children xsi:type="basic:Part" xmi:id="_Iur_YK2EEeGDq5L5Yjmzhg" contributionURI="bundleclass://net.comes.care.patient/net.comes.care.patient.views.DataView" label="Data"/>
+      <children xsi:type="basic:Part" xmi:id="_JBzvsK2EEeGDq5L5Yjmzhg" contributionURI="bundleclass://net.comes.care.patient/net.comes.care.patient.views.MessagesView" label="Messages"/>
+    </children>
+    <trimBars xmi:id="_z4ArcK2DEeGDq5L5Yjmzhg">
+      <children xsi:type="menu:ToolControl" xmi:id="_0yunQK2DEeGDq5L5Yjmzhg" elementId="net.comes.care.patient.views.UserControl" contributionURI="bundleclass://net.comes.care.patient/net.comes.care.patient.views.UserToolControl"/>
     </trimBars>
   </children>
   <handlers xmi:id="_U_cI8apbEeGUM9mJNOWIww" contributionURI="bundleclass://net.comes.care.patient/net.comes.care.patient.handlers.QuitHandler" command="_U_cI8KpbEeGUM9mJNOWIww"/>
