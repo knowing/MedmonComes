@@ -3,8 +3,8 @@ package net.comes.care.ui.wizards.pages;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.comes.care.common.preferences.SensorPreferences;
 import net.comes.care.common.resources.JFaceUtil;
-import net.comes.care.ui.preferences.SensorPreferences;
 import net.comes.care.ui.viewer.SensorTableViewer;
 import net.comes.care.ui.wizards.IValidationPage;
 import net.comes.care.ui.wizards.ValidationListener;

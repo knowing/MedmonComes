@@ -1,7 +1,9 @@
 package net.comes.care.ui.viewer;
 
+import net.comes.care.common.preferences.SensorPreferences;
+import net.comes.care.common.resources.ISharedImages;
+import net.comes.care.common.resources.ResourceManager;
 import net.comes.care.ui.Activator;
-import net.comes.care.ui.preferences.SensorPreferences;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellLabelProvider;
@@ -62,7 +64,7 @@ public class SensorTableViewer extends TableViewer {
 		public Image getColumnImage(Object element, int columnIndex) {
 			switch (columnIndex) {
 			case 0:
-				return Activator.getImageDescriptor("icons/24/usb.png").createImage();
+				return ResourceManager.getPluginImage(ISharedImages.PLUGIN_ID, ISharedImages.ICON_USB_24);
 			default:
 				return null;
 			}

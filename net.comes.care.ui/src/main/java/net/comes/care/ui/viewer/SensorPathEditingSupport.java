@@ -1,7 +1,7 @@
 package net.comes.care.ui.viewer;
 
+import net.comes.care.common.preferences.SensorPreferences;
 import net.comes.care.ui.Activator;
-import net.comes.care.ui.preferences.SensorPreferences;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -32,13 +32,13 @@ public class SensorPathEditingSupport extends EditingSupport {
 
 	@Override
 	protected Object getValue(Object element) {
-		return SensorPreferences.getPreferenceNode((ISensor) element).get("path", "");
+		return SensorPreferences.getPreferenceNode((ISensor) element).get(SensorPreferences.SENSOR_PATH, "");
 	}
 
 	@Override
 	protected void setValue(Object element, Object value) {
 		IEclipsePreferences config = SensorPreferences.getPreferenceNode((ISensor) element);
-		config.put("path", value.toString());
+		config.put(SensorPreferences.SENSOR_PATH, value.toString());
 		try {
 			config.flush();
 		} catch (BackingStoreException e) {

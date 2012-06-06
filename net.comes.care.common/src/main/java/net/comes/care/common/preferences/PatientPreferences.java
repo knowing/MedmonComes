@@ -1,4 +1,4 @@
-package net.comes.care.ui.preferences;
+package net.comes.care.common.preferences;
 
 public class PatientPreferences {
 

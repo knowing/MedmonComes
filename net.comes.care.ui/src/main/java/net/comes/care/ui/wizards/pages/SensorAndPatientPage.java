@@ -9,9 +9,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.comes.care.common.preferences.SensorPreferences;
+import net.comes.care.common.ui.DataViewer;
 import net.comes.care.entity.Patient;
 import net.comes.care.ui.Activator;
-import net.comes.care.ui.preferences.SensorPreferences;
 import net.comes.care.ui.wizards.IValidationPage;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -19,16 +20,13 @@ import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -49,7 +47,7 @@ public class SensorAndPatientPage extends WizardPage implements IValidationPage 
 
 	private Text txtPatient;
 	private ComboViewer sensorComboViewer;
-	private TableViewer dataViewer;
+	private DataViewer dataViewer;
 	private Button btnEvaluation;
 
 	/**
@@ -119,7 +117,7 @@ public class SensorAndPatientPage extends WizardPage implements IValidationPage 
 				ISensor sensor = (ISensor) selection.getFirstElement();
 				String directory = SensorPreferences.getSensorPath(sensor);
 				txtInfo.setText(directory);
-				updateDataViewer(sensor, directory);
+				dataViewer.setInput(sensor, directory);
 			}
 		});
 
@@ -128,15 +126,12 @@ public class SensorAndPatientPage extends WizardPage implements IValidationPage 
 		grpData.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 		grpData.setText("Daten");
 
-		dataViewer = new TableViewer(grpData, SWT.NONE | SWT.FULL_SELECTION);
+		dataViewer = new DataViewer(grpData, SWT.NONE | SWT.FULL_SELECTION);
 		
 		btnEvaluation = new Button(container, SWT.CHECK);
 		btnEvaluation.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		btnEvaluation.setText("Auswertung");
 		
-		
-		dataViewer.setContentProvider(new ArrayContentProvider());
-		dataViewer.setLabelProvider(new DataLabelProvider());
 
 		// Initial Selection
 		if (patient != null) {
@@ -144,7 +139,7 @@ public class SensorAndPatientPage extends WizardPage implements IValidationPage 
 		}
 		if (sensor != null) {
 			sensorComboViewer.setSelection(new StructuredSelection(sensor));
-			updateDataViewer(sensor, SensorPreferences.getSensorPath(sensor));
+			dataViewer.setInput(sensor, SensorPreferences.getSensorPath(sensor));
 		}
 
 	}
@@ -153,30 +148,9 @@ public class SensorAndPatientPage extends WizardPage implements IValidationPage 
 	public void checkContents() {
 
 	}
-
-	private void updateDataViewer(ISensor sensor, String directory) {
-		List<URI> uriList = new ArrayList<URI>();
-		try (DirectoryStream<Path> directoyStream = Files.newDirectoryStream(Paths.get(directory))) {
-			String filePrefix = sensor.getFilePrefix();
-			for (Path file : directoyStream) {
-				// Don't use file.endsWith() -> checks the last foldername
-				// of the path not the prefix of the file
-				if (file.toString().endsWith(filePrefix))
-					uriList.add(file.toUri());
-			}
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		dataViewer.setInput(uriList);
-	}
 	
 	public List<URI> getSelectedFiles() {
-		ISelection selection = dataViewer.getSelection();
-		if(selection.isEmpty())
-			return (List<URI>) dataViewer.getInput();
-		IStructuredSelection sel = (IStructuredSelection) selection;
-		return sel.toList();
+		return dataViewer.getSelectedFiles();
 	}
 	
 	public Patient getSelectedPatient() {
@@ -190,25 +164,6 @@ public class SensorAndPatientPage extends WizardPage implements IValidationPage 
 	
 	public boolean isEvaluate() {
 		return btnEvaluation.getSelection();
-	}
-
-	private class DataLabelProvider extends LabelProvider implements ITableLabelProvider {
-
-		@Override
-		public Image getColumnImage(Object element, int columnIndex) {
-			return null;
-		}
-
-		@Override
-		public String getColumnText(Object element, int columnIndex) {
-			URI uri = (URI) element;
-			switch (columnIndex) {
-			case 0:
-				return Paths.get(uri).getFileName().toString();
-			default:
-				return getText(element);
-			}
-		}
 	}
 
 }
