@@ -38,13 +38,18 @@ import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Label;
 import org.osgi.service.prefs.BackingStoreException;
 
+import de.lmu.ifi.dbs.knowing.core.service.IEvaluateService;
 import de.lmu.ifi.dbs.medmon.sensor.core.ISensor;
 import de.lmu.ifi.dbs.medmon.sensor.core.ISensorDirectoryService;
+
 
 public class DataView {
 
 	@Inject
 	private ISensorDirectoryService sensorDirectory;
+	
+	@Inject
+	private IEvaluateService evaluateService;
 
 	private DataViewer dataViewer;
 	private ComboViewer sensorViewer;
@@ -102,8 +107,20 @@ public class DataView {
 		RowData layoutData = new RowData();
 		layoutData.width = 80;
 		upload.setLayoutData(layoutData);
-
 		upload.setText("Upload");
+		upload.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				//DPUs
+				//ARFF Classification Testing
+				
+				// 1. Selected SDR file
+				// 2. Call SDRConverterHandler with parameters
+				// "DPU  := SDR Classification Testing"
+				// "File := <path-to-file>
+				// 3. SDRConverterHandler loads and configures DPU
+			}
+		});
 	}
 
 	private void onSensorSelection(SelectionChangedEvent event) {

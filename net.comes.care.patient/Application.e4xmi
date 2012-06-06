@@ -13,6 +13,7 @@
   <handlers xmi:id="_U_cI9apbEeGUM9mJNOWIww" contributionURI="bundleclass://net.comes.care.patient/net.comes.care.patient.handlers.OpenHandler" command="_U_cI9KpbEeGUM9mJNOWIww"/>
   <handlers xmi:id="_U_cI-KpbEeGUM9mJNOWIww" contributionURI="bundleclass://net.comes.care.patient/net.comes.care.patient.handlers.SaveHandler" command="_U_cI96pbEeGUM9mJNOWIww"/>
   <handlers xmi:id="_U_cI-6pbEeGUM9mJNOWIww" contributionURI="bundleclass://net.comes.care.patient/net.comes.care.patient.handlers.AboutHandler" command="_U_cI-qpbEeGUM9mJNOWIww"/>
+  <handlers xmi:id="_2ushUK_LEeGJEb2WbDEaGg"/>
   <bindingTables xmi:id="_U_cI8qpbEeGUM9mJNOWIww" bindingContext="_U_bh4apbEeGUM9mJNOWIww">
     <bindings xmi:id="_U_cI86pbEeGUM9mJNOWIww" keySequence="Ctrl+Q" command="_U_cI8KpbEeGUM9mJNOWIww"/>
     <bindings xmi:id="_U_cI9qpbEeGUM9mJNOWIww" keySequence="Ctrl+O" command="_U_cI9KpbEeGUM9mJNOWIww"/>
@@ -27,6 +28,11 @@
   <commands xmi:id="_U_cI9KpbEeGUM9mJNOWIww" elementId="net.comes.care.patient.openCommand" commandName="openCommand"/>
   <commands xmi:id="_U_cI96pbEeGUM9mJNOWIww" elementId="net.comes.care.patient.saveCommand" commandName="saveCommand"/>
   <commands xmi:id="_U_cI-qpbEeGUM9mJNOWIww" elementId="net.comes.care.patient.aboutCommand" commandName="aboutCommand"/>
+  <commands xmi:id="_3qNuYK_LEeGJEb2WbDEaGg" elementId="net.comes.care.patient.ConverterCommand" commandName="converterCommand">
+    <parameters xmi:id="_8BLuoK_LEeGJEb2WbDEaGg" elementId="net.comes.care.parameters.uifactory" name="uifactory" optional="false"/>
+    <parameters xmi:id="_-t8P0K_LEeGJEb2WbDEaGg" elementId="net.comes.care.parameters.file" name="file"/>
+    <parameters xmi:id="_TUmx0K_MEeGJEb2WbDEaGg" elementId="net.comes.care.parameters.sensor" name="Sensor ID"/>
+  </commands>
   <addons xmi:id="_U_bh5KpbEeGUM9mJNOWIww" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_U_bh5apbEeGUM9mJNOWIww" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_U_bh5qpbEeGUM9mJNOWIww" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
