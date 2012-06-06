@@ -3,11 +3,11 @@ package net.comes.care.ui.wizards.pages;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.comes.care.common.resources.JFaceUtil;
 import net.comes.care.ui.preferences.SensorPreferences;
 import net.comes.care.ui.viewer.SensorTableViewer;
 import net.comes.care.ui.wizards.IValidationPage;
 import net.comes.care.ui.wizards.ValidationListener;
-import net.commes.care.common.resources.JFaceUtil;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;

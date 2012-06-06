@@ -1,6 +1,6 @@
-package net.commes.care.common.resources;
+package net.comes.care.common.resources;
 
-import net.commes.care.common.internal.Activator;
+import net.comes.care.common.internal.Activator;
 
 public interface ISharedImages {
 	

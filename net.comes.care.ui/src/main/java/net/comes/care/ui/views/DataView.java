@@ -10,9 +10,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.xml.ws.soap.SOAPFaultException;
 
+import net.comes.care.common.login.SessionStore;
 import net.comes.care.entity.Patient;
 import net.comes.care.ui.Activator;
-import net.comes.care.ui.login.SessionStore;
 import net.comes.care.ws.sycare.DeviceManufacturers;
 import net.comes.care.ws.sycare.DeviceType;
 import net.comes.care.ws.sycare.GetDeviceManufacturersRequest;

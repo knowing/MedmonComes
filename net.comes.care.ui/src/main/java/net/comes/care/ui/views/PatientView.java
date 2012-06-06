@@ -8,12 +8,12 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import net.comes.care.common.resources.ISharedImages;
+import net.comes.care.common.resources.ResourceManager;
 import net.comes.care.entity.Patient;
 import net.comes.care.ui.Activator;
 import net.comes.care.ui.preferences.PatientPreferences;
 import net.comes.care.ui.search.PatientContentAssistenProcessor;
-import net.commes.care.common.resources.ISharedImages;
-import net.commes.care.common.resources.ResourceManager;
 
 import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.core.databinding.DataBindingContext;

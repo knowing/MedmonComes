@@ -3,8 +3,8 @@ package net.comes.care.ui.handlers;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import net.comes.care.common.login.SessionStore;
 import net.comes.care.ui.dialogs.UserPasswordDialog;
-import net.comes.care.ui.login.SessionStore;
 import net.comes.care.ws.sycare.Session;
 import net.comes.care.ws.sycare.service.Sycare;
 

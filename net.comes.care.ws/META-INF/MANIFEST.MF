@@ -4,13 +4,13 @@ Bundle-Name: Comes SOAP JAX-WS
 Bundle-SymbolicName: net.comes.care.ws
 Bundle-Version: 0.1.1.qualifier
 Bundle-Activator: net.comes.care.ws.Activator
-Require-Bundle: org.eclipse.core.runtime,
+Require-Bundle: org.eclipse.core.runtime;bundle-version="3.8.0",
  org.apache.cxf.bundle-minimal;bundle-version="2.5.2"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: org.apache.cxf;version="2.5.2",
  org.apache.cxf.jaxws;version="2.5.2",
  org.slf4j;version="[1.6.0,2.0.0)"
-Export-Package: net.comes.care.ws.sycare,
- net.comes.care.ws.sycare.service
+Export-Package: net.comes.care.ws.sycare;version="0.1.1",
+ net.comes.care.ws.sycare.service;version="0.1.1"
 Service-Component: OSGI-INF/sycareService.xml

@@ -1,5 +1,5 @@
  
-package net.comes.care.ui.login;
+package net.comes.care.common.login;
 
 import javax.inject.Inject;
 import javax.annotation.PostConstruct;

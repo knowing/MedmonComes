@@ -3,7 +3,7 @@ package net.comes.care.ui.views;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
-import net.comes.care.ui.login.SessionStore;
+import net.comes.care.common.login.SessionStore;
 import net.comes.care.ui.preferences.SensorPreferences;
 import net.comes.care.ui.viewer.SensorTableViewer;
 import net.comes.care.ws.sycare.DeviceManufacturers;

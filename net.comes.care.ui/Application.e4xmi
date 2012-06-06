@@ -51,5 +51,5 @@
   <addons xmi:id="_g6D3J4-cEeGSFOgdbNI9Jg" elementId="org.eclipse.e4.ui.workbench.commands.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.CommandProcessingAddon"/>
   <addons xmi:id="_g6D3KI-cEeGSFOgdbNI9Jg" elementId="org.eclipse.e4.ui.workbench.contexts.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.ContextProcessingAddon"/>
   <addons xmi:id="_g6D3KY-cEeGSFOgdbNI9Jg" elementId="org.eclipse.e4.ui.workbench.bindings.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.swt/org.eclipse.e4.ui.workbench.swt.util.BindingProcessingAddon"/>
-  <addons xmi:id="_-KqqQKpSEeGUM9mJNOWIww" elementId="net.comes.care.ui.SessionStoreAddon" contributionURI="bundleclass://net.comes.care.ui/net.comes.care.ui.login.SessionStoreAddon"/>
+  <addons xmi:id="_-KqqQKpSEeGUM9mJNOWIww" elementId="net.comes.care.ui.SessionStoreAddon" contributionURI="bundleclass://net.comes.care.common/net.comes.care.common.login.SessionStoreAddon"/>
 </application:Application>

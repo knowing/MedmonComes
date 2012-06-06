@@ -6,9 +6,9 @@ import java.nio.file.Paths;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.comes.care.common.resources.JFaceUtil;
 import net.comes.care.ui.wizards.IValidationPage;
 import net.comes.care.ui.wizards.ValidationListener;
-import net.commes.care.common.resources.JFaceUtil;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellLabelProvider;

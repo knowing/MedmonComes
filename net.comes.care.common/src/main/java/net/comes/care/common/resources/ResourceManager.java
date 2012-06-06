@@ -1,4 +1,4 @@
-package net.commes.care.common.resources;
+package net.comes.care.common.resources;
 
 import java.io.File;
 import java.io.InputStream;
