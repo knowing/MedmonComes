@@ -17,16 +17,33 @@
          </property>
          <property
                name="applicationCSS"
-               value="platform:/plugin/net.comes.care.ui/css/green.css">
+               value="platform:/plugin/net.comes.care.common/css/green.css">
+         </property>
+         <property
+               name="aboutImage"
+               value="img/comes-logo-round.png">
+         </property>
+         <property
+               name="windowImages"
+               value="icons/16/comes-logo.png,icons/32/comes-logo.png,icons/48/comes-logo.png">
+         </property>
+         <property
+               name="startupForegroundColor"
+               value="000000">
+         </property>
+         <property
+               name="startupMessageRect"
+               value="7,252,445,20">
+         </property>
+         <property
+               name="startupProgressRect"
+               value="5,275,445,15">
+         </property>
+         <property
+               name="preferenceCustomization"
+               value="plugin_customization.ini">
          </property>
       </product>
-   </extension>
-   <extension
-         point="org.eclipse.ui.splashHandlers">
-      <splashHandler
-            class="net.comes.care.ui.splashHandlers.InteractiveSplashHandler"
-            id="net.comes.care.ui.splashHandlers.interactive">
-      </splashHandler>
    </extension>
 
 </plugin>

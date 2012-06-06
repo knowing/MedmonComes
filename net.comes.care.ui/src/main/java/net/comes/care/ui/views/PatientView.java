@@ -12,6 +12,8 @@ import net.comes.care.entity.Patient;
 import net.comes.care.ui.Activator;
 import net.comes.care.ui.preferences.PatientPreferences;
 import net.comes.care.ui.search.PatientContentAssistenProcessor;
+import net.commes.care.common.resources.ISharedImages;
+import net.commes.care.common.resources.ResourceManager;
 
 import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.core.databinding.DataBindingContext;
@@ -25,14 +27,12 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.e4.core.commands.ECommandService;
 import org.eclipse.e4.core.commands.EHandlerService;
 import org.eclipse.e4.core.di.extensions.Preference;
-import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.gemini.ext.di.GeminiPersistenceContext;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.TextViewer;
@@ -125,8 +125,8 @@ public class PatientView {
 		gd_imgPatient.widthHint = 120;
 		imageLabel.setLayoutData(gd_imgPatient);
 		imageLabel.setText("<image>");
-		dummyPortrait = Activator.getImageDescriptor("icons/256/stock_person.png").createImage();
-
+		
+		dummyPortrait = ResourceManager.getPluginImage(ISharedImages.PLUGIN_ID, ISharedImages.ICON_PERSON_STOCK_256);
 		Label lblFirstName = new Label(container, SWT.NONE);
 		lblFirstName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblFirstName.setText("Vorname");
@@ -152,7 +152,7 @@ public class PatientView {
 		cButtons.setLayout(new RowLayout());
 
 		btnImport = new Button(cButtons, SWT.PUSH);
-		btnImport.setImage(Activator.getImageDescriptor("img/import.png").createImage());
+		btnImport.setImage(ResourceManager.getPluginImage(ISharedImages.PLUGIN_ID, ISharedImages.IMG_IMPORT));
 		btnImport.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -163,7 +163,7 @@ public class PatientView {
 		btnImport.setEnabled(false);
 
 		Button btnComes = new Button(cButtons, SWT.PUSH);
-		btnComes.setImage(Activator.getImageDescriptor("img/comes-logo-flat.png").createImage());
+		btnComes.setImage(ResourceManager.getPluginImage(ISharedImages.PLUGIN_ID, ISharedImages.IMG_COMES_LOGO_FLAT));
 		btnComes.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

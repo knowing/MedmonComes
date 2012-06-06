@@ -1,4 +1,4 @@
-package net.comes.care.ui.util;
+package net.commes.care.common.resources;
 
 import java.util.Collection;
 

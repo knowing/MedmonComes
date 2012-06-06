@@ -24,12 +24,9 @@
    <launcher>
       <solaris/>
       <win useIco="false">
-         <bmp
-            winSmallHigh="/net.comes.care.ui/icons/16/comes-logo.bmp"
-            winSmallLow="/net.comes.care.ui/icons/16/comes-logo.bmp"/>
+         <bmp/>
       </win>
    </launcher>
-
 
    <vm>
    </vm>

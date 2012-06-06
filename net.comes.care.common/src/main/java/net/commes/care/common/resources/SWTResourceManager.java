@@ -1,4 +1,4 @@
-package net.comes.care.ui.util;
+package net.commes.care.common.resources;
 
 import java.io.FileInputStream;
 import java.io.IOException;

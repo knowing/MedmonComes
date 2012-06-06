@@ -17,7 +17,7 @@
          </property>
          <property
                name="applicationCSS"
-               value="platform:/plugin/net.comes.care.patient/css/green.css">
+               value="platform:/plugin/net.comes.care.common/css/green.css">
          </property>
       </product>
    </extension>
