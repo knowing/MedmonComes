@@ -1,13 +1,9 @@
 package net.comes.care.patient.views;
 
 import java.io.IOException;
-import java.net.URI;
-import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Properties;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -15,12 +11,12 @@ import javax.inject.Inject;
 
 import net.comes.care.common.preferences.SensorPreferences;
 import net.comes.care.common.ui.DataViewer;
+import net.comes.care.patient.evaluation.EvaluationDialog;
 
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -38,6 +34,9 @@ import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Label;
 import org.osgi.service.prefs.BackingStoreException;
 
+import de.lmu.ifi.dbs.knowing.core.exceptions.KnowingException;
+import de.lmu.ifi.dbs.knowing.core.exceptions.ValidationException;
+import de.lmu.ifi.dbs.knowing.core.service.IActorSystemManager;
 import de.lmu.ifi.dbs.knowing.core.service.IEvaluateService;
 import de.lmu.ifi.dbs.medmon.sensor.core.ISensor;
 import de.lmu.ifi.dbs.medmon.sensor.core.ISensorDirectoryService;
@@ -50,6 +49,9 @@ public class DataView {
 	
 	@Inject
 	private IEvaluateService evaluateService;
+	
+	@Inject
+	private IActorSystemManager asm;
 
 	private DataViewer dataViewer;
 	private ComboViewer sensorViewer;
@@ -111,6 +113,23 @@ public class DataView {
 		upload.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				EvaluationDialog dlg = new EvaluationDialog(dataViewer.getControl().getShell(), asm);
+				dlg.open();
+				try {
+					Path execPath = Files.createTempDirectory("comes");
+					Properties parameters = new Properties();
+					evaluateService.evaluate(null, execPath.toUri(), dlg.getUiFactory(), dlg.getSystem(), parameters, null, null);
+					
+					//clean up
+				} catch (IOException ioe) {
+					ioe.printStackTrace();
+				} catch (ValidationException ex) {
+					ex.printStackTrace();
+				} catch (KnowingException ex) {
+					ex.printStackTrace();
+				}
+				
+				
 				//DPUs
 				//ARFF Classification Testing
 				
