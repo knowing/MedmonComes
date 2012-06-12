@@ -13,7 +13,6 @@
   <handlers xmi:id="_U_cI9apbEeGUM9mJNOWIww" contributionURI="bundleclass://net.comes.care.patient/net.comes.care.patient.handlers.OpenHandler" command="_U_cI9KpbEeGUM9mJNOWIww"/>
   <handlers xmi:id="_U_cI-KpbEeGUM9mJNOWIww" contributionURI="bundleclass://net.comes.care.patient/net.comes.care.patient.handlers.SaveHandler" command="_U_cI96pbEeGUM9mJNOWIww"/>
   <handlers xmi:id="_U_cI-6pbEeGUM9mJNOWIww" contributionURI="bundleclass://net.comes.care.patient/net.comes.care.patient.handlers.AboutHandler" command="_U_cI-qpbEeGUM9mJNOWIww"/>
-  <handlers xmi:id="_2ushUK_LEeGJEb2WbDEaGg"/>
   <bindingTables xmi:id="_U_cI8qpbEeGUM9mJNOWIww" bindingContext="_U_bh4apbEeGUM9mJNOWIww">
     <bindings xmi:id="_U_cI86pbEeGUM9mJNOWIww" keySequence="Ctrl+Q" command="_U_cI8KpbEeGUM9mJNOWIww"/>
     <bindings xmi:id="_U_cI9qpbEeGUM9mJNOWIww" keySequence="Ctrl+O" command="_U_cI9KpbEeGUM9mJNOWIww"/>
