@@ -1,12 +1,19 @@
 package net.comes.care.common.evaluation;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Shell;
 
+import akka.actor.ActorPath;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.TypedActor;
@@ -15,8 +22,15 @@ import akka.japi.Creator;
 
 import com.typesafe.config.ConfigFactory;
 
+import de.lmu.ifi.dbs.knowing.core.events.Created;
+import de.lmu.ifi.dbs.knowing.core.events.ExceptionEvent;
+import de.lmu.ifi.dbs.knowing.core.events.Finished;
+import de.lmu.ifi.dbs.knowing.core.events.Progress;
+import de.lmu.ifi.dbs.knowing.core.events.Ready;
+import de.lmu.ifi.dbs.knowing.core.events.Running;
 import de.lmu.ifi.dbs.knowing.core.events.Shutdown;
 import de.lmu.ifi.dbs.knowing.core.events.Status;
+import de.lmu.ifi.dbs.knowing.core.events.UpdateUI;
 import de.lmu.ifi.dbs.knowing.core.factory.UIFactory;
 import de.lmu.ifi.dbs.knowing.core.service.IActorSystemManager;
 import de.lmu.ifi.dbs.knowing.core.swt.factory.TabUIFactory;
@@ -33,6 +47,9 @@ public class EvaluationDialog extends Dialog {
 
 	private UIFactory<Composite> uiFactory;
 	private ActorSystem system;
+	private ProgressBar progressBar;
+
+	private final Map<ActorPath, Double> progressMap;
 
 	/**
 	 * Create the dialog.
@@ -42,6 +59,7 @@ public class EvaluationDialog extends Dialog {
 	public EvaluationDialog(Shell parentShell, IActorSystemManager asm) {
 		super(parentShell);
 		this.asm = asm;
+		progressMap = new HashMap<>();
 		setBlockOnOpen(false);
 	}
 
@@ -53,21 +71,38 @@ public class EvaluationDialog extends Dialog {
 	@Override
 	protected Control createDialogArea(final Composite parent) {
 		Composite container = (Composite) super.createDialogArea(parent);
+		container.setLayout(new GridLayout(1, false));
+		progressBar = new ProgressBar(container, SWT.NONE);
+		progressBar.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 
 		system = asm.create("swt-default", ConfigFactory.defaultReference(ActorSystem.class.getClassLoader()));
-//		uiFactory = UIFactories.newTabUIFactoryInstance(system, parent, UIFACTORY_ID);
+		// uiFactory = UIFactories.newTabUIFactoryInstance(system, parent,
+		// UIFACTORY_ID);
 		uiFactory = TypedActor.get(system).typedActorOf(new TypedProps<TabUIFactory>(UIFactory.class, new Creator<TabUIFactory>() {
 			public TabUIFactory create() {
 				return new TabUIFactory(parent, UIFACTORY_ID, SWT.BOTTOM) {
 					@Override
 					public void update(ActorRef actor, Status status) {
-						if(status instanceof Shutdown)
-							onFinish();
-						super.update(actor, status);
+						if (status instanceof Shutdown)
+							parent.getDisplay().asyncExec(new Runnable() {
+								@Override
+								public void run() {
+									onFinish();
+								}
+							});
+						else if (status instanceof UpdateUI)
+							parent.getDisplay().asyncExec(new Runnable() {
+								@Override
+								public void run() {
+									updateUI();
+								}
+							});
+						else
+							updateProgress(actor, status);
 					}
 				};
 			}
-		}), "name");
+		}), "EvaluationDialog-UIFactory");
 		return container;
 	}
 
@@ -77,9 +112,39 @@ public class EvaluationDialog extends Dialog {
 		uiFactory = null;
 		return super.close();
 	}
-	
+
+	private void updateProgress(final ActorRef actor, final Status status) {
+		progressBar.getDisplay().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				if (status instanceof Created) 
+					progressMap.put(actor.path(), 0.0);
+				else if (status instanceof Running)
+					;
+				else if (status instanceof Finished || status instanceof Ready)
+					progressMap.put(actor.path(), 1.0);
+				else if (status instanceof Progress) {
+					Progress p = (Progress) status;
+					double worked = p.worked();
+					double work = p.work();
+					progressMap.put(actor.path(), (worked / work));
+				} else if (status instanceof ExceptionEvent) {
+					ExceptionEvent ex = (ExceptionEvent) status;
+					ex.throwable().printStackTrace();
+				}
+				
+				progressBar.setMaximum(progressMap.size() * 100);
+				int selection = 0;
+				for (Double d : progressMap.values()) {
+					selection += d * 100.00;
+				}
+				progressBar.setSelection(selection);
+			}
+		});
+	}
+
 	private void onFinish() {
-		System.err.println("FINISH IT!");
+		close();
 	}
 
 	/**
