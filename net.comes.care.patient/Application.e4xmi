@@ -3,7 +3,10 @@
   <children xsi:type="basic:TrimmedWindow" xmi:id="_U_cI_apbEeGUM9mJNOWIww" label="net.comes.care.patient" width="500" height="400">
     <children xsi:type="basic:PartSashContainer" xmi:id="_HuzPsK2EEeGDq5L5Yjmzhg" horizontal="true">
       <children xsi:type="basic:Part" xmi:id="_Iur_YK2EEeGDq5L5Yjmzhg" contributionURI="bundleclass://net.comes.care.patient/net.comes.care.patient.views.DataView" label="Data"/>
-      <children xsi:type="basic:Part" xmi:id="_JBzvsK2EEeGDq5L5Yjmzhg" contributionURI="bundleclass://net.comes.care.patient/net.comes.care.patient.views.MessagesView" label="Messages"/>
+      <children xsi:type="basic:PartSashContainer" xmi:id="_Ah4WkLVGEeG0iqVhiBjZ4Q" selectedElement="_JBzvsK2EEeGDq5L5Yjmzhg">
+        <children xsi:type="basic:Part" xmi:id="_JBzvsK2EEeGDq5L5Yjmzhg" contributionURI="bundleclass://net.comes.care.patient/net.comes.care.patient.views.MessagesView" label="Messages"/>
+        <children xsi:type="basic:Part" xmi:id="_Bhtb4LVGEeG0iqVhiBjZ4Q" contributionURI="bundleclass://net.comes.care.patient/net.comes.care.patient.views.MessageContentView" label="Content"/>
+      </children>
     </children>
     <trimBars xmi:id="_z4ArcK2DEeGDq5L5Yjmzhg">
       <children xsi:type="menu:ToolControl" xmi:id="_0yunQK2DEeGDq5L5Yjmzhg" elementId="net.comes.care.patient.views.UserControl" contributionURI="bundleclass://net.comes.care.patient/net.comes.care.patient.views.UserToolControl"/>
@@ -17,7 +20,6 @@
     <bindings xmi:id="_U_cI86pbEeGUM9mJNOWIww" keySequence="Ctrl+Q" command="_U_cI8KpbEeGUM9mJNOWIww"/>
     <bindings xmi:id="_U_cI9qpbEeGUM9mJNOWIww" keySequence="Ctrl+O" command="_U_cI9KpbEeGUM9mJNOWIww"/>
     <bindings xmi:id="_U_cI-apbEeGUM9mJNOWIww" keySequence="Ctrl+S" command="_U_cI96pbEeGUM9mJNOWIww"/>
-    <bindings xmi:id="_U_cI_KpbEeGUM9mJNOWIww" keySequence="Ctrl+A" command="_U_cI-qpbEeGUM9mJNOWIww"/>
   </bindingTables>
   <rootContext xmi:id="_U_bh4apbEeGUM9mJNOWIww" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="In Dialog and Windows">
     <children xmi:id="_U_bh4qpbEeGUM9mJNOWIww" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
@@ -37,6 +39,6 @@
   <addons xmi:id="_U_bh5qpbEeGUM9mJNOWIww" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
   <addons xmi:id="_U_bh56pbEeGUM9mJNOWIww" elementId="org.eclipse.e4.ui.workbench.commands.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.CommandProcessingAddon"/>
   <addons xmi:id="_U_bh6KpbEeGUM9mJNOWIww" elementId="org.eclipse.e4.ui.workbench.contexts.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.ContextProcessingAddon"/>
-  <addons xmi:id="_U_bh6apbEeGUM9mJNOWIww" elementId="org.eclipse.e4.ui.workbench.bindings.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.swt/org.eclipse.e4.ui.workbench.swt.util.BindingProcessingAddon"/>
+  <addons xmi:id="_U_bh6apbEeGUM9mJNOWIww" elementId="org.eclipse.e4.ui.workbench.bindings.model" contributionURI="bundMyeclass://org.eclipse.e4.ui.workbench.swt/org.eclipse.e4.ui.workbench.swt.util.BindingProcessingAddon"/>
   <addons xmi:id="_3Bre0K-3EeGasJseaF8YMw" elementId="net.comes.care.ui.SessionStoreAddon" contributionURI="bundleclass://net.comes.care.common/net.comes.care.common.login.SessionStoreAddon"/>
 </application:Application>
