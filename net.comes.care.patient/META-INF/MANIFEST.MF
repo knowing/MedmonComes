@@ -31,12 +31,15 @@ Require-Bundle: javax.inject;bundle-version="1.0.0",
  de.lmu.ifi.dbs.medmon.sensor.core;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: akka.actor;version="[2.0.0,3.0.0)",
+ akka.japi;version="[2.1.0,3.0.0)",
  com.typesafe.config;version="[0.4.0,0.5.0)",
+ de.lmu.ifi.dbs.knowing.core.events,
  de.lmu.ifi.dbs.knowing.core.exceptions,
  de.lmu.ifi.dbs.knowing.core.factory,
  de.lmu.ifi.dbs.knowing.core.model,
  de.lmu.ifi.dbs.knowing.core.service,
  de.lmu.ifi.dbs.knowing.core.swt.factory,
  org.osgi.framework;version="1.3.0",
+ scala;version="[2.9.1,2.10.0)",
  scala.collection.mutable;version="[2.9.1,2.10.0)"
 Bundle-ActivationPolicy: lazy

@@ -4,10 +4,27 @@ Bundle-Name: Comes Care Common
 Bundle-SymbolicName: net.comes.care.common;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Export-Package: net.comes.care.common.login;version="1.0.0",
- net.comes.care.common.preferences;version="1.0.0",
- net.comes.care.common.resources;version="1.0.0",
- net.comes.care.common.ui;version="1.0.0"
+Export-Package: net.comes.care.common.evaluation;version="1.0.0";
+  uses:="de.lmu.ifi.dbs.knowing.core.factory,
+   akka.actor,
+   de.lmu.ifi.dbs.knowing.core.service,
+   org.eclipse.swt.widgets,
+   org.eclipse.jface.dialogs",
+ net.comes.care.common.handlers;version="1.0.0";uses:="org.eclipse.swt.widgets",
+ net.comes.care.common.login;version="1.0.0";
+  uses:="org.eclipse.e4.core.contexts,
+   net.comes.care.ws.sycare.service,
+   com.google.common.base,
+   org.eclipse.swt.widgets,
+   net.comes.care.ws.sycare,
+   org.eclipse.jface.dialogs",
+ net.comes.care.common.preferences;version="1.0.0";uses:="de.lmu.ifi.dbs.medmon.sensor.core,org.eclipse.core.runtime.preferences",
+ net.comes.care.common.resources;version="1.0.0";uses:="org.eclipse.jface.resource,org.eclipse.jface.viewers,org.eclipse.swt.graphics",
+ net.comes.care.common.ui;version="1.0.0";
+  uses:="de.lmu.ifi.dbs.medmon.sensor.core,
+   org.eclipse.swt.graphics,
+   org.eclipse.jface.viewers,
+   org.eclipse.swt.widgets"
 Require-Bundle: org.eclipse.jface;bundle-version="3.8.0",
  org.eclipse.core.runtime;bundle-version="3.8.0",
  org.eclipse.e4.core.contexts;bundle-version="1.0.0",
@@ -17,4 +34,14 @@ Require-Bundle: org.eclipse.jface;bundle-version="3.8.0",
  de.lmu.ifi.dbs.medmon.sensor.core;bundle-version="[1.0.0,2.0.0)",
  de.lmu.ifi.dbs.knowing.core;bundle-version="[0.1.4,1.0.0)",
  org.eclipse.e4.ui.services;bundle-version="0.10.0"
-Import-Package: javax.inject;version="1.0.0"
+Import-Package: akka;version="[2.1.0,3.0.0)",
+ akka.actor;version="[2.1.0,3.0.0)",
+ akka.japi;version="[2.1.0,3.0.0)",
+ com.typesafe.config;version="[0.4.1,0.5.0)",
+ de.lmu.ifi.dbs.knowing.core.swt,
+ de.lmu.ifi.dbs.knowing.core.swt.factory,
+ javax.inject;version="1.0.0",
+ org.slf4j;version="[1.6.0,1.7.0)",
+ scala;version="[2.9.1,2.10.0)",
+ scala.collection;version="[2.9.1,2.10.0)",
+ scala.collection.mutable;version="[2.9.1,2.10.0)"

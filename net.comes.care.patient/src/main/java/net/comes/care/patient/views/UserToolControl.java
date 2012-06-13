@@ -33,7 +33,6 @@ public class UserToolControl {
 		parent.setLayout(new GridLayout(4, false));
 		
 		final Label lblStatus = new Label(parent, SWT.NONE);
-		lblStatus.setText("Nicht eingeloggt");
 		lblStatus.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		
 		txtUsername = new Text(parent, SWT.BORDER);
@@ -59,6 +58,7 @@ public class UserToolControl {
 					login.setText("<a>login</a>");
 					txtUsername.setVisible(true);
 					txtPassword.setVisible(true);
+					lblStatus.setText("");
 					parent.layout();
 					return;
 				}
@@ -79,7 +79,6 @@ public class UserToolControl {
 					txtPassword.setText("");
 					parent.layout();
 				} catch (SOAPFaultException ex) {
-					ex.printStackTrace();
 					lblStatus.setText("Falscher Benutzername oder Passwort");
 				}
 

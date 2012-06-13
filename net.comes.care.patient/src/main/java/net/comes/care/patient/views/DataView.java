@@ -1,20 +1,26 @@
 package net.comes.care.patient.views;
 
-import java.io.IOException;
-import java.nio.file.Files;
+import java.net.URI;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.Properties;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 
+import net.comes.care.common.handlers.SDRConverterHandler;
 import net.comes.care.common.preferences.SensorPreferences;
 import net.comes.care.common.ui.DataViewer;
-import net.comes.care.patient.evaluation.EvaluationDialog;
 
+import org.eclipse.core.commands.Command;
+import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.e4.core.commands.ECommandService;
+import org.eclipse.e4.core.commands.EHandlerService;
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -34,24 +40,31 @@ import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Label;
 import org.osgi.service.prefs.BackingStoreException;
 
-import de.lmu.ifi.dbs.knowing.core.exceptions.KnowingException;
-import de.lmu.ifi.dbs.knowing.core.exceptions.ValidationException;
 import de.lmu.ifi.dbs.knowing.core.service.IActorSystemManager;
+import de.lmu.ifi.dbs.knowing.core.service.IDPUDirectory;
 import de.lmu.ifi.dbs.knowing.core.service.IEvaluateService;
 import de.lmu.ifi.dbs.medmon.sensor.core.ISensor;
 import de.lmu.ifi.dbs.medmon.sensor.core.ISensorDirectoryService;
-
 
 public class DataView {
 
 	@Inject
 	private ISensorDirectoryService sensorDirectory;
-	
+
 	@Inject
 	private IEvaluateService evaluateService;
-	
+
 	@Inject
 	private IActorSystemManager asm;
+
+	@Inject
+	private IDPUDirectory dpuDirectory;
+
+	@Inject
+	private ECommandService commandService;
+
+	@Inject
+	private EHandlerService handlerService;
 
 	private DataViewer dataViewer;
 	private ComboViewer sensorViewer;
@@ -113,31 +126,7 @@ public class DataView {
 		upload.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				EvaluationDialog dlg = new EvaluationDialog(dataViewer.getControl().getShell(), asm);
-				dlg.open();
-				try {
-					Path execPath = Files.createTempDirectory("comes");
-					Properties parameters = new Properties();
-					evaluateService.evaluate(null, execPath.toUri(), dlg.getUiFactory(), dlg.getSystem(), parameters, null, null);
-					
-					//clean up
-				} catch (IOException ioe) {
-					ioe.printStackTrace();
-				} catch (ValidationException ex) {
-					ex.printStackTrace();
-				} catch (KnowingException ex) {
-					ex.printStackTrace();
-				}
-				
-				
-				//DPUs
-				//ARFF Classification Testing
-				
-				// 1. Selected SDR file
-				// 2. Call SDRConverterHandler with parameters
-				// "DPU  := SDR Classification Testing"
-				// "File := <path-to-file>
-				// 3. SDRConverterHandler loads and configures DPU
+				onUpload();
 			}
 		});
 	}
@@ -179,6 +168,29 @@ public class DataView {
 			e.printStackTrace();
 		}
 		return directory;
+	}
+
+	private void onUpload() {
+		List<URI> files = dataViewer.getSelectedFiles();
+		if (files.isEmpty()) {
+			MessageDialog.openInformation(dataViewer.getControl().getShell(), "Daten ausw\u00e4hlen",
+					"Bitte w\u00e4hlen Sie einen Datensatz zum hochladen aus.");
+			return;
+		}
+		Command command = commandService.getCommand("net.comes.care.patient.ConverterCommand");
+
+		Path file = Paths.get(files.get(0));
+		Properties parameter = new Properties();
+		parameter.setProperty("net.comes.care.parameters.file", file.toString());
+		parameter.setProperty("net.comes.care.parameters.uifactory", "none");
+		ParameterizedCommand cmd = commandService.createCommand("net.comes.care.patient.ConverterCommand", parameter);
+
+		if (!command.isHandled()) {
+			// Activate Handler, assume AboutHandler() class exists already
+			handlerService.activateHandler("net.comes.care.patient.ConverterCommand", new SDRConverterHandler());
+		}
+		handlerService.executeHandler(cmd);
+
 	}
 
 	@PreDestroy
