@@ -5,6 +5,8 @@ import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 
 import net.comes.care.common.login.SessionStore;
+import net.comes.care.common.resources.ISharedImages;
+import net.comes.care.common.resources.ResourceManager;
 import net.comes.care.common.ui.MessageViewer;
 import net.comes.care.ws.sycare.service.Sycare;
 
@@ -43,10 +45,10 @@ public class MessagesView {
 	 */
 	@PostConstruct
 	public void createControls(Composite parent) {
-		parent.setLayout(new GridLayout(1, false));
+		parent.setLayout(new GridLayout(2, false));
 
 		txtSearch = new Text(parent, SWT.BORDER);
-		txtSearch.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		txtSearch.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		messageViewer = new MessageViewer(parent, SWT.BORDER | SWT.FULL_SELECTION);
 		messageViewer.getControl().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		messageViewer.addSelectionChangedListener(new ISelectionChangedListener() {
@@ -61,12 +63,13 @@ public class MessagesView {
 		});
 
 		Composite cButtonBar = new Composite(parent, SWT.NONE);
-		cButtonBar.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, true, false, 1, 1));
-		cButtonBar.setLayout(new RowLayout(SWT.HORIZONTAL));
+		cButtonBar.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, true, 1, 1));
+		cButtonBar.setLayout(new RowLayout(SWT.VERTICAL));
 
 		Button btnRefresh = new Button(cButtonBar, SWT.NONE);
-		btnRefresh.setLayoutData(new RowData(85, SWT.DEFAULT));
+		btnRefresh.setLayoutData(new RowData(125, SWT.DEFAULT));
 		btnRefresh.setText("Aktualisieren");
+		btnRefresh.setImage(ResourceManager.getPluginImage(ISharedImages.PLUGIN_ID, ISharedImages.ICON_REFRESH_16));
 		btnRefresh.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -74,9 +77,9 @@ public class MessagesView {
 			}
 		});
 
-		Button btnSend = new Button(cButtonBar, SWT.CENTER);
-		btnSend.setLayoutData(new RowData(85, SWT.DEFAULT));
-		btnSend.setText("Senden");
+		Button btnRead = new Button(cButtonBar, SWT.CENTER);
+		btnRead.setLayoutData(new RowData(125, SWT.DEFAULT));
+		btnRead.setText("Gelesen");
 	}
 
 	private void onRefresh() {

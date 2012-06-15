@@ -18,10 +18,12 @@ public interface ISharedImages {
 	public static final String ICON_DOCUMENT_OPEN_16 = "icons/16/document-open.png";
 	public static final String ICON_DOCUMENT_OPEN_24 = "icons/24/document-open.png";
 	
-	
 	public static final String ICON_USB_16 = "icons/16/usb.png";
 	public static final String ICON_USB_24 = "icons/24/usb.png";
 	public static final String ICON_USB_256 = "icons/256/usb.png";
+	
+	public static final String ICON_REFRESH_16 = "icons/16/refresh.png";
+	public static final String ICON_REFRESH_24 = "icons/24/refresh.png";
 	
 	public static final String ICON_PERSON_STOCK_16 = "icons/16/stock_person.png";
 	public static final String ICON_PERSON_STOCK_256 = "icons/256/stock_person.png";
