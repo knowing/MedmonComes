@@ -45,11 +45,12 @@ public class MessagesView {
 	 */
 	@PostConstruct
 	public void createControls(Composite parent) {
-		parent.setLayout(new GridLayout(2, false));
+		Composite container = new Composite(parent, SWT.NONE);
+		container.setLayout(new GridLayout(2, false));
 
-		txtSearch = new Text(parent, SWT.BORDER);
+		txtSearch = new Text(container, SWT.BORDER);
 		txtSearch.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-		messageViewer = new MessageViewer(parent, SWT.BORDER | SWT.FULL_SELECTION);
+		messageViewer = new MessageViewer(container, SWT.BORDER | SWT.FULL_SELECTION);
 		messageViewer.getControl().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		messageViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
@@ -62,7 +63,7 @@ public class MessagesView {
 			}
 		});
 
-		Composite cButtonBar = new Composite(parent, SWT.NONE);
+		Composite cButtonBar = new Composite(container, SWT.NONE);
 		cButtonBar.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, true, 1, 1));
 		cButtonBar.setLayout(new RowLayout(SWT.VERTICAL));
 
