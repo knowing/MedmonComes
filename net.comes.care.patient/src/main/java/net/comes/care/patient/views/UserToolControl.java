@@ -12,6 +12,8 @@ import net.comes.care.ws.sycare.Status;
 import net.comes.care.ws.sycare.StatusScope;
 import net.comes.care.ws.sycare.service.Sycare;
 
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.e4.core.di.extensions.Preference;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -22,6 +24,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Text;
+import org.osgi.service.prefs.BackingStoreException;
 
 public class UserToolControl {
 
@@ -36,7 +39,8 @@ public class UserToolControl {
 	private Link login;
 
 	@PostConstruct
-	public void createContent(final Composite parent, final SessionStore store) {
+	public void createContent(final Composite parent, final SessionStore store,
+			@Preference(nodePath = "net.comes.care.patient") final IEclipsePreferences prefs) {
 		parent.setLayout(new GridLayout(4, false));
 
 		final Label lblStatus = new Label(parent, SWT.NONE);
@@ -47,12 +51,15 @@ public class UserToolControl {
 		layoutData.widthHint = 170;
 		txtUsername.setLayoutData(layoutData);
 		txtUsername.setToolTipText("Benutzername");
+		txtUsername.setText(prefs.get("lastUser", ""));
 
 		txtPassword = new Text(parent, SWT.BORDER | SWT.PASSWORD);
 		layoutData = new GridData(SWT.RIGHT, SWT.CENTER, false, false);
 		layoutData.widthHint = 170;
 		txtPassword.setLayoutData(layoutData);
 		txtPassword.setToolTipText("Passwort");
+		if(!txtUsername.getText().isEmpty())
+			txtPassword.setFocus();
 
 		login = new Link(parent, SWT.NONE);
 		login.setText("<a>login</a>");
@@ -64,6 +71,7 @@ public class UserToolControl {
 					store.setSession(null);
 					login.setText("<a>login</a>");
 					txtUsername.setVisible(true);
+					txtUsername.setText(prefs.get("lastUser", ""));
 					txtPassword.setVisible(true);
 					lblStatus.setText("");
 					parent.layout();
@@ -76,6 +84,8 @@ public class UserToolControl {
 				credentials.setPassword(txtPassword.getText());
 
 				try {
+					prefs.put("lastUser", txtUsername.getText());
+					prefs.flush();
 					Session session = sycare.authenticate(credentials);
 
 					// Success
@@ -86,13 +96,8 @@ public class UserToolControl {
 					selectionService.setSelection(status);
 
 					StringBuilder sb = new StringBuilder();
-					sb.append(txtUsername.getText())
-							.append(" | ")
-							.append("Ungelesene Nachrichten ")
-							.append(status.getAvailableMessages())
-							.append(" | ")
-							.append("Ungelesene Auswertungen ")
-							.append(status.getAvailableSurveys()).toString();
+					sb.append(txtUsername.getText()).append(" | ").append("Ungelesene Nachrichten ").append(status.getAvailableMessages())
+							.append(" | ").append("Ungelesene Auswertungen ").append(status.getAvailableSurveys()).toString();
 
 					lblStatus.setText(sb.toString());
 					login.setText("<a>ausloggen</a>");
@@ -105,6 +110,8 @@ public class UserToolControl {
 					parent.layout();
 				} catch (SOAPFaultException ex) {
 					lblStatus.setText("Falscher Benutzername oder Passwort");
+				} catch (BackingStoreException ex) {
+					ex.printStackTrace();
 				}
 
 			}
