@@ -29,7 +29,7 @@ public class MessageContentView {
 	public void setSelection(@Optional @Named(IServiceConstants.ACTIVE_SELECTION) AMessage msg) {
 		if (msg == null)
 			return;
-		System.err.println("Selection: " + msg.getMessageTitle());
+		messageViewer.setText(msg.getMessageData());
 	}
 
 }
