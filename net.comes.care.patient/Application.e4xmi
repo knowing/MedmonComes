@@ -30,8 +30,9 @@
   <commands xmi:id="_U_cI96pbEeGUM9mJNOWIww" elementId="net.comes.care.patient.saveCommand" commandName="saveCommand"/>
   <commands xmi:id="_U_cI-qpbEeGUM9mJNOWIww" elementId="net.comes.care.patient.aboutCommand" commandName="aboutCommand"/>
   <commands xmi:id="_3qNuYK_LEeGJEb2WbDEaGg" elementId="net.comes.care.patient.ConverterCommand" commandName="converterCommand">
-    <parameters xmi:id="_8BLuoK_LEeGJEb2WbDEaGg" elementId="net.comes.care.parameters.uifactory" name="uifactory" optional="false"/>
-    <parameters xmi:id="_-t8P0K_LEeGJEb2WbDEaGg" elementId="net.comes.care.parameters.file" name="file"/>
+    <parameters xmi:id="_8BLuoK_LEeGJEb2WbDEaGg" elementId="net.comes.care.parameters.uifactory" name="UIFactory"/>
+    <parameters xmi:id="_-t8P0K_LEeGJEb2WbDEaGg" elementId="net.comes.care.parameters.file.source" name="Source File" optional="false"/>
+    <parameters xmi:id="_synpULq5EeGWGI8Kp-V8Tg" elementId="net.comes.care.parameters.file.target" name="Target File" optional="false"/>
     <parameters xmi:id="_TUmx0K_MEeGJEb2WbDEaGg" elementId="net.comes.care.parameters.sensor" name="Sensor ID"/>
   </commands>
   <addons xmi:id="_U_bh5KpbEeGUM9mJNOWIww" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>

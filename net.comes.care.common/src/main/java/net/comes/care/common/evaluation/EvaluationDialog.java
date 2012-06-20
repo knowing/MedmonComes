@@ -3,6 +3,10 @@ package net.comes.care.common.evaluation;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+
+import org.eclipse.e4.core.di.annotations.Creatable;
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
@@ -40,25 +44,30 @@ import de.lmu.ifi.dbs.knowing.core.swt.factory.TabUIFactory;
  * @author Nepomuk Seiler
  * 
  */
+@Creatable
 public class EvaluationDialog extends Dialog {
 
 	public static final String UIFACTORY_ID = "net.comes.care.patient.evaluation.Dialog";
+	public static final String FINISH_EVENT_TOPIC = "de/lmu/ifi/dbs/knowing/core/evaluation";
+
+	private final IEventBroker broker;
 	private final IActorSystemManager asm;
+	private final Map<ActorPath, Double> progressMap;
 
 	private UIFactory<Composite> uiFactory;
 	private ActorSystem system;
 	private ProgressBar progressBar;
-
-	private final Map<ActorPath, Double> progressMap;
 
 	/**
 	 * Create the dialog.
 	 * 
 	 * @param parentShell
 	 */
-	public EvaluationDialog(Shell parentShell, IActorSystemManager asm) {
+	@Inject
+	public EvaluationDialog(Shell parentShell, IActorSystemManager asm, IEventBroker broker) {
 		super(parentShell);
 		this.asm = asm;
+		this.broker = broker;
 		progressMap = new HashMap<>();
 		setBlockOnOpen(false);
 	}
@@ -117,7 +126,7 @@ public class EvaluationDialog extends Dialog {
 		progressBar.getDisplay().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				if (status instanceof Created) 
+				if (status instanceof Created)
 					progressMap.put(actor.path(), 0.0);
 				else if (status instanceof Running)
 					;
@@ -132,7 +141,7 @@ public class EvaluationDialog extends Dialog {
 					ExceptionEvent ex = (ExceptionEvent) status;
 					ex.throwable().printStackTrace();
 				}
-				
+
 				progressBar.setMaximum(progressMap.size() * 100);
 				int selection = 0;
 				for (Double d : progressMap.values()) {
@@ -144,6 +153,7 @@ public class EvaluationDialog extends Dialog {
 	}
 
 	private void onFinish() {
+		broker.send(FINISH_EVENT_TOPIC, "finished");
 		close();
 	}
 

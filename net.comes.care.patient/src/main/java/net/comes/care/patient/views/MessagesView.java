@@ -3,14 +3,18 @@ package net.comes.care.patient.views;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import net.comes.care.common.login.SessionStore;
 import net.comes.care.common.resources.ISharedImages;
 import net.comes.care.common.resources.ResourceManager;
 import net.comes.care.common.ui.MessageViewer;
+import net.comes.care.ws.sycare.Session;
 import net.comes.care.ws.sycare.service.Sycare;
 
+import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -29,13 +33,13 @@ import org.eclipse.swt.widgets.Text;
 public class MessagesView {
 
 	@Inject
-	private Sycare sycare;
+	Sycare sycare;
 
 	@Inject
-	private SessionStore store;
+	SessionStore store;
 
 	@Inject
-	private ESelectionService selectionService;
+	ESelectionService selectionService;
 
 	private MessageViewer messageViewer;
 	private Text txtSearch;
@@ -74,20 +78,24 @@ public class MessagesView {
 		btnRefresh.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				onRefresh();
+				if (store.getSession().isPresent())
+					onRefresh(store.getSession().get());
 			}
 		});
 
 		Button btnRead = new Button(cButtonBar, SWT.CENTER);
 		btnRead.setLayoutData(new RowData(125, SWT.DEFAULT));
 		btnRead.setText("Gelesen");
+
 	}
 
-	private void onRefresh() {
-		if (!store.getSession().isPresent())
+	@Inject
+	private void onRefresh(@Optional @Named(IServiceConstants.ACTIVE_SELECTION) Session session) {
+		if (session == null)
 			return;
 
-		messageViewer.setInput(sycare, store.getSession().get().getSessionId());
+		//TODO until bug is fixed
+		//messageViewer.setInput(sycare, session.getSessionId());
 	}
 
 	@PreDestroy

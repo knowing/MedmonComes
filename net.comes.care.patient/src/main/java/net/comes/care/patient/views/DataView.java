@@ -1,6 +1,8 @@
 package net.comes.care.patient.views;
 
+import java.io.IOException;
 import java.net.URI;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -11,8 +13,16 @@ import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 
 import net.comes.care.common.handlers.SDRConverterHandler;
+import net.comes.care.common.login.SessionStore;
 import net.comes.care.common.preferences.SensorPreferences;
 import net.comes.care.common.ui.DataViewer;
+import net.comes.care.ws.sycare.DataType;
+import net.comes.care.ws.sycare.DeviceADDR;
+import net.comes.care.ws.sycare.DeviceData;
+import net.comes.care.ws.sycare.DeviceType;
+import net.comes.care.ws.sycare.SendDataRequest;
+import net.comes.care.ws.sycare.Status;
+import net.comes.care.ws.sycare.service.Sycare;
 
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ParameterizedCommand;
@@ -49,22 +59,28 @@ import de.lmu.ifi.dbs.medmon.sensor.core.ISensorDirectoryService;
 public class DataView {
 
 	@Inject
-	private ISensorDirectoryService sensorDirectory;
+	ISensorDirectoryService sensorDirectory;
 
 	@Inject
-	private IEvaluateService evaluateService;
+	IEvaluateService evaluateService;
 
 	@Inject
-	private IActorSystemManager asm;
+	IActorSystemManager asm;
 
 	@Inject
-	private IDPUDirectory dpuDirectory;
+	IDPUDirectory dpuDirectory;
 
 	@Inject
-	private ECommandService commandService;
+	ECommandService commandService;
 
 	@Inject
-	private EHandlerService handlerService;
+	EHandlerService handlerService;
+	
+	@Inject
+	Sycare sycare;
+	
+	@Inject
+	SessionStore store;
 
 	private DataViewer dataViewer;
 	private ComboViewer sensorViewer;
@@ -179,10 +195,17 @@ public class DataView {
 		}
 		Command command = commandService.getCommand("net.comes.care.patient.ConverterCommand");
 
-		Path file = Paths.get(files.get(0));
 		Properties parameter = new Properties();
-		parameter.setProperty("net.comes.care.parameters.file", file.toString());
-		parameter.setProperty("net.comes.care.parameters.uifactory", "none");
+		try {
+			Path srcFile = Paths.get(files.get(0));
+			Path trgFile = Files.createTempFile("comes-upload", "sdr");
+			parameter.setProperty("net.comes.care.parameters.file.source", srcFile.toString());
+			parameter.setProperty("net.comes.care.parameters.file.target", trgFile.toString());
+			parameter.setProperty("net.comes.care.parameters.uifactory", "none");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		ParameterizedCommand cmd = commandService.createCommand("net.comes.care.patient.ConverterCommand", parameter);
 
 		if (!command.isHandled()) {
@@ -190,7 +213,27 @@ public class DataView {
 			handlerService.activateHandler("net.comes.care.patient.ConverterCommand", new SDRConverterHandler());
 		}
 		handlerService.executeHandler(cmd);
-
+		
+		/*
+		SendDataRequest parameters = new SendDataRequest();
+		parameters.setSessionId(store.getSession().get().getSessionId());
+		parameters.setDataType(DataType.ASCII_DELIMITED);
+		parameters.setDeviceType(DeviceType.AC);
+		List<DeviceData> data = parameters.getDeviceData();
+		//Adding data
+		DeviceData d = new DeviceData();
+		
+		DeviceADDR deviceADDR = new DeviceADDR();
+		deviceADDR.setSerialNumber("00.02.C7.52.DF.9E");
+		deviceADDR.setDeviceManufacturer(" Omron RX Genius 6371T");
+		d.setDeviceADDR(deviceADDR);
+		List<String> acData = d.getACData();
+		acData.add("");
+		acData.add("");
+		
+		data.add(d);
+		Status status = sycare.sendData(parameters);
+		*/
 	}
 
 	@PreDestroy
