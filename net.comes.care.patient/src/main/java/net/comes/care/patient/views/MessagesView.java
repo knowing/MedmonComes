@@ -95,7 +95,9 @@ public class MessagesView {
 			return;
 
 		//TODO until bug is fixed
-		//messageViewer.setInput(sycare, session.getSessionId());
+//		messageViewer.setInput(sycare, session.getSessionId());
+		
+		//Mock until fixed
 	}
 
 	@PreDestroy

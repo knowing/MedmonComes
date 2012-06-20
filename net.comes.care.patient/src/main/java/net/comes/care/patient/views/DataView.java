@@ -15,6 +15,8 @@ import javax.inject.Inject;
 import net.comes.care.common.handlers.SDRConverterHandler;
 import net.comes.care.common.login.SessionStore;
 import net.comes.care.common.preferences.SensorPreferences;
+import net.comes.care.common.resources.ISharedImages;
+import net.comes.care.common.resources.ResourceManager;
 import net.comes.care.common.ui.DataViewer;
 import net.comes.care.ws.sycare.DataType;
 import net.comes.care.ws.sycare.DeviceADDR;
@@ -84,6 +86,7 @@ public class DataView {
 
 	private DataViewer dataViewer;
 	private ComboViewer sensorViewer;
+	private Button btnUpload;
 
 	/**
 	 * Create contents of the view part.
@@ -134,12 +137,10 @@ public class DataView {
 		buttonPane.setLayout(new RowLayout());
 		buttonPane.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, false, 3, 1));
 
-		Button upload = new Button(buttonPane, SWT.PUSH);
-		RowData layoutData = new RowData();
-		layoutData.width = 80;
-		upload.setLayoutData(layoutData);
-		upload.setText("Upload");
-		upload.addSelectionListener(new SelectionAdapter() {
+		btnUpload = new Button(buttonPane, SWT.PUSH);
+		btnUpload.setImage(ResourceManager.getPluginImage(ISharedImages.PLUGIN_ID, ISharedImages.IMG_IMPORT));
+		btnUpload.setEnabled(false);
+		btnUpload.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				onUpload();
@@ -148,8 +149,11 @@ public class DataView {
 	}
 
 	private void onSensorSelection(SelectionChangedEvent event) {
-		if (event.getSelection().isEmpty())
+		if (event.getSelection().isEmpty()) {
+			btnUpload.setEnabled(false);
 			return;
+		}
+			
 
 		IStructuredSelection selection = (IStructuredSelection) event.getSelection();
 		ISensor sensor = (ISensor) selection.getFirstElement();
@@ -158,6 +162,7 @@ public class DataView {
 		if (path == null)
 			return;
 
+		btnUpload.setEnabled(true);		
 		// update
 		dataViewer.setInput(sensor, path);
 	}
