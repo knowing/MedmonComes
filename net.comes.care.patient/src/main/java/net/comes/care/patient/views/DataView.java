@@ -18,12 +18,6 @@ import net.comes.care.common.preferences.SensorPreferences;
 import net.comes.care.common.resources.ISharedImages;
 import net.comes.care.common.resources.ResourceManager;
 import net.comes.care.common.ui.DataViewer;
-import net.comes.care.ws.sycare.DataType;
-import net.comes.care.ws.sycare.DeviceADDR;
-import net.comes.care.ws.sycare.DeviceData;
-import net.comes.care.ws.sycare.DeviceType;
-import net.comes.care.ws.sycare.SendDataRequest;
-import net.comes.care.ws.sycare.Status;
 import net.comes.care.ws.sycare.service.Sycare;
 
 import org.eclipse.core.commands.Command;
@@ -44,7 +38,6 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -77,10 +70,10 @@ public class DataView {
 
 	@Inject
 	EHandlerService handlerService;
-	
+
 	@Inject
 	Sycare sycare;
-	
+
 	@Inject
 	SessionStore store;
 
@@ -126,7 +119,8 @@ public class DataView {
 				IStructuredSelection selection = (IStructuredSelection) sensorViewer.getSelection();
 				ISensor sensor = (ISensor) selection.getFirstElement();
 				String directory = updateSensor(sensor);
-				dataViewer.setInput(sensor, directory);
+				if (directory != null)
+					dataViewer.setInput(sensor, directory);
 			}
 		});
 
@@ -153,7 +147,6 @@ public class DataView {
 			btnUpload.setEnabled(false);
 			return;
 		}
-			
 
 		IStructuredSelection selection = (IStructuredSelection) event.getSelection();
 		ISensor sensor = (ISensor) selection.getFirstElement();
@@ -162,7 +155,7 @@ public class DataView {
 		if (path == null)
 			return;
 
-		btnUpload.setEnabled(true);		
+		btnUpload.setEnabled(true);
 		// update
 		dataViewer.setInput(sensor, path);
 	}
@@ -210,7 +203,7 @@ public class DataView {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		ParameterizedCommand cmd = commandService.createCommand("net.comes.care.patient.ConverterCommand", parameter);
 
 		if (!command.isHandled()) {
@@ -218,27 +211,23 @@ public class DataView {
 			handlerService.activateHandler("net.comes.care.patient.ConverterCommand", new SDRConverterHandler());
 		}
 		handlerService.executeHandler(cmd);
-		
+
 		/*
-		SendDataRequest parameters = new SendDataRequest();
-		parameters.setSessionId(store.getSession().get().getSessionId());
-		parameters.setDataType(DataType.ASCII_DELIMITED);
-		parameters.setDeviceType(DeviceType.AC);
-		List<DeviceData> data = parameters.getDeviceData();
-		//Adding data
-		DeviceData d = new DeviceData();
-		
-		DeviceADDR deviceADDR = new DeviceADDR();
-		deviceADDR.setSerialNumber("00.02.C7.52.DF.9E");
-		deviceADDR.setDeviceManufacturer(" Omron RX Genius 6371T");
-		d.setDeviceADDR(deviceADDR);
-		List<String> acData = d.getACData();
-		acData.add("");
-		acData.add("");
-		
-		data.add(d);
-		Status status = sycare.sendData(parameters);
-		*/
+		 * SendDataRequest parameters = new SendDataRequest();
+		 * parameters.setSessionId(store.getSession().get().getSessionId());
+		 * parameters.setDataType(DataType.ASCII_DELIMITED);
+		 * parameters.setDeviceType(DeviceType.AC); List<DeviceData> data =
+		 * parameters.getDeviceData(); //Adding data DeviceData d = new
+		 * DeviceData();
+		 * 
+		 * DeviceADDR deviceADDR = new DeviceADDR();
+		 * deviceADDR.setSerialNumber("00.02.C7.52.DF.9E");
+		 * deviceADDR.setDeviceManufacturer(" Omron RX Genius 6371T");
+		 * d.setDeviceADDR(deviceADDR); List<String> acData = d.getACData();
+		 * acData.add(""); acData.add("");
+		 * 
+		 * data.add(d); Status status = sycare.sendData(parameters);
+		 */
 	}
 
 	@PreDestroy
