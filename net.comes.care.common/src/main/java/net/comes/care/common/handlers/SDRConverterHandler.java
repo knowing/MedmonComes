@@ -62,9 +62,9 @@ public class SDRConverterHandler {
 			parameters.setProperty("sdr-file", sdrFile.getFileName().toString());
 			parameters.setProperty("arff-output", trgFile);
 
-			// SDR Classification No UI No Reclassification | SDR Classification
-			// No UI
-			IDataProcessingUnit dpu = dpuDir.getDPU("SDR Classification No UI No Reclassification").get();
+			// SDR Classification No UI No Reclassification | SDR Classification No UI
+			// SDR Classification To ACData No Reclassification
+			IDataProcessingUnit dpu = dpuDir.getDPU("SDR Classification To ACData No Reclassification").get();
 			eval.evaluate(dpu, execPath.toUri(), dlg.getUiFactory(), dlg.getSystem(), parameters, null, null);
 
 			// clean up

@@ -18,6 +18,12 @@ import net.comes.care.common.preferences.SensorPreferences;
 import net.comes.care.common.resources.ISharedImages;
 import net.comes.care.common.resources.ResourceManager;
 import net.comes.care.common.ui.DataViewer;
+import net.comes.care.ws.sycare.DataType;
+import net.comes.care.ws.sycare.DeviceADDR;
+import net.comes.care.ws.sycare.DeviceData;
+import net.comes.care.ws.sycare.DeviceType;
+import net.comes.care.ws.sycare.SendDataRequest;
+import net.comes.care.ws.sycare.Status;
 import net.comes.care.ws.sycare.service.Sycare;
 
 import org.eclipse.core.commands.Command;
@@ -196,7 +202,7 @@ public class DataView {
 		Properties parameter = new Properties();
 		try {
 			Path srcFile = Paths.get(files.get(0));
-			Path trgFile = Files.createTempFile("comes-upload", "sdr");
+			Path trgFile = Files.createTempFile("comes-upload", ".acdata");
 			parameter.setProperty("net.comes.care.parameters.file.source", srcFile.toString());
 			parameter.setProperty("net.comes.care.parameters.file.target", trgFile.toString());
 			parameter.setProperty("net.comes.care.parameters.uifactory", "none");
@@ -213,21 +219,26 @@ public class DataView {
 		handlerService.executeHandler(cmd);
 
 		/*
-		 * SendDataRequest parameters = new SendDataRequest();
-		 * parameters.setSessionId(store.getSession().get().getSessionId());
-		 * parameters.setDataType(DataType.ASCII_DELIMITED);
-		 * parameters.setDeviceType(DeviceType.AC); List<DeviceData> data =
-		 * parameters.getDeviceData(); //Adding data DeviceData d = new
-		 * DeviceData();
-		 * 
-		 * DeviceADDR deviceADDR = new DeviceADDR();
-		 * deviceADDR.setSerialNumber("00.02.C7.52.DF.9E");
-		 * deviceADDR.setDeviceManufacturer(" Omron RX Genius 6371T");
-		 * d.setDeviceADDR(deviceADDR); List<String> acData = d.getACData();
-		 * acData.add(""); acData.add("");
-		 * 
-		 * data.add(d); Status status = sycare.sendData(parameters);
-		 */
+		SendDataRequest parameters = new SendDataRequest();
+		parameters.setSessionId(store.getSession().get().getSessionId());
+		parameters.setDataType(DataType.ASCII_DELIMITED);
+		parameters.setDeviceType(DeviceType.AC);
+		List<DeviceData> data = parameters.getDeviceData(); // Adding data
+		DeviceData d = new DeviceData();
+
+		DeviceADDR deviceADDR = new DeviceADDR();
+		deviceADDR.setSerialNumber("00.02.C7.52.DF.9E");
+		deviceADDR.setDeviceManufacturer(" Omron RX Genius 6371T");
+		d.setDeviceADDR(deviceADDR);
+		List<String> acData = d.getACData();
+		acData.add("##;0;2010;5;25;19;50;41;Joggen;0;0;;;;");
+		acData.add("##;1;2010;5;25;19;50;42;biken;0;0;;;;");
+		acData.add("##;2;2010;5;25;19;50;48;Joggen;0;0;;;;");
+		data.add(d);
+		
+		Status status = sycare.sendData(parameters);
+		System.out.println("Status: " + status.isAccepted());
+		*/
 	}
 
 	@PreDestroy
