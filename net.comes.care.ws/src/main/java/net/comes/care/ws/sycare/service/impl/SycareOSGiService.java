@@ -29,7 +29,8 @@ public class SycareOSGiService implements Sycare {
 
 	protected void activate(Map<String, Object> properties) {
 		JaxWsProxyFactoryBean factory = new JaxWsProxyFactoryBean();
-		factory.setAddress("https://comes.synergysystems-net.com/sycare/soap/sycare_ws.php");
+		//https://www.kompass-lme.ei.tum.de/sycare/soap/sycare_ws.php -unsigned certificate
+		factory.setAddress("http://www.kompass-lme.ei.tum.de/sycare/soap/sycare_ws.php");
 		factory.setServiceClass(Sycare.class);
 		client = (Sycare) factory.create();
 	}

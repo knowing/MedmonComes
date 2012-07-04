@@ -16,13 +16,13 @@ import javax.xml.ws.Service;
  */
 @WebServiceClient(name = "sycare", 
                   wsdlLocation = "sycare-0.11.wsdl",
-                  targetNamespace = "https://comes.synergysystems-net.com/sycare/soap/sycare-0.11.wsdl") 
+                  targetNamespace = "https://www.kompass-lme.ei.tum.de/sycare/soap/sycare-0.11.wsdl") 
 public class Sycare_Service extends Service {
 
     public final static URL WSDL_LOCATION;
 
-    public final static QName SERVICE = new QName("https://comes.synergysystems-net.com/sycare/soap/sycare-0.11.wsdl", "sycare");
-    public final static QName SycareSOAP = new QName("https://comes.synergysystems-net.com/sycare/soap/sycare-0.11.wsdl", "sycareSOAP");
+    public final static QName SERVICE = new QName("https://www.kompass-lme.ei.tum.de/sycare/soap/sycare-0.11.wsdl", "sycare");
+    public final static QName SycareSOAP = new QName("https://www.kompass-lme.ei.tum.de/sycare/soap/sycare-0.11.wsdl", "sycareSOAP");
     static {
         URL url = Sycare_Service.class.getResource("sycare-0.11.wsdl");
         if (url == null) {

@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
  */
 public final class Sycare_SycareSOAP_Client {
 
-    private static final QName SERVICE_NAME = new QName("https://comes.synergysystems-net.com/sycare/soap/sycare-0.11.wsdl", "sycare");
+    private static final QName SERVICE_NAME = new QName("https://www.kompass-lme.ei.tum.de/sycare/soap/sycare-0.11.wsdl", "sycare");
 
     private Sycare_SycareSOAP_Client() {
     }
