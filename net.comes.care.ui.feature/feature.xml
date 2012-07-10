@@ -34,7 +34,7 @@
          id="org.eclipse.osgi.util"
          download-size="0"
          install-size="0"
-         version="3.2.200.v20120307-2102"
+         version="3.2.300.v20120522-1822"
          unpack="false"/>
 
    <plugin
@@ -48,14 +48,14 @@
          id="org.eclipse.jface.text"
          download-size="0"
          install-size="0"
-         version="3.8.0.v20120314-1011"
+         version="3.8.0.v20120531-0600"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.text"
          download-size="0"
          install-size="0"
-         version="3.5.200.v20120312-1446"
+         version="3.5.200.v20120523-1310"
          unpack="false"/>
 
    <plugin
@@ -87,13 +87,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.joda.time"
-         download-size="0"
-         install-size="0"
-         version="2.1.0"
-         unpack="false"/>
-
-   <plugin
          id="nz.ac.waikato.cs.weka"
          download-size="0"
          install-size="0"
@@ -104,7 +97,7 @@
          id="de.lmu.ifi.dbs.knowing.core"
          download-size="0"
          install-size="0"
-         version="0.1.4.201206031346"
+         version="0.1.4.201206121358"
          unpack="false"/>
 
    <plugin
@@ -119,6 +112,13 @@
          download-size="0"
          install-size="0"
          version="2.9.2.v20120330-163119-949a4804e4-vfinal"
+         unpack="false"/>
+
+   <plugin
+         id="joda-time"
+         download-size="0"
+         install-size="0"
+         version="2.1.0"
          unpack="false"/>
 
 </feature>

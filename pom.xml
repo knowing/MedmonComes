@@ -13,6 +13,7 @@
 		<encoding>UTF-8</encoding>
 	</properties>
   <modules>
+    <module>net.comes.care.common</module>
     <module>net.comes.care.entity</module>
     <module>net.comes.care.mysql.feature</module>
     <module>net.comes.care.patient</module>
@@ -56,11 +57,6 @@
 			<id>eclipse-juno</id>
 			<layout>p2</layout>
 			<url>http://download.eclipse.org/releases/juno</url>
-		</repository>
-		<repository>
-			<id>eclipselink-milestones</id>
-			<layout>p2</layout>
-			<url>http://download.eclipse.org/rt/eclipselink/milestone-updates</url>
 		</repository>
 		<repository>
 			<id>eclipse-sapphire</id>
@@ -109,7 +105,7 @@
 		<repository>
 			<id>eclipse-scala-ide</id>
 			<layout>p2</layout>
-			<url>http://download.scala-ide.org/releases-29/milestone/site</url>
+			<url>http://download.scala-ide.org/releases-29/stable/site</url>
 		</repository>
 
 		<!-- additional repositories -->
