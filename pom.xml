@@ -21,6 +21,7 @@
     <module>net.comes.care.ui</module>
     <module>net.comes.care.ui.feature</module>
     <module>net.comes.care.ws</module>
+    <module>net.comes.care.site</module>
     <module>org.apache.cxf</module>
   </modules>
   <build>
