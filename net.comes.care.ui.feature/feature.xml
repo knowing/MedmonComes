@@ -20,105 +20,105 @@
          id="net.comes.care.ui"
          download-size="0"
          install-size="0"
-         version="1.0.0.qualifier"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.gemini.ext.di"
          download-size="0"
          install-size="0"
-         version="1.0.0.qualifier"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.osgi.util"
          download-size="0"
          install-size="0"
-         version="3.2.300.v20120522-1822"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="com.google.guava"
          download-size="0"
          install-size="0"
-         version="11.0.1"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.jface.text"
          download-size="0"
          install-size="0"
-         version="3.8.0.v20120531-0600"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.text"
          download-size="0"
          install-size="0"
-         version="3.5.200.v20120523-1310"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="de.lmu.ifi.dbs.medmon.sensor.core"
          download-size="0"
          install-size="0"
-         version="1.0.0.qualifier"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="slf4j.api"
          download-size="0"
          install-size="0"
-         version="1.6.4"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="ch.qos.logback.classic"
          download-size="0"
          install-size="0"
-         version="1.0.0.v20111214-2030"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="ch.qos.logback.core"
          download-size="0"
          install-size="0"
-         version="1.0.0.v20111214-2030"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="nz.ac.waikato.cs.weka"
          download-size="0"
          install-size="0"
-         version="3.7.5"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="de.lmu.ifi.dbs.knowing.core"
          download-size="0"
          install-size="0"
-         version="0.1.4.201206121358"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="de.sendsor.accelerationSensor"
          download-size="0"
          install-size="0"
-         version="1.0.0.201205051229"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.scala-ide.scala.library"
          download-size="0"
          install-size="0"
-         version="2.9.2.v20120330-163119-949a4804e4-vfinal"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="joda-time"
          download-size="0"
          install-size="0"
-         version="2.1.0"
+         version="0.0.0"
          unpack="false"/>
 
 </feature>

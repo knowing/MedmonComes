@@ -10,4 +10,5 @@
   <groupId>net.comes.care.ws</groupId>
   <artifactId>net.comes.care.ws</artifactId>
   <packaging>eclipse-plugin</packaging>
+  <version>0.1.1-SNAPSHOT</version>
 </project>

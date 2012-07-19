@@ -68,7 +68,12 @@
 		<repository>
 			<id>knowing</id>
 			<layout>p2</layout>
-			<url>http://repository.mukis.de/p2/de.lmu.ifi.dbs.knowing</url>
+			<url>http://repository.mukis.de/p2/knowing/0.1.5</url>
+		</repository>
+		<repository>
+			<id>medmon</id>
+			<layout>p2</layout>
+			<url>http://repository.mukis.de/p2/medmon/snapshot</url>
 		</repository>
 		<repository>
 			<id>gemini-dbaccess</id>
