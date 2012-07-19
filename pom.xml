@@ -50,9 +50,37 @@
 					<resolver>p2</resolver>
 				</configuration>
 			</plugin>
-    </plugins>
-  </build>
-<repositories>
+			<plugin>
+  				<groupId>org.eclipse.tycho</groupId>
+    				<artifactId>tycho-surefire-plugin</artifactId>
+				<version>${tycho.version}</version>
+    				<configuration>
+					<argLine>-Xms256m -Xmx512m -XX:MaxPermSize=256M</argLine>
+					<includes>
+						<include>**/*Test.*</include>
+					</includes>
+      				<dependencies>
+        					<dependency>
+          					<type>p2-installable-unit</type>
+          					<artifactId>org.eclipse.equinox.ds</artifactId>
+        					</dependency>
+      				</dependencies>
+				</configuration>
+				 
+				<executions>
+          			<execution>
+           				<id>test</id>
+            				<phase>test</phase>
+            				<goals>
+              					<goal>test</goal>
+            				</goals>
+          			</execution>
+        			</executions>
+				
+  			</plugin>
+   		 </plugins>
+  	</build>
+	<repositories>
 		<!-- eclipse repositories -->
 		<repository>
 			<id>eclipse-juno</id>
@@ -62,7 +90,7 @@
 		<repository>
 			<id>eclipse-sapphire</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/sapphire/0.4.1/repository</url>
+			<url>http://download.eclipse.org/sapphire/0.5.1/repository</url>
 		</repository>
 
 		<!-- custom repositories -->

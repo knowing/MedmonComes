@@ -2,31 +2,35 @@ package net.comes.care.ws.sycare.service.impl;
 
 import static org.junit.Assert.*;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.xml.ws.soap.SOAPFaultException;
 
 import net.comes.care.ws.sycare.*;
+import net.comes.care.ws.sycare.service.*;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
+
 
 public class SycareOSGiTest {
 
 	
-	private SycareOSGiService sycare;
+	private Sycare sycare;
 
 	@Before
 	public void setUp() throws Exception {
-		sycare = new SycareOSGiService();
-		sycare.activate(Collections.<String, Object> emptyMap());
+		BundleContext context = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		ServiceReference<Sycare> reference = context.getServiceReference(Sycare.class);
+		sycare = context.getService(reference);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		sycare.deactivate();
 	}
 
 	@Test
