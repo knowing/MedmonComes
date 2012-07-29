@@ -1,33 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="comes" sequenceNumber="3">
+<?pde version="3.8"?><target name="Medmon@Comes" sequenceNumber="41">
 <locations>
+<location path="/home/muki/Development/target_platform/medmon" type="Directory"/>
+<location path="${eclipse_home}" type="Profile"/>
+<location path="/home/muki/Development/target_platform/apache/apache-cxf-dosgi-ri-1.3.1/plugins" type="Directory"/>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="de.lmu.ifi.dbs.knowing.core.feature.feature.group" version="0.1.4.201206051500"/>
-<repository location="http://repository.mukis.de/p2/de.lmu.ifi.dbs.knowing/"/>
+<unit id="com.google.guava.runtime.feature.feature.group" version="11.0.1"/>
+<unit id="com.google.guava.sdk.feature.feature.group" version="11.0.1"/>
+<repository location="http://guava-osgi.googlecode.com/svn/trunk/repository/"/>
 </location>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.sapphire.feature.group" version="0.4.1.201203031702"/>
-<unit id="org.eclipse.sapphire.platform.feature.group" version="0.4.1.201203031702"/>
-<unit id="org.eclipse.sapphire.ui.swt.graphiti.feature.group" version="0.4.1.201203031702"/>
-<unit id="org.eclipse.sapphire.java.jdt.feature.group" version="0.4.1.201203031702"/>
-<unit id="org.eclipse.sapphire.java.feature.group" version="0.4.1.201203031702"/>
-<unit id="org.eclipse.sapphire.osgi.feature.group" version="0.4.1.201203031702"/>
-<unit id="org.eclipse.sapphire.sdk.feature.group" version="0.4.1.201203031702"/>
-<unit id="org.eclipse.sapphire.source.feature.group" version="0.4.1.201203031702"/>
-<unit id="org.eclipse.sapphire.tests.feature.group" version="0.4.1.201203031702"/>
-<unit id="org.eclipse.sapphire.ui.feature.group" version="0.4.1.201203031702"/>
-<unit id="org.eclipse.sapphire.ui.swt.xml.editor.feature.group" version="0.4.1.201203031702"/>
-<unit id="org.eclipse.sapphire.modeling.xml.feature.group" version="0.4.1.201203031702"/>
-<repository location="http://download.eclipse.org/sapphire/0.4.1/repository"/>
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.persistence.sdk.feature.group" version="2.4.0.v20120528-r11520"/>
-<unit id="org.eclipse.equinox.sdk.feature.group" version="3.8.0.v20120522-1841-7M7fA78g5_y-_gftHxbJgZkz-9m8"/>
-<repository location="http://download.eclipse.org/releases/juno"/>
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.scala-ide.sdt.feature.feature.group" version="2.1.0.m1-2_09-201204131819-c58d6d8"/>
-<repository location="http://download.scala-ide.org/releases-29/milestone/site"/>
-</location>
+<location path="/home/muki/Development/workspace_knowing/Medmon/de.lmu.ifi.dbs.medmon.site/target/repository" type="Directory"/>
+<location path="/home/muki/Development/workspace_knowing/Knowing/de.lmu.ifi.dbs.knowing.updatesite/target/repository" type="Directory"/>
 </locations>
+<environment>
+<os>linux</os>
+<ws>gtk</ws>
+<arch>x86_64</arch>
+<nl>de_DE</nl>
+</environment>
+<launcherArgs>
+<vmArgs>-Xms40m -Xmx384m</vmArgs>
+</launcherArgs>
 </target>

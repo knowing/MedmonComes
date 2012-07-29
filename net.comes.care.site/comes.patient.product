@@ -29,5 +29,11 @@
       <feature id="de.lmu.ifi.dbs.knowing.weka.feature" version="0.1.6.201207281723"/>
    </features>
 
+   <configurations>
+      <plugin id="de.lmu.ifi.dbs.knowing.core" autoStart="true" startLevel="0" />
+      <plugin id="de.lmu.ifi.dbs.knowing.core.swt" autoStart="true" startLevel="0" />
+      <plugin id="de.lmu.ifi.dbs.knowing.weka" autoStart="true" startLevel="0" />
+      <plugin id="de.sendsor.accelerationSensor" autoStart="true" startLevel="0" />
+   </configurations>
 
 </product>
