@@ -3,10 +3,13 @@
    <feature url="features/net.comes.care.mysql.feature_1.0.0.qualifier.jar" id="net.comes.care.mysql.feature" version="1.0.0.qualifier">
       <category name="net.comes.care"/>
    </feature>
-   <feature url="features/net.comes.care.ui.feature_1.0.0.qualifier.jar" id="net.comes.care.ui.feature" version="1.0.0.qualifier">
+   <feature url="features/org.apache.cxf_2.5.2.jar" id="org.apache.cxf" version="2.5.2">
       <category name="net.comes.care"/>
    </feature>
-   <feature url="features/org.apache.cxf_2.5.2.jar" id="org.apache.cxf" version="2.5.2">
+   <feature url="features/net.comes.care.core.feature_1.0.0.qualifier.jar" id="net.comes.care.core.feature" version="1.0.0.qualifier">
+      <category name="net.comes.care"/>
+   </feature>
+   <feature url="features/net.comes.care.patient.feature_1.0.0.qualifier.jar" id="net.comes.care.patient.feature" version="1.0.0.qualifier">
       <category name="net.comes.care"/>
    </feature>
    <category-def name="net.comes.care" label="COMES Care"/>
