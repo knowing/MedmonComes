@@ -110,6 +110,7 @@ public class UserToolControl {
 					parent.layout();
 				} catch (SOAPFaultException ex) {
 					lblStatus.setText("Falscher Benutzername oder Passwort");
+					ex.printStackTrace();
 				} catch (BackingStoreException ex) {
 					ex.printStackTrace();
 				}

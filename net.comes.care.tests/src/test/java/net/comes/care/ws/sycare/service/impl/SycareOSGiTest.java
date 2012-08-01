@@ -19,6 +19,8 @@ import org.osgi.framework.ServiceReference;
 
 public class SycareOSGiTest {
 
+	private static final String USER = "lucky@luke.de";
+	private static final String PASSWORD = "ll";
 	
 	private Sycare sycare;
 
@@ -36,8 +38,8 @@ public class SycareOSGiTest {
 	@Test
 	public void testAuthenticate(){
 		Credentials credentials = new Credentials();
-		credentials.setUsername("ComesTest22");
-		credentials.setPassword("Comes#22");
+		credentials.setUsername(USER);
+		credentials.setPassword(PASSWORD);
 		Session session = sycare.authenticate(credentials);
 		
 		assertNotNull(session);
@@ -80,8 +82,8 @@ public class SycareOSGiTest {
 	@Test
 	public void testSendData() {
 		Credentials credentials = new Credentials();
-		credentials.setUsername("ComesTest22");
-		credentials.setPassword("Comes#22");
+		credentials.setUsername(USER);
+		credentials.setPassword(PASSWORD);
 		Session session = sycare.authenticate(credentials);
 		
 		SendDataRequest parameters = new SendDataRequest();

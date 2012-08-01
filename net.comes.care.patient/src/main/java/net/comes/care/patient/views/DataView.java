@@ -18,12 +18,6 @@ import net.comes.care.common.preferences.SensorPreferences;
 import net.comes.care.common.resources.ISharedImages;
 import net.comes.care.common.resources.ResourceManager;
 import net.comes.care.common.ui.DataViewer;
-import net.comes.care.ws.sycare.DataType;
-import net.comes.care.ws.sycare.DeviceADDR;
-import net.comes.care.ws.sycare.DeviceData;
-import net.comes.care.ws.sycare.DeviceType;
-import net.comes.care.ws.sycare.SendDataRequest;
-import net.comes.care.ws.sycare.Status;
 import net.comes.care.ws.sycare.service.Sycare;
 
 import org.eclipse.core.commands.Command;
