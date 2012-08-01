@@ -4,7 +4,6 @@ Bundle-Name: Comes Care Tests
 Bundle-SymbolicName: net.comes.care.tests
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Require-Bundle: org.apache.cxf.bundle-minimal;bundle-version="2.5.2",
- net.comes.care.ws;bundle-version="0.1.1",
- org.junit;bundle-version="4.10.0"
+Fragment-Host: net.comes.care.ws;bundle-version="0.1.1"
+Require-Bundle: org.junit;bundle-version="4.10.0"
 Import-Package: org.osgi.framework;version="1.7.0"

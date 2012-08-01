@@ -1,32 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion>
-  <artifactId>MedmonComes</artifactId>
-  <groupId>net.comes.care</groupId>
-  <version>1.0.0-SNAPSHOT</version>
-  <packaging>pom</packaging>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>MedmonComes</artifactId>
+	<groupId>net.comes.care</groupId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
 	<properties>
 		<tycho.version>0.15.0</tycho.version>
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
 		<encoding>UTF-8</encoding>
 	</properties>
-  <modules>
-    <module>net.comes.care.common</module>
-    <module>net.comes.care.entity</module>
-    <module>net.comes.care.mysql.feature</module>
-    <module>net.comes.care.patient</module>
-    <module>net.comes.care.sensors</module>
-    <module>net.comes.care.ui</module>
-    <module>net.comes.care.core.feature</module>
-    <module>net.comes.care.patient.feature</module>
-    <module>net.comes.care.ws</module>
-    <module>net.comes.care.site</module>
-    <module>org.apache.cxf</module>
-  </modules>
-  <build>
-    <plugins>
+	<modules>
+		<module>net.comes.care.common</module>
+		<module>net.comes.care.entity</module>
+		<module>net.comes.care.mysql.feature</module>
+		<module>net.comes.care.patient</module>
+		<module>net.comes.care.sensors</module>
+		<module>net.comes.care.ui</module>
+		<module>net.comes.care.core.feature</module>
+		<module>net.comes.care.patient.feature</module>
+		<module>net.comes.care.ws</module>
+		<module>net.comes.care.tests</module>
+		<module>net.comes.care.site</module>
+		<module>org.apache.cxf</module>
+	</modules>
+	<build>
+		<plugins>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-maven-plugin</artifactId>
@@ -78,55 +80,55 @@
 					</environments>
 				</configuration>
 			</plugin>
-   			<plugin>
-      			<groupId>org.eclipse.tycho</groupId>
-      			<artifactId>tycho-p2-director-plugin</artifactId>
-      			<version>${tycho.version}</version>
-      			<executions>
-        				<execution>
-          				<id>materialize-products</id>
-          				<goals>
-            					<goal>materialize-products</goal>
-          				</goals>
-       					</execution>
-        				<execution>
-          				<id>archive-products</id>
-          				<goals>
-            					<goal>archive-products</goal>
-          				</goals>
-        				</execution>
-      			</executions>
-    			</plugin>
 			<plugin>
-  				<groupId>org.eclipse.tycho</groupId>
-    				<artifactId>tycho-surefire-plugin</artifactId>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-p2-director-plugin</artifactId>
 				<version>${tycho.version}</version>
-    				<configuration>
+				<executions>
+					<execution>
+						<id>materialize-products</id>
+						<goals>
+							<goal>materialize-products</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>archive-products</id>
+						<goals>
+							<goal>archive-products</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-surefire-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<configuration>
 					<argLine>-Xms256m -Xmx512m -XX:MaxPermSize=256M</argLine>
 					<includes>
 						<include>**/*Test.*</include>
 					</includes>
-      				<dependencies>
-        					<dependency>
-          					<type>p2-installable-unit</type>
-          					<artifactId>org.eclipse.equinox.ds</artifactId>
-        					</dependency>
-      				</dependencies>
+					<dependencies>
+						<dependency>
+							<type>p2-installable-unit</type>
+							<artifactId>org.eclipse.equinox.ds</artifactId>
+						</dependency>
+					</dependencies>
 				</configuration>
-				 
+
 				<executions>
-          			<execution>
-           				<id>test</id>
-            				<phase>test</phase>
-            				<goals>
-              					<goal>test</goal>
-            				</goals>
-          			</execution>
-        			</executions>
-				
-  			</plugin>
-   		 </plugins>
-  	</build>
+					<execution>
+						<id>comes-tests</id>
+						<phase>test</phase>
+						<goals>
+							<goal>mvntest</goal>
+						</goals>
+					</execution>
+				</executions>
+
+			</plugin>
+		</plugins>
+	</build>
 	<repositories>
 		<!-- eclipse repositories -->
 		<repository>
@@ -178,15 +180,15 @@
 		</repository>
 
 		<!-- scala/typesafe repositories -->
-          <repository>
+		<repository>
 			<id>scala-tools.org</id>
 			<name>Scala-tools Maven2 Repository</name>
-			 <url>http://scala-tools.org/repo-releases</url>
+			<url>http://scala-tools.org/repo-releases</url>
 		</repository>
 		<repository>
-  			<id>typesafe</id>
-  			<name>Typesafe Repository</name>
-  			<url>http://repo.typesafe.com/typesafe/releases</url>
+			<id>typesafe</id>
+			<name>Typesafe Repository</name>
+			<url>http://repo.typesafe.com/typesafe/releases</url>
 		</repository>
 		<repository>
 			<id>eclipse-scala-ide</id>
@@ -200,11 +202,11 @@
 			<name>Google Guava OSGi</name>
 			<url>http://guava-osgi.googlecode.com/svn/trunk/repository</url>
 		</repository>
-      </repositories>
-<pluginRepositories>
-  <pluginRepository>
-    <id>tycho-snapshots</id>
-    <url>https://oss.sonatype.org/content/groups/public/</url>
-  </pluginRepository>
-</pluginRepositories>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>tycho-snapshots</id>
+			<url>https://oss.sonatype.org/content/groups/public/</url>
+		</pluginRepository>
+	</pluginRepositories>
 </project>
