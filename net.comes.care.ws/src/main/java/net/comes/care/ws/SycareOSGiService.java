@@ -1,4 +1,4 @@
-package net.comes.care.ws.sycare.service.impl;
+package net.comes.care.ws;
 
 import java.util.Map;
 
@@ -21,7 +21,7 @@ import net.comes.care.ws.sycare.SendDataRequest;
 import net.comes.care.ws.sycare.SendSurveyDataRequest;
 import net.comes.care.ws.sycare.Session;
 import net.comes.care.ws.sycare.Status;
-import net.comes.care.ws.sycare.service.Sycare;
+import net.comes.care.ws.sycare.Sycare;
 
 public class SycareOSGiService implements Sycare {
 	

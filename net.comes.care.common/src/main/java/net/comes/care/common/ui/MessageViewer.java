@@ -8,7 +8,7 @@ import net.comes.care.ws.sycare.AMessage;
 import net.comes.care.ws.sycare.GetMessageRequest;
 import net.comes.care.ws.sycare.MessageOption;
 import net.comes.care.ws.sycare.Scroll;
-import net.comes.care.ws.sycare.service.Sycare;
+import net.comes.care.ws.sycare.Sycare;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;

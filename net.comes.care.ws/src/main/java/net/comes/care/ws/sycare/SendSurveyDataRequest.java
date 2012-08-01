@@ -1,6 +1,7 @@
 
 package net.comes.care.ws.sycare;
 
+import javax.annotation.Generated;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -9,7 +10,7 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java-Klasse für anonymous complex type.
+ * <p>Java-Klasse fÃ¼r anonymous complex type.
  * 
  * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
  * 
@@ -18,9 +19,9 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="SessionId" type="{https://comes.synergysystems-net.com/sycare/soap/sycare-0.11.wsdl}SessionId"/>
+ *         &lt;element name="SessionId" type="{http://www.kompass-lme.ei.tum.de/sycare/soap/sycare-0.11.wsdl}SessionId"/>
  *         &lt;element name="SurveyId" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="SurveyResult" type="{https://comes.synergysystems-net.com/sycare/soap/sycare-0.11.wsdl}SurveyResult" minOccurs="0"/>
+ *         &lt;element name="SurveyResult" type="{http://www.kompass-lme.ei.tum.de/sycare/soap/sycare-0.11.wsdl}SurveyResult" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,13 +37,17 @@ import javax.xml.bind.annotation.XmlType;
     "surveyResult"
 })
 @XmlRootElement(name = "sendSurveyDataRequest")
+@Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
 public class SendSurveyDataRequest {
 
     @XmlElement(name = "SessionId", required = true)
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     protected String sessionId;
     @XmlElement(name = "SurveyId")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     protected int surveyId;
     @XmlElement(name = "SurveyResult")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     protected SurveyResult surveyResult;
 
     /**
@@ -53,6 +58,7 @@ public class SendSurveyDataRequest {
      *     {@link String }
      *     
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public String getSessionId() {
         return sessionId;
     }
@@ -65,6 +71,7 @@ public class SendSurveyDataRequest {
      *     {@link String }
      *     
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public void setSessionId(String value) {
         this.sessionId = value;
     }
@@ -73,6 +80,7 @@ public class SendSurveyDataRequest {
      * Ruft den Wert der surveyId-Eigenschaft ab.
      * 
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public int getSurveyId() {
         return surveyId;
     }
@@ -81,6 +89,7 @@ public class SendSurveyDataRequest {
      * Legt den Wert der surveyId-Eigenschaft fest.
      * 
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public void setSurveyId(int value) {
         this.surveyId = value;
     }
@@ -93,6 +102,7 @@ public class SendSurveyDataRequest {
      *     {@link SurveyResult }
      *     
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public SurveyResult getSurveyResult() {
         return surveyResult;
     }
@@ -105,6 +115,7 @@ public class SendSurveyDataRequest {
      *     {@link SurveyResult }
      *     
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public void setSurveyResult(SurveyResult value) {
         this.surveyResult = value;
     }

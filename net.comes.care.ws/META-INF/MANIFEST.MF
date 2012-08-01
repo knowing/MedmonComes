@@ -12,6 +12,5 @@ Import-Package: org.apache.cxf;version="2.5.2",
  org.apache.cxf.jaxws;version="2.5.2",
  org.osgi.framework;version="1.7.0",
  org.slf4j;version="[1.6.0,2.0.0)"
-Export-Package: net.comes.care.ws.sycare;version="0.1.1",
- net.comes.care.ws.sycare.service;version="0.1.1"
+Export-Package: net.comes.care.ws.sycare;version="0.1.1"
 Service-Component: OSGI-INF/sycareService.xml

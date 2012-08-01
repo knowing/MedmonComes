@@ -6,7 +6,7 @@ import net.comes.care.entity.Patient;
 import net.comes.care.ui.views.PatientView;
 import net.comes.care.ui.views.SensorView;
 import net.comes.care.ui.wizards.ImportWizard;
-import net.comes.care.ws.sycare.service.Sycare;
+import net.comes.care.ws.sycare.Sycare;
 
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.services.IServiceConstants;

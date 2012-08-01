@@ -19,7 +19,7 @@ import net.comes.care.ws.sycare.GetDeviceManufacturersRequest;
 import net.comes.care.ws.sycare.GetMeasuredDataRequest;
 import net.comes.care.ws.sycare.GetMeasuredDataResponse;
 import net.comes.care.ws.sycare.Session;
-import net.comes.care.ws.sycare.service.Sycare;
+import net.comes.care.ws.sycare.Sycare;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;

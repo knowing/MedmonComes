@@ -3,6 +3,7 @@ package net.comes.care.ws.sycare;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Generated;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -11,7 +12,7 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java-Klasse für anonymous complex type.
+ * <p>Java-Klasse fÃ¼r anonymous complex type.
  * 
  * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
  * 
@@ -23,7 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="Accepted" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *         &lt;element name="AvailableMessages" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="AvailableSurveys" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
- *         &lt;element name="DeviceInfo" type="{https://comes.synergysystems-net.com/sycare/soap/sycare-0.11.wsdl}DeviceInfo" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="DeviceInfo" type="{http://www.kompass-lme.ei.tum.de/sycare/soap/sycare-0.11.wsdl}DeviceInfo" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -40,15 +41,20 @@ import javax.xml.bind.annotation.XmlType;
     "deviceInfo"
 })
 @XmlRootElement(name = "Status")
+@Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
 public class Status {
 
     @XmlElement(name = "Accepted")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     protected Boolean accepted;
     @XmlElement(name = "AvailableMessages")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     protected Integer availableMessages;
     @XmlElement(name = "AvailableSurveys")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     protected Integer availableSurveys;
     @XmlElement(name = "DeviceInfo")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     protected List<DeviceInfo> deviceInfo;
 
     /**
@@ -59,6 +65,7 @@ public class Status {
      *     {@link Boolean }
      *     
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public Boolean isAccepted() {
         return accepted;
     }
@@ -71,6 +78,7 @@ public class Status {
      *     {@link Boolean }
      *     
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public void setAccepted(Boolean value) {
         this.accepted = value;
     }
@@ -83,6 +91,7 @@ public class Status {
      *     {@link Integer }
      *     
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public Integer getAvailableMessages() {
         return availableMessages;
     }
@@ -95,6 +104,7 @@ public class Status {
      *     {@link Integer }
      *     
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public void setAvailableMessages(Integer value) {
         this.availableMessages = value;
     }
@@ -107,6 +117,7 @@ public class Status {
      *     {@link Integer }
      *     
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public Integer getAvailableSurveys() {
         return availableSurveys;
     }
@@ -119,6 +130,7 @@ public class Status {
      *     {@link Integer }
      *     
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public void setAvailableSurveys(Integer value) {
         this.availableSurveys = value;
     }
@@ -145,6 +157,7 @@ public class Status {
      * 
      * 
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public List<DeviceInfo> getDeviceInfo() {
         if (deviceInfo == null) {
             deviceInfo = new ArrayList<DeviceInfo>();

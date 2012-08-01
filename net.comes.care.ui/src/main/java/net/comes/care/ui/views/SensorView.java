@@ -5,7 +5,7 @@ import javax.inject.Inject;
 
 import net.comes.care.common.preferences.SensorPreferences;
 import net.comes.care.ui.viewer.SensorTableViewer;
-import net.comes.care.ws.sycare.service.Sycare;
+import net.comes.care.ws.sycare.Sycare;
 
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.e4.core.di.annotations.Optional;

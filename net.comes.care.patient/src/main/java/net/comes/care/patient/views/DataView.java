@@ -18,7 +18,7 @@ import net.comes.care.common.preferences.SensorPreferences;
 import net.comes.care.common.resources.ISharedImages;
 import net.comes.care.common.resources.ResourceManager;
 import net.comes.care.common.ui.DataViewer;
-import net.comes.care.ws.sycare.service.Sycare;
+import net.comes.care.ws.sycare.Sycare;
 
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ParameterizedCommand;

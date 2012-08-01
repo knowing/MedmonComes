@@ -1,6 +1,7 @@
 
 package net.comes.care.ws.sycare;
 
+import javax.annotation.Generated;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -9,7 +10,7 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java-Klasse für anonymous complex type.
+ * <p>Java-Klasse fÃ¼r anonymous complex type.
  * 
  * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
  * 
@@ -18,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;all>
- *         &lt;element name="MessageType" type="{https://comes.synergysystems-net.com/sycare/soap/sycare-0.11.wsdl}MessageType"/>
+ *         &lt;element name="MessageType" type="{http://www.kompass-lme.ei.tum.de/sycare/soap/sycare-0.11.wsdl}MessageType"/>
  *         &lt;element name="MessageTitle" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="MessageData" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="MessageId" type="{http://www.w3.org/2001/XMLSchema}int"/>
@@ -35,15 +36,20 @@ import javax.xml.bind.annotation.XmlType;
 
 })
 @XmlRootElement(name = "aMessage")
+@Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
 public class AMessage {
 
     @XmlElement(name = "MessageType", required = true)
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     protected MessageType messageType;
     @XmlElement(name = "MessageTitle", required = true)
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     protected String messageTitle;
     @XmlElement(name = "MessageData", required = true)
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     protected String messageData;
     @XmlElement(name = "MessageId")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     protected int messageId;
 
     /**
@@ -54,6 +60,7 @@ public class AMessage {
      *     {@link MessageType }
      *     
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public MessageType getMessageType() {
         return messageType;
     }
@@ -66,6 +73,7 @@ public class AMessage {
      *     {@link MessageType }
      *     
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public void setMessageType(MessageType value) {
         this.messageType = value;
     }
@@ -78,6 +86,7 @@ public class AMessage {
      *     {@link String }
      *     
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public String getMessageTitle() {
         return messageTitle;
     }
@@ -90,6 +99,7 @@ public class AMessage {
      *     {@link String }
      *     
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public void setMessageTitle(String value) {
         this.messageTitle = value;
     }
@@ -102,6 +112,7 @@ public class AMessage {
      *     {@link String }
      *     
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public String getMessageData() {
         return messageData;
     }
@@ -114,6 +125,7 @@ public class AMessage {
      *     {@link String }
      *     
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public void setMessageData(String value) {
         this.messageData = value;
     }
@@ -122,6 +134,7 @@ public class AMessage {
      * Ruft den Wert der messageId-Eigenschaft ab.
      * 
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public int getMessageId() {
         return messageId;
     }
@@ -130,6 +143,7 @@ public class AMessage {
      * Legt den Wert der messageId-Eigenschaft fest.
      * 
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public void setMessageId(int value) {
         this.messageId = value;
     }

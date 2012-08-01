@@ -1,0 +1,730 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.kompass-lme.ei.tum.de/sycare/soap/sycare-0.11.wsdl" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="sycare" targetNamespace="http://www.kompass-lme.ei.tum.de/sycare/soap/sycare-0.11.wsdl">
+	<documentation>Version 0.10 - 2010-12-17</documentation>
+	<types>
+		<xsd:schema targetNamespace="http://www.kompass-lme.ei.tum.de/sycare/soap/sycare-0.11.wsdl">
+
+			<!-- simple types -->
+		    <xsd:simpleType name="DataType">
+		       	<xsd:restriction base="xsd:string">
+		       		<xsd:enumeration value="ASCII-DELIMITED" />
+		       		<xsd:enumeration value="XML" />
+		       	</xsd:restriction>
+		    </xsd:simpleType>
+		    
+		    <xsd:simpleType name="BD_ADDR">
+		    	<xsd:annotation>
+	               	<xsd:documentation>
+	               		Bluetooth hardware device address (BD_ADDR)
+	               		without any delimiter
+	               	</xsd:documentation>
+		       	</xsd:annotation>
+		       	<xsd:restriction base="xsd:string">
+					<xsd:pattern value="([0-9A-Z]{12})" />
+		       	</xsd:restriction>
+		    </xsd:simpleType>
+		    
+		    <xsd:simpleType name="ACData">
+		    	<xsd:annotation>
+		        	<xsd:documentation>
+		        		ASCII_DELIMITED format for activity:
+		        		##;record_id;year;month;day;hour;minute;second;unit;duration;steps;weight;met;calorie;distance
+		        		date values must be valid
+		        		record_id may be empty
+		        		duration (unit: second) is an integer value
+		        		steps is an integer value
+		        		weight, met, calorie and distance (unit: km) are float values with maximum 2 decimal places
+		        		either weight or met has to be passed
+		        		calorie and distance are optional
+		        	</xsd:documentation>
+		        </xsd:annotation>
+				<xsd:restriction base="xsd:token">
+		       		<xsd:pattern value="(^##;.*;20\d{2};(0[1-9]|1[0-2]);([0-2]\d|3[0-1]);([0-1]\d|2[0-4]);([0-5]\d|60);([0-5]\d|60);.+;\d+;\d+;\d{1,3}(\.\d{1,2})?;\d{1,3}(\.\d{1,2})?;\d{1,3}(\.\d{1,2})?(;\d{1,3}(\.\d{1,2})?)?(;\d{1,3}(\.\d{1,2})?)?$)" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			
+			<xsd:simpleType name="BPData">
+		    	<xsd:annotation>
+		        	<xsd:documentation>
+		        		ASCII_DELIMITED format for blood pressure:
+		        		##;record_id;year;month;day;hour;minute;second;unit;sytric;diastric;pulse
+		        		time and date values must be valid
+		        		record_id and unit may be empty
+		        		sytric, diastric and pulse are integer values
+		        	</xsd:documentation>
+		        </xsd:annotation>
+				<xsd:restriction base="xsd:token">
+		       		<xsd:pattern value="(^##;.*;20\d{2};(0[1-9]|1[0-2]);([0-2]\d|3[0-1]);([0-1]\d|2[0-4]);([0-5]\d|60);([0-5]\d|60);.+;\d{1,3};\d{1,3};\d{1,3}$)" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			
+			<xsd:simpleType name="BSData">
+		    	<xsd:annotation>
+		        	<xsd:documentation>
+		        		ASCII_DELIMITED format for glucose:
+		        		##;record_id;year;month;day;hour;minute;second;unit;glucose
+		        		time and date values must be valid
+		        		record_id may be empty
+		        	</xsd:documentation>
+		        </xsd:annotation>
+				<xsd:restriction base="xsd:token">
+		       		<xsd:pattern value="(^##;.*;20\d{2};(0[1-9]|1[0-2]);([0-2]\d|3[0-1]);([0-1]\d|2[0-4]);([0-5]\d|60);([0-5]\d|60);mg\/dl|mmol\/l;\d{1,3}(\.\d)?$)" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			
+			<xsd:simpleType name="SCData">
+		    	<xsd:annotation>
+		        	<xsd:documentation>
+		        		ASCII_DELIMITED format for weight:
+		        		##;record_id;year;month;day;hour;minute;second;unit;weight
+		        		time and date values must be valid
+		        		record_id may be empty
+		        		weight is a float value with maximum 2 decimal places
+		        	</xsd:documentation>
+		        </xsd:annotation>
+				<xsd:restriction base="xsd:token">
+		       		<xsd:pattern value="(^##;.*;20\d{2};(0[1-9]|1[0-2]);([0-2]\d|3[0-1]);([0-1]\d|2[0-4]);([0-5]\d|60);([0-5]\d|60);kg|lb;\d{1,3}(\.\d{1,2})?$)" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			
+			<xsd:simpleType name="MessageType">
+				<xsd:restriction base="xsd:string">
+		   			<xsd:enumeration value="HTML"></xsd:enumeration>
+		       		<xsd:enumeration value="STRING"></xsd:enumeration>
+		       		<xsd:enumeration value="VIDEOURL"></xsd:enumeration>
+		       		<xsd:enumeration value="XML"></xsd:enumeration>
+		       	</xsd:restriction>
+		    </xsd:simpleType>
+	
+			<xsd:simpleType name="DeviceType">
+		        <xsd:annotation>
+		            <xsd:documentation>
+		           		AC : Acitvity
+		           		BP : Blood Pressure
+		           		BS : Blood Sugar
+		           		SC : Weight
+		            </xsd:documentation>
+		        </xsd:annotation>
+		        <xsd:restriction base="xsd:string">
+		        	<xsd:enumeration value="AC"></xsd:enumeration>
+		        	<xsd:enumeration value="BP"></xsd:enumeration>
+					<xsd:enumeration value="BS"></xsd:enumeration>
+					<xsd:enumeration value="SC"></xsd:enumeration>
+				</xsd:restriction>
+			</xsd:simpleType>
+					
+			<xsd:simpleType name="Direction">
+		       <xsd:annotation>
+	               	<xsd:documentation>
+	               		f : forward
+	               		r : reverse
+	               	</xsd:documentation>
+		       </xsd:annotation>
+		       <xsd:restriction base="xsd:string">
+					<xsd:enumeration value="f"></xsd:enumeration>
+					<xsd:enumeration value="r"></xsd:enumeration>
+				</xsd:restriction>
+			</xsd:simpleType>
+					
+			<xsd:simpleType name="QuestionId">
+				<xsd:restriction base="xsd:int" />
+			</xsd:simpleType>
+			
+			<xsd:simpleType name="AnswerId">
+				<xsd:restriction base="xsd:int" />
+			</xsd:simpleType>	
+			
+			<xsd:simpleType name="Password">
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="((?=^.{5,19}$)(?=^[^A-Z]*(?:[A-Z][^A-Z]*){1,}$)(?=^[^0-9]*(?:[0-9][^0-9]*){1,}$)(?=^[a-zA-Z0-9]*(?:[^a-zA-Z0-9][a-zA-Z0-9]*){1,}$))"></xsd:pattern>
+				</xsd:restriction>
+			</xsd:simpleType>
+			
+			<xsd:simpleType name="SessionId">
+				<xsd:annotation>
+					<xsd:documentation>
+						SessionId is valid half an hour after calling
+						authenticate method
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:string" />
+			</xsd:simpleType>
+			
+			<xsd:simpleType name="Increment">
+				<xsd:restriction base="xsd:int">
+					 <xsd:minInclusive value="1" />
+				</xsd:restriction>
+			</xsd:simpleType>	
+			
+			<xsd:simpleType name="Date">
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="(^[1-9][0-9]{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$)" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			
+			<xsd:simpleType name="StatusScope">
+				<xsd:annotation>
+			    	<xsd:documentation>
+			    		Defines the entities of which the status shall be returned using an index number.
+			    		The index number is calculated by a logical OR-connection of the binary values of the entities 
+			    		of which the status shall be retrieved. 
+			    		Following values are assigned to the entities:
+			    			messages = 1
+			    			surveys = 2
+			    			devices = 4	
+			    		For example, if the status of messages and surveys shall be retrieved, the index number
+			    	 	has to be 3.
+			    	</xsd:documentation>
+			    </xsd:annotation>
+				<xsd:restriction base="xsd:int" />
+			</xsd:simpleType>	
+			
+			<!-- complex types -->
+			<xsd:complexType name="Device_ADDR">
+		        <xsd:sequence>
+	        		<xsd:element name="DeviceManufacturer" type="xsd:string" minOccurs="1" maxOccurs="1" />
+	        		<xsd:element name="SerialNumber" type="xsd:string" minOccurs="1" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:complexType>
+
+		    <xsd:complexType name="DeviceData">
+		    	<xsd:sequence>
+	        		<xsd:element name="Device_ADDR" type="tns:Device_ADDR" minOccurs="0" maxOccurs="1" />
+	        		<xsd:element name="BD_ADDR" type="tns:BD_ADDR" minOccurs="0" maxOccurs="1" />
+	    			<xsd:element name="ACData" type="tns:ACData" minOccurs="0" maxOccurs="unbounded" />
+	    			<xsd:element name="BPData" type="tns:BPData" minOccurs="0" maxOccurs="unbounded" />
+	    			<xsd:element name="BSData" type="tns:BSData" minOccurs="0" maxOccurs="unbounded" />
+	    			<xsd:element name="SCData" type="tns:SCData" minOccurs="0" maxOccurs="unbounded" />
+		    	</xsd:sequence>
+		    </xsd:complexType>
+		
+			<xsd:complexType name="Device">
+				<xsd:sequence>
+	        		<xsd:element name="Device_ADDR" type="tns:Device_ADDR" minOccurs="0" maxOccurs="1" />
+	        		<xsd:element name="BD_ADDR" type="tns:BD_ADDR" minOccurs="0" maxOccurs="1" />
+		     		<xsd:element name="DeviceType" type="tns:DeviceType" minOccurs="1" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:complexType>
+		
+		    <xsd:complexType name="DeviceInfo">
+				<xsd:sequence>
+	        		<xsd:element name="Device_ADDR" type="tns:Device_ADDR" minOccurs="0" maxOccurs="1" />
+	        		<xsd:element name="BD_ADDR" type="tns:BD_ADDR" minOccurs="0" maxOccurs="1" />
+		     		<xsd:element name="DeviceType" type="tns:DeviceType" minOccurs="1" maxOccurs="1" />
+		     		<xsd:element name="FirstRecord" type="xsd:int" minOccurs="1" maxOccurs="1">
+		     			<xsd:annotation>
+		     				<xsd:documentation>
+		     					unix timestamp
+		     				</xsd:documentation>
+		     			</xsd:annotation>
+		     		</xsd:element>
+		     		<xsd:element name="LastRecord" type="xsd:int" minOccurs="1" maxOccurs="1">
+		     			<xsd:annotation>
+		     				<xsd:documentation>
+		     					unix timestamp
+		     				</xsd:documentation>
+		     			</xsd:annotation>
+		     		</xsd:element>
+		   		</xsd:sequence>
+			</xsd:complexType>
+			
+			<xsd:complexType name="Scroll">
+			 	<xsd:sequence>
+			 		<xsd:element name="Direction" type="tns:Direction" minOccurs="1" maxOccurs="1" /> 
+			 		<xsd:element name="Increment" type="tns:Increment" minOccurs="0" maxOccurs="1" default="1" />
+			 	</xsd:sequence>
+			 </xsd:complexType>
+		
+			<xsd:complexType name="Question">
+			 	<xsd:sequence>
+			 		<xsd:element name="QuestionId" type="xsd:int" minOccurs="1" maxOccurs="1" /> 
+			 		<xsd:element name="Position" type="xsd:int" minOccurs="1" maxOccurs="1" />
+			 		<xsd:element name="Content" type="xsd:string" minOccurs="1" maxOccurs="1" />
+			 	</xsd:sequence>
+			</xsd:complexType>
+			
+			<xsd:complexType name="AnswerDefault">
+			 	<xsd:sequence>
+			 		<xsd:element name="AnswerId" type="xsd:int" minOccurs="1" maxOccurs="1" /> 
+			 		<xsd:element name="Position" type="xsd:int" minOccurs="1" maxOccurs="1" />
+			 		<xsd:element name="Content" type="xsd:string" minOccurs="1" maxOccurs="1" />
+			 	</xsd:sequence>
+			 </xsd:complexType>
+			
+			<xsd:complexType name="MessageOption">
+			 	<xsd:sequence>
+			 		<xsd:element name="MessageId" type="xsd:int" minOccurs="1" maxOccurs="1" /> 
+			 		<xsd:element name="Scroll" type="tns:Scroll" minOccurs="0" maxOccurs="1" />
+			 	</xsd:sequence>
+			 </xsd:complexType>
+			
+			<xsd:complexType name="SurveyOption">
+			 	<xsd:sequence>
+			 		<xsd:element name="SurveyId" type="xsd:int" minOccurs="1" maxOccurs="1" /> 
+			 		<xsd:element name="Scroll" type="tns:Scroll" minOccurs="0" maxOccurs="1" />
+			 	</xsd:sequence>
+			 </xsd:complexType>
+		
+		 	<xsd:complexType name="SurveyValue">
+			 	<xsd:sequence>
+			 		<xsd:element name="QuestionId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+			 		<xsd:element name="AnswerId" type="xsd:int" minOccurs="0" maxOccurs="1" />
+			 		<xsd:element name="AnswerContent" type="xsd:string" minOccurs="0" maxOccurs="1" />
+			 	</xsd:sequence>
+			 </xsd:complexType>
+			
+			<xsd:complexType name="SurveyElement">
+			 	<xsd:sequence>
+			 		<xsd:element name="Question" type="tns:Question" minOccurs="1" maxOccurs="1" />
+			 		<xsd:element name="AnswerDefault" type="tns:AnswerDefault" minOccurs="0" maxOccurs="unbounded" />
+			 	</xsd:sequence>
+			 </xsd:complexType>
+			 
+			<xsd:complexType name="SurveyResult">
+					<xsd:sequence>
+		           		 <xsd:element name="SurveyValue" type="tns:SurveyValue" minOccurs="1" maxOccurs="unbounded" />
+		            </xsd:sequence>
+		     </xsd:complexType> 
+		
+			<xsd:complexType name="SurveyData">
+					<xsd:sequence>
+		           		 <xsd:element name="SurveyElement" type="tns:SurveyElement" minOccurs="1" maxOccurs="unbounded" />
+		            </xsd:sequence>
+		     </xsd:complexType> 
+		
+			<!-- complex elements -->
+			<xsd:element name="Credentials">
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element name="username" type="xsd:string" />
+						<xsd:element name="password" type="xsd:string" />
+					</xsd:all>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:element name="Status">
+			    <xsd:annotation>
+			    	<xsd:documentation>
+			    		TODO: current values of DeviceInfo-type are not
+			    		enough, as a device can handle multiple value
+			    		types. We need appropriate values for every
+			    		value type
+			    	</xsd:documentation>
+			    </xsd:annotation>
+			    <xsd:complexType>
+			      	<xsd:sequence>
+			      		<xsd:element name="Accepted" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+			      		<xsd:element name="AvailableMessages" type="xsd:int" minOccurs="0" maxOccurs="1" />
+		        		<xsd:element name="AvailableSurveys" type="xsd:int"	minOccurs="0" maxOccurs="1" />
+			      		<xsd:element name="DeviceInfo" type="tns:DeviceInfo" minOccurs="0" maxOccurs="unbounded" />
+			      	</xsd:sequence>
+				</xsd:complexType>
+		    </xsd:element> 
+		    
+		    <xsd:element name="getStatusRequest">
+		   		<xsd:annotation>
+			    	<xsd:documentation>
+			    		The device address (BD_ADDR or Device_ADDR) is required for each device of which the status shall be retrieved.
+			    	</xsd:documentation>
+			    </xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SessionId" type="tns:SessionId" minOccurs="1" maxOccurs="1" />
+						<xsd:element name="StatusScope" type="tns:StatusScope" minOccurs="1" maxOccurs="1" default="7" />
+		        		<xsd:element name="Device_ADDR" type="tns:Device_ADDR" minOccurs="0" maxOccurs="1" />
+		        		<xsd:element name="BD_ADDR" type="tns:BD_ADDR" minOccurs="0" maxOccurs="1" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			
+			<xsd:element name="getDeviceTypesRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SessionId" type="tns:SessionId" minOccurs="1" maxOccurs="1" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			
+			<xsd:element name="DeviceTypes">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="DeviceType" type="tns:DeviceType" minOccurs="0" maxOccurs="unbounded" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			
+			<xsd:element name="getDeviceManufacturersRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SessionId" type="tns:SessionId" minOccurs="1" maxOccurs="1" />
+						<xsd:element name="DeviceType" type="tns:DeviceType" minOccurs="1" maxOccurs="1" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			
+			<xsd:element name="DeviceManufacturers">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="DeviceManufacturer" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		    
+		    <xsd:element name="sendDataRequest">
+		     	<xsd:complexType>
+		     		<xsd:sequence>
+		     			<xsd:element name="SessionId" type="tns:SessionId" minOccurs="1" maxOccurs="1" />
+		     			<xsd:element name="DataType" type="tns:DataType" minOccurs="1" maxOccurs="1" />
+		     			<xsd:element name="DeviceType" type="tns:DeviceType" minOccurs="1" maxOccurs="1" />
+		     			<xsd:element name="DeviceData" type="tns:DeviceData" minOccurs="1" maxOccurs="unbounded" />
+		     		</xsd:sequence>
+		     	</xsd:complexType>
+		     </xsd:element>
+		     
+		    <xsd:element name="getMeasuredDataRequest">
+		     	<xsd:complexType>
+		     		<xsd:sequence>
+		     			<xsd:element name="SessionId" type="tns:SessionId" minOccurs="1" maxOccurs="1" />
+		     			<xsd:element name="DeviceType" type="tns:DeviceType" minOccurs="1" maxOccurs="1" />
+		     			<xsd:element name="Days" type="xsd:int" minOccurs="0" maxOccurs="1" default="1" />
+		     		</xsd:sequence>
+		     	</xsd:complexType>
+		     </xsd:element>
+		     
+		    <xsd:element name="getMeasuredDataResponse">		     
+		    	<xsd:complexType>
+		     		<xsd:sequence>
+	    				<xsd:element name="ACData" type="tns:ACData" minOccurs="0" maxOccurs="unbounded" />
+	    				<xsd:element name="BPData" type="tns:BPData" minOccurs="0" maxOccurs="unbounded" />
+	    				<xsd:element name="BSData" type="tns:BSData" minOccurs="0" maxOccurs="unbounded" />
+	    				<xsd:element name="SCData" type="tns:SCData" minOccurs="0" maxOccurs="unbounded" />
+		     		</xsd:sequence>
+		     	</xsd:complexType>
+		     </xsd:element>
+		
+		     <xsd:element name="getMessageRequest">
+		     	<xsd:complexType>
+		     		<xsd:all>
+		     			<xsd:element name="SessionId" type="tns:SessionId" minOccurs="1" maxOccurs="1" />
+		     			<xsd:element name="MessageOption" type="tns:MessageOption" minOccurs="0" maxOccurs="1" />
+		     		</xsd:all>
+		     	</xsd:complexType>
+		     </xsd:element>
+		     
+		    <xsd:element name="aMessage">
+		      <xsd:complexType>
+		     		<xsd:all>
+		     			<xsd:element name="MessageType" type="tns:MessageType"/>
+		     			<xsd:element name="MessageTitle" type="xsd:string"/>
+		     			<xsd:element name="MessageData"	type="xsd:string"/>
+		     			<xsd:element name="MessageId" type="xsd:int"/>
+		     		</xsd:all>
+		      </xsd:complexType>
+		     </xsd:element>
+		     
+		     <xsd:element name="getSurveyRequest">
+		    	<xsd:complexType>
+		    		<xsd:all>
+		    			<xsd:element name="SessionId" type="tns:SessionId"  minOccurs="1" maxOccurs="1" />
+		    			<xsd:element name="SurveyOption" type="tns:SurveyOption" minOccurs="0" maxOccurs="1" />
+		    		</xsd:all>
+		    	</xsd:complexType>
+		     </xsd:element>
+		     
+		     <xsd:element name="aSurvey">
+			      <xsd:complexType>
+			     		<xsd:all>
+			     			<xsd:element name="SurveyTitle" type="xsd:string"/>
+			     			<xsd:element name="SurveyFreetext" type="xsd:string"/>
+			     			<xsd:element name="SurveyData"	type="tns:SurveyData"/>
+			     			<xsd:element name="SurveyId" type="xsd:int"/>
+			     		</xsd:all>
+			      </xsd:complexType>
+		     </xsd:element>
+		            
+		     <xsd:element name="sendSurveyDataRequest">
+		            <xsd:complexType>
+		            	<xsd:sequence>
+		               		<xsd:element name="SessionId" type="tns:SessionId"  minOccurs="1" maxOccurs="1" />
+		            		<xsd:element name="SurveyId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+		                	<xsd:element name="SurveyResult" type="tns:SurveyResult" minOccurs="0" maxOccurs="1" />
+		            	</xsd:sequence>
+		            </xsd:complexType>
+		     </xsd:element> 
+		            
+		     <xsd:element name="Session">
+		      	<xsd:annotation>
+					<xsd:documentation>
+						SessionId is valid half an hour after calling
+						authenticate method
+					</xsd:documentation>
+				</xsd:annotation>
+		          	<xsd:complexType>
+		          		<xsd:all>
+		          			<xsd:element name="SessionId"  type="tns:SessionId" minOccurs="1" maxOccurs="1" /> 
+		          			<xsd:element name="PwdExpire" type="tns:Date" minOccurs="0" maxOccurs="1" />
+		          		</xsd:all>
+		          	</xsd:complexType>
+		      </xsd:element> 
+		           
+		      <xsd:element name="newPwdRequest">
+		            <xsd:complexType>
+		            	<xsd:sequence>
+		               		<xsd:element name="SessionId" type="tns:SessionId" minOccurs="1" maxOccurs="1" />
+		            		<xsd:element name="Password" type="tns:Password" minOccurs="1" maxOccurs="1"  />
+		                   	</xsd:sequence>
+		            </xsd:complexType>
+		     </xsd:element> 
+		</xsd:schema>
+	</types>
+
+	<message name="authenticateRequest">
+		<part name="parameters" element="tns:Credentials"/>
+	</message>
+	<message name="authenticateResponse">
+		<part name="parameters" element="tns:Session"/>
+	</message>
+    <message name="getStatusRequest">
+    	<part name="parameters" element="tns:getStatusRequest"></part>
+    </message>
+    <message name="getStatusResponse">
+    	<part name="parameters" element="tns:Status"></part>
+    </message>	
+     <message name="getDeviceTypesRequest">
+    	<part name="parameters" element="tns:getDeviceTypesRequest"></part>
+    </message>
+    <message name="getDeviceTypesResponse">
+    	<part name="parameters" element="tns:DeviceTypes"></part>
+    </message>
+     <message name="getDeviceManufacturersRequest">
+    	<part name="parameters" element="tns:getDeviceManufacturersRequest"></part>
+    </message>
+    <message name="getDeviceManufacturersResponse">
+    	<part name="parameters" element="tns:DeviceManufacturers"></part>
+    </message>
+    <message name="sendDataRequest">
+    	<part name="parameters" element="tns:sendDataRequest"></part>
+    </message>
+    <message name="sendDataResponse">
+    	<part name="parameters" element="tns:Status"></part>
+    </message>
+     <message name="getMeasuredDataRequest">
+    	<part name="parameters" element="tns:getMeasuredDataRequest"></part>
+    </message>
+    <message name="getMeasuredDataResponse">
+    	<part name="parameters" element="tns:getMeasuredDataResponse"></part>
+    </message>
+    <message name="getMessageRequest">
+    	<part name="parameters" element="tns:getMessageRequest"></part>
+    </message>
+    <message name="getMessageResponse">
+    	<part name="parameters" element="tns:aMessage"></part>
+    </message>
+     <message name="getSurveyRequest">
+    	<part name="parameters" element="tns:getSurveyRequest"></part>
+    </message>
+    <message name="getSurveyResponse">
+    	<part name="parameters" element="tns:aSurvey"></part>
+    </message>
+ 	<message name="newPwdRequest">
+    	<part name="parameters" element="tns:newPwdRequest"></part>
+    </message>
+    <message name="newPwdResponse">
+    	<part name="parameters" element="tns:Status"></part>
+    </message> 
+    <message name="sendSurveyDataRequest">
+    	<part name="parameters" element="tns:sendSurveyDataRequest"></part>
+    </message>
+	 <message name="sendSurveyDataResponse">
+    	<part name="parameters" element="tns:Status"></part>
+    </message>
+   
+    <portType name="sycare">
+	<operation name="authenticate">
+		<documentation>
+			Client has to authenticate against Webservice with username and password.
+			If account exists we will return an appropriate userid. 
+			If authentication takes place within a configurable period before password expires,
+			we return the  additional parameter PwdExpire with the date of expiration as value. 
+			If account doesn't exist we return zero.
+		</documentation>
+		<input message="tns:authenticateRequest"/>
+		<output message="tns:authenticateResponse"/>
+	</operation>
+    <operation name="getStatus">
+    	<documentation>
+    		Client sends request for retrieving status of messages and/or surveys and/or a specific device.
+			We return the status of the devices which contains requested device identifier and most recent values for devices
+			and/or the number of the unread messages and/or the number of the unread surveys.
+			Returns a SOAP-Fault if no session id is transmitted, session id is invalid or session is expired.
+		</documentation>
+		<input message="tns:getStatusRequest"></input>
+    	<output message="tns:getStatusResponse"></output>
+    </operation> 
+     <operation name="getDeviceTypes">
+    	<documentation>Client sends request for embedded device types. We return a list of device types.</documentation>
+    	<input message="tns:getDeviceTypesRequest"></input>
+    	<output message="tns:getDeviceTypesResponse"></output>
+    </operation>
+    <operation name="getDeviceManufacturers">
+    	<documentation>
+    		Client sends device type. We return a list of manufacturers for this device type.
+    		The list is empty, if no devices of given type are allocated to actual patient.
+    	</documentation>
+    	<input message="tns:getDeviceManufacturersRequest"></input>
+    	<output message="tns:getDeviceManufacturersResponse"></output>
+    </operation>
+     <operation name="sendData">
+    	<documentation>Client sends data for available devices to Webservice. We return a status.</documentation>
+    	<input message="tns:sendDataRequest"></input>
+    	<output message="tns:sendDataResponse"></output>
+    </operation>
+    <operation name="getMeasuredData">
+    	<documentation>
+    		Client sends device type and number of days.
+    		The number of days specfies how many days before current date the period 
+			from which the measured data shall come begins.  
+			We return measured data for specified device type within specified period.
+		</documentation>
+    	<input message="tns:getMeasuredDataRequest"></input>
+    	<output message="tns:getMeasuredDataResponse"></output>
+    </operation>
+    <operation name="getMessage">
+    	<documentation>Client sends request for retrieving next available message</documentation>
+    	<input message="tns:getMessageRequest"></input>
+    	<output message="tns:getMessageResponse"></output>
+    </operation>
+    <operation name="getSurvey">
+    	<documentation>Client sends request for retrieving next available survey</documentation>
+    	<input message="tns:getSurveyRequest"></input>
+    	<output message="tns:getSurveyResponse"></output>
+    </operation>
+    <operation name="sendSurveyData">
+    	<documentation>
+    		Client sends confirmation and maybe answers of a survey. 
+			We return if data could be inserted in database succesfully
+		</documentation>
+    	<input message="tns:sendSurveyDataRequest"></input>
+    	<output message="tns:sendSurveyDataResponse"></output>
+    </operation> 
+  	<operation name="newPwd">
+    	<documentation>
+    		Client sends new password.
+			We return if password is valid and could be inserted in database succesfully.
+		</documentation>
+    	<input message="tns:newPwdRequest"></input>
+    	<output message="tns:newPwdResponse"></output>
+    </operation>    
+    </portType>
+
+    <binding name="sycareSOAP" type="tns:sycare">
+    	<soap:binding style="document"
+    		transport="http://schemas.xmlsoap.org/soap/http" />
+    	<operation name="authenticate">
+    		<soap:operation
+    			soapAction="http://www.kompass-lme.ei.tum.de/sycare/soap/sycare-0.11.wsdl/authenticate" />
+    		<input>
+    			<soap:body use="literal" />
+    		</input>
+    		<output>
+    			<soap:body use="literal" />
+    		</output>
+    	</operation>
+    	<operation name="getStatus">
+    		<soap:operation
+    			soapAction="http://www.kompass-lme.ei.tum.de/sycare/soap/sycare-0.11.wsdl/getStatus" />
+    		<input>
+    			<soap:body use="literal" />
+    		</input>
+    		<output>
+    			<soap:body use="literal" />
+    		</output>
+    	</operation>
+    	<operation name="getDeviceTypes">
+    		<soap:operation
+    			soapAction="http://www.kompass-lme.ei.tum.de/sycare/soap/sycare-0.11.wsdl/getDeviceTypes" />
+    		<input>
+    			<soap:body use="literal" />
+    		</input>
+    		<output>
+    			<soap:body use="literal" />
+    		</output>
+    	</operation> 
+    	<operation name="getDeviceManufacturers">
+    		<soap:operation
+    			soapAction="http://www.kompass-lme.ei.tum.de/sycare/soap/sycare-0.11.wsdl/getDeviceManufacturers" />
+    		<input>
+    			<soap:body use="literal" />
+    		</input>
+    		<output>
+    			<soap:body use="literal" />
+    		</output>
+    	</operation>   
+    	<operation name="sendData">
+    		<soap:operation
+    			soapAction="http://www.kompass-lme.ei.tum.de/sycare/soap/sycare-0.11.wsdl/sendData" />
+    		<input>
+    			<soap:body use="literal" />
+    		</input>
+    		<output>
+    			<soap:body use="literal" />
+    		</output>
+    	</operation>
+    	<operation name="getMeasuredData">
+    		<soap:operation
+    			soapAction="http://www.kompass-lme.ei.tum.de/sycare/soap/sycare-0.11.wsdl/getMeasuredData" />
+    		<input>
+    			<soap:body use="literal" />
+    		</input>
+    		<output>
+    			<soap:body use="literal" />
+    		</output>
+    	</operation>
+    	<operation name="getMessage">
+    		<soap:operation
+    			soapAction="http://www.kompass-lme.ei.tum.de/sycare/soap/sycare-0.11.wsdl/getMessage" />
+    		<input>
+    			<soap:body use="literal" />
+    		</input>
+    		<output>
+    			<soap:body use="literal" />
+    		</output>
+    	</operation>
+    	<operation name="getSurvey">
+    		<soap:operation
+    			soapAction="http://www.kompass-lme.ei.tum.de/sycare/soap/sycare-0.11.wsdl/getSurvey" />
+    		<input>
+    			<soap:body use="literal" />
+    		</input>
+    		<output>
+    			<soap:body use="literal" />
+    		</output>
+    	</operation>
+        <operation name="sendSurveyData">
+    		<soap:operation
+    			soapAction="http://www.kompass-lme.ei.tum.de/sycare/soap/sycare-0.11.wsdl/sendSurveyData" />
+    		<input>
+    			<soap:body use="literal" />
+    		</input>
+    		<output>
+    			<soap:body use="literal" />
+    		</output>
+    	</operation>
+    	<operation name="newPwd">
+    		<soap:operation
+    			soapAction="http://www.kompass-lme.ei.tum.de/sycare/soap/sycare-0.11.wsdl/newPwd" />
+    		<input>
+    			<soap:body use="literal" />
+    		</input>
+    		<output>
+    			<soap:body use="literal" />
+    		</output>
+    	</operation> 
+     </binding>
+
+    <service name="sycare">
+		<port binding="tns:sycareSOAP" name="sycareSOAP">
+			<soap:address location="http://www.kompass-lme.ei.tum.de/sycare/soap/sycare_ws.php"/>
+		</port>
+	</service>
+</definitions>	

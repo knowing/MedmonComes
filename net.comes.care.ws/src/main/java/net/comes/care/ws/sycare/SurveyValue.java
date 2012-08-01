@@ -1,6 +1,7 @@
 
 package net.comes.care.ws.sycare;
 
+import javax.annotation.Generated;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -8,7 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java-Klasse für SurveyValue complex type.
+ * <p>Java-Klasse fÃ¼r SurveyValue complex type.
  * 
  * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
  * 
@@ -34,19 +35,24 @@ import javax.xml.bind.annotation.XmlType;
     "answerId",
     "answerContent"
 })
+@Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
 public class SurveyValue {
 
     @XmlElement(name = "QuestionId")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     protected int questionId;
     @XmlElement(name = "AnswerId")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     protected Integer answerId;
     @XmlElement(name = "AnswerContent")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     protected String answerContent;
 
     /**
      * Ruft den Wert der questionId-Eigenschaft ab.
      * 
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public int getQuestionId() {
         return questionId;
     }
@@ -55,6 +61,7 @@ public class SurveyValue {
      * Legt den Wert der questionId-Eigenschaft fest.
      * 
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public void setQuestionId(int value) {
         this.questionId = value;
     }
@@ -67,6 +74,7 @@ public class SurveyValue {
      *     {@link Integer }
      *     
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public Integer getAnswerId() {
         return answerId;
     }
@@ -79,6 +87,7 @@ public class SurveyValue {
      *     {@link Integer }
      *     
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public void setAnswerId(Integer value) {
         this.answerId = value;
     }
@@ -91,6 +100,7 @@ public class SurveyValue {
      *     {@link String }
      *     
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public String getAnswerContent() {
         return answerContent;
     }
@@ -103,6 +113,7 @@ public class SurveyValue {
      *     {@link String }
      *     
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public void setAnswerContent(String value) {
         this.answerContent = value;
     }

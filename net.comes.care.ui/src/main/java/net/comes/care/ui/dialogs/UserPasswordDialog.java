@@ -5,7 +5,7 @@ import javax.xml.ws.soap.SOAPFaultException;
 import net.comes.care.ui.Activator;
 import net.comes.care.ws.sycare.Credentials;
 import net.comes.care.ws.sycare.Session;
-import net.comes.care.ws.sycare.service.Sycare;
+import net.comes.care.ws.sycare.Sycare;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;

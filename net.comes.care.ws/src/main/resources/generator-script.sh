@@ -1,0 +1,1 @@
+wsdl2java -client -p net.comes.care.ws.sycare -d ../java/ -verbose -mark-generated sycare-0.11.wsdl

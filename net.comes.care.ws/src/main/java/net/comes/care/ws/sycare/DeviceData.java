@@ -3,6 +3,7 @@ package net.comes.care.ws.sycare;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Generated;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -12,7 +13,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
- * <p>Java-Klasse für DeviceData complex type.
+ * <p>Java-Klasse fÃ¼r DeviceData complex type.
  * 
  * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
  * 
@@ -21,12 +22,12 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="Device_ADDR" type="{https://comes.synergysystems-net.com/sycare/soap/sycare-0.11.wsdl}Device_ADDR" minOccurs="0"/>
- *         &lt;element name="BD_ADDR" type="{https://comes.synergysystems-net.com/sycare/soap/sycare-0.11.wsdl}BD_ADDR" minOccurs="0"/>
- *         &lt;element name="ACData" type="{https://comes.synergysystems-net.com/sycare/soap/sycare-0.11.wsdl}ACData" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="BPData" type="{https://comes.synergysystems-net.com/sycare/soap/sycare-0.11.wsdl}BPData" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="BSData" type="{https://comes.synergysystems-net.com/sycare/soap/sycare-0.11.wsdl}BSData" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="SCData" type="{https://comes.synergysystems-net.com/sycare/soap/sycare-0.11.wsdl}SCData" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="Device_ADDR" type="{http://www.kompass-lme.ei.tum.de/sycare/soap/sycare-0.11.wsdl}Device_ADDR" minOccurs="0"/>
+ *         &lt;element name="BD_ADDR" type="{http://www.kompass-lme.ei.tum.de/sycare/soap/sycare-0.11.wsdl}BD_ADDR" minOccurs="0"/>
+ *         &lt;element name="ACData" type="{http://www.kompass-lme.ei.tum.de/sycare/soap/sycare-0.11.wsdl}ACData" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="BPData" type="{http://www.kompass-lme.ei.tum.de/sycare/soap/sycare-0.11.wsdl}BPData" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="BSData" type="{http://www.kompass-lme.ei.tum.de/sycare/soap/sycare-0.11.wsdl}BSData" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="SCData" type="{http://www.kompass-lme.ei.tum.de/sycare/soap/sycare-0.11.wsdl}SCData" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -44,23 +45,30 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
     "bsData",
     "scData"
 })
+@Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
 public class DeviceData {
 
     @XmlElement(name = "Device_ADDR")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     protected DeviceADDR deviceADDR;
     @XmlElement(name = "BD_ADDR")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     protected String bdaddr;
     @XmlElement(name = "ACData")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     protected List<String> acData;
     @XmlElement(name = "BPData")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     protected List<String> bpData;
     @XmlElement(name = "BSData")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     protected List<String> bsData;
     @XmlElement(name = "SCData")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     protected List<String> scData;
 
     /**
@@ -71,6 +79,7 @@ public class DeviceData {
      *     {@link DeviceADDR }
      *     
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public DeviceADDR getDeviceADDR() {
         return deviceADDR;
     }
@@ -83,6 +92,7 @@ public class DeviceData {
      *     {@link DeviceADDR }
      *     
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public void setDeviceADDR(DeviceADDR value) {
         this.deviceADDR = value;
     }
@@ -95,6 +105,7 @@ public class DeviceData {
      *     {@link String }
      *     
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public String getBDADDR() {
         return bdaddr;
     }
@@ -107,6 +118,7 @@ public class DeviceData {
      *     {@link String }
      *     
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public void setBDADDR(String value) {
         this.bdaddr = value;
     }
@@ -133,6 +145,7 @@ public class DeviceData {
      * 
      * 
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public List<String> getACData() {
         if (acData == null) {
             acData = new ArrayList<String>();
@@ -162,6 +175,7 @@ public class DeviceData {
      * 
      * 
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public List<String> getBPData() {
         if (bpData == null) {
             bpData = new ArrayList<String>();
@@ -191,6 +205,7 @@ public class DeviceData {
      * 
      * 
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public List<String> getBSData() {
         if (bsData == null) {
             bsData = new ArrayList<String>();
@@ -220,6 +235,7 @@ public class DeviceData {
      * 
      * 
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public List<String> getSCData() {
         if (scData == null) {
             scData = new ArrayList<String>();

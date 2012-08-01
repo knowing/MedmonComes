@@ -6,7 +6,7 @@ import net.comes.care.common.internal.Activator;
 import net.comes.care.common.resources.ISharedImages;
 import net.comes.care.ws.sycare.Credentials;
 import net.comes.care.ws.sycare.Session;
-import net.comes.care.ws.sycare.service.Sycare;
+import net.comes.care.ws.sycare.Sycare;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;

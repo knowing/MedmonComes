@@ -10,7 +10,7 @@ import java.util.List;
 
 import net.comes.care.entity.Patient;
 import net.comes.care.ui.wizards.pages.SensorAndPatientPage;
-import net.comes.care.ws.sycare.service.Sycare;
+import net.comes.care.ws.sycare.Sycare;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.Wizard;

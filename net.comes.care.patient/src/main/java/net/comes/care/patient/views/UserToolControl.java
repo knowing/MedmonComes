@@ -9,8 +9,7 @@ import net.comes.care.ws.sycare.Credentials;
 import net.comes.care.ws.sycare.GetStatusRequest;
 import net.comes.care.ws.sycare.Session;
 import net.comes.care.ws.sycare.Status;
-import net.comes.care.ws.sycare.StatusScope;
-import net.comes.care.ws.sycare.service.Sycare;
+import net.comes.care.ws.sycare.Sycare;
 
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.e4.core.di.extensions.Preference;
@@ -123,7 +122,7 @@ public class UserToolControl {
 	private Status fetchStatus(Session session) {
 		GetStatusRequest parameters = new GetStatusRequest();
 		parameters.setSessionId(session.getSessionId());
-		parameters.setStatusScope(StatusScope.MESSAGE | StatusScope.SURVEYS);
+//		parameters.setStatusScope(StatusScope.MESSAGE | StatusScope.SURVEYS);
 		return sycare.getStatus(parameters);
 	}
 }

@@ -1,6 +1,7 @@
 
 package net.comes.care.ws.sycare;
 
+import javax.annotation.Generated;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -8,7 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java-Klasse für Scroll complex type.
+ * <p>Java-Klasse fÃ¼r Scroll complex type.
  * 
  * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
  * 
@@ -17,8 +18,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="Direction" type="{https://comes.synergysystems-net.com/sycare/soap/sycare-0.11.wsdl}Direction"/>
- *         &lt;element name="Increment" type="{https://comes.synergysystems-net.com/sycare/soap/sycare-0.11.wsdl}Increment" minOccurs="0"/>
+ *         &lt;element name="Direction" type="{http://www.kompass-lme.ei.tum.de/sycare/soap/sycare-0.11.wsdl}Direction"/>
+ *         &lt;element name="Increment" type="{http://www.kompass-lme.ei.tum.de/sycare/soap/sycare-0.11.wsdl}Increment" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -32,11 +33,14 @@ import javax.xml.bind.annotation.XmlType;
     "direction",
     "increment"
 })
+@Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
 public class Scroll {
 
     @XmlElement(name = "Direction", required = true)
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     protected Direction direction;
     @XmlElement(name = "Increment", defaultValue = "1")
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     protected Integer increment;
 
     /**
@@ -47,6 +51,7 @@ public class Scroll {
      *     {@link Direction }
      *     
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public Direction getDirection() {
         return direction;
     }
@@ -59,6 +64,7 @@ public class Scroll {
      *     {@link Direction }
      *     
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public void setDirection(Direction value) {
         this.direction = value;
     }
@@ -71,6 +77,7 @@ public class Scroll {
      *     {@link Integer }
      *     
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public Integer getIncrement() {
         return increment;
     }
@@ -83,6 +90,7 @@ public class Scroll {
      *     {@link Integer }
      *     
      */
+    @Generated(value = "com.sun.tools.xjc.Driver", date = "2012-08-01T12:52:24+02:00", comments = "JAXB RI v2.2.5")
     public void setIncrement(Integer value) {
         this.increment = value;
     }

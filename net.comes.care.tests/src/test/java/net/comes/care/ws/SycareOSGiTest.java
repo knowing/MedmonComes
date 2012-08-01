@@ -1,4 +1,4 @@
-package net.comes.care.ws.sycare.service.impl;
+package net.comes.care.ws;
 
 import static org.junit.Assert.*;
 
@@ -7,7 +7,6 @@ import java.util.List;
 import javax.xml.ws.soap.SOAPFaultException;
 
 import net.comes.care.ws.sycare.*;
-import net.comes.care.ws.sycare.service.*;
 
 import org.junit.After;
 import org.junit.Before;
