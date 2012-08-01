@@ -31,6 +31,7 @@
 
    <configurations>
       <plugin id="de.lmu.ifi.dbs.knowing.core" autoStart="true" startLevel="0" />
+      <plugin id="de.lmu.ifi.dbs.knowing.core.common" autoStart="true" startLevel="0" />
       <plugin id="de.lmu.ifi.dbs.knowing.core.swt" autoStart="true" startLevel="0" />
       <plugin id="de.lmu.ifi.dbs.knowing.weka" autoStart="true" startLevel="0" />
       <plugin id="de.sendsor.accelerationSensor" autoStart="true" startLevel="0" />
