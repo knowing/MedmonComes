@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="net.comes.care.knowing.feature"
+      label="Feature"
+      version="1.0.0.qualifier">
+
+   <description url="http://www.example.com/description">
+      [Enter Feature Description here.]
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <includes
+         id="de.lmu.ifi.dbs.knowing.core.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="de.lmu.ifi.dbs.knowing.core.swt.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="de.lmu.ifi.dbs.knowing.weka.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.sapphire"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.sapphire.java"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.sapphire.modeling.xml"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.sapphire.osgi"
+         version="0.0.0"/>
+
+</feature>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="Comes Patient App" uid="Comes Patient App" id="net.comes.care.patient.product" application="org.eclipse.e4.ui.workbench.swt.E4Application" version="1.0.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="ComesApp" uid="comes.patient" id="net.comes.care.patient.product" application="org.eclipse.e4.ui.workbench.swt.E4Application" version="1.0.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <configIni use="default">
    </configIni>
@@ -10,23 +10,33 @@
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 
+   <launcher name="ComesApp">
+      <linux icon="/icons/comes-logo.xpm"/>
+      <solaris/>
+      <win useIco="true">
+         <ico path="/icons/comes-logo.ico"/>
+         <bmp/>
+      </win>
+   </launcher>
+
+   <vm>
+      <linux include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7</linux>
+      <macos include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7</macos>
+      <solaris include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7</solaris>
+      <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7</windows>
+   </vm>
+
    <plugins>
    </plugins>
 
    <features>
-      <feature id="net.comes.care.patient.feature" version="1.0.0.qualifier"/>
-      <feature id="net.comes.care.core.feature" version="1.0.0.qualifier"/>
       <feature id="org.eclipse.e4.rcp" version="1.1.0.v20120521-2329-8yFTIGF3GGduEYqkQB9M3DKn"/>
-      <feature id="org.apache.cxf" version="2.5.2"/>
       <feature id="org.eclipse.emf.ecore" version="2.8.0.v20120606-0717"/>
       <feature id="org.eclipse.emf.common" version="2.8.0.v20120606-0717"/>
-      <feature id="org.eclipse.sapphire" version="0.5.1.201206261319"/>
-      <feature id="org.eclipse.sapphire.java" version="0.5.1.201206261319"/>
-      <feature id="org.eclipse.sapphire.modeling.xml" version="0.5.1.201206261319"/>
-      <feature id="org.eclipse.sapphire.osgi" version="0.5.1.201206261319"/>
-      <feature id="de.lmu.ifi.dbs.knowing.core.feature" version="0.1.6.201207281723"/>
-      <feature id="de.lmu.ifi.dbs.knowing.core.swt.feature" version="0.1.6.201207281723"/>
-      <feature id="de.lmu.ifi.dbs.knowing.weka.feature" version="0.1.6.201207281723"/>
+      <feature id="net.comes.care.patient.feature" version="1.0.0.qualifier"/>
+      <feature id="net.comes.care.core.feature" version="1.0.0.qualifier"/>
+      <feature id="net.comes.care.knowing.feature" version="1.0.0.qualifier"/>
+      <feature id="org.apache.cxf" version="2.5.2"/>
    </features>
 
    <configurations>
@@ -35,6 +45,10 @@
       <plugin id="de.lmu.ifi.dbs.knowing.core.swt" autoStart="true" startLevel="0" />
       <plugin id="de.lmu.ifi.dbs.knowing.weka" autoStart="true" startLevel="0" />
       <plugin id="de.sendsor.accelerationSensor" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
    </configurations>
 
 </product>

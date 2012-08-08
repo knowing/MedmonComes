@@ -115,41 +115,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.apache.geronimo.specs.geronimo-activation_1.1_spec"
-         download-size="0"
-         install-size="0"
-         version="1.1.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.geronimo.specs.geronimo-annotation_1.0_spec"
-         download-size="0"
-         install-size="0"
-         version="1.1.1"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.geronimo.specs.geronimo-javamail_1.4_spec"
-         download-size="0"
-         install-size="0"
-         version="1.2.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.geronimo.specs.geronimo-servlet_3.0_spec"
-         download-size="0"
-         install-size="0"
-         version="1.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.geronimo.specs.geronimo-ws-metadata_2.0_spec"
-         download-size="0"
-         install-size="0"
-         version="1.1.3"
-         unpack="false"/>
-
-   <plugin
          id="org.apache.hadoop.zookeeper"
          download-size="0"
          install-size="0"
@@ -378,6 +343,27 @@
          download-size="0"
          install-size="0"
          version="4.1.1"
+         unpack="false"/>
+
+   <plugin
+         id="javax.activation"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="javax.mail"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="javax.servlet"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
          unpack="false"/>
 
 </feature>

@@ -12,6 +12,7 @@
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
 		<encoding>UTF-8</encoding>
+		<product.id>comes.patient</product.id>
 	</properties>
 	<modules>
 		<module>net.comes.care.common</module>
@@ -22,6 +23,7 @@
 		<module>net.comes.care.ui</module>
 		<module>net.comes.care.core.feature</module>
 		<module>net.comes.care.patient.feature</module>
+		<module>net.comes.care.knowing.feature</module>
 		<module>net.comes.care.ws</module>
 		<module>net.comes.care.tests</module>
 		<module>net.comes.care.site</module>
@@ -116,6 +118,7 @@
 					</dependencies>
 				</configuration>
 
+<!-- 
 				<executions>
 					<execution>
 						<id>comes-tests</id>
@@ -125,8 +128,9 @@
 						</goals>
 					</execution>
 				</executions>
-
+-->
 			</plugin>
+
 		</plugins>
 	</build>
 	<repositories>

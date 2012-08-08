@@ -5,11 +5,11 @@
          id="product"
          point="org.eclipse.core.runtime.products">
       <product
-            name="Comes Patient App"
+            name="ComesApp"
             application="org.eclipse.e4.ui.workbench.swt.E4Application">
          <property
                name="appName"
-               value="Comes Patient App">
+               value="ComesApp">
          </property>
          <property
                name="applicationXMI"

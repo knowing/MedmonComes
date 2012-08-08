@@ -10,4 +10,34 @@
   <groupId>net.comes.care.site</groupId>
   <artifactId>net.comes.care.site</artifactId>
   <packaging>eclipse-repository</packaging>
+  <build>
+    <plugins>
+       <!-- Bug isn't really fixed https://bugs.eclipse.org/bugs/show_bug.cgi?id=349421 -->
+       <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>2.5</version>
+          <executions>
+            <execution>
+              <id>copy-resources</id>
+              <phase>generate-resources</phase>
+              <goals>
+                <goal>copy-resources</goal>
+              </goals>
+              <configuration>
+                <outputDirectory>${project.build.directory}/products/${product.id}/icons/</outputDirectory>
+	  	   <nonFilteredFileExtensions>
+	  	   <nonFilteredFileExtension>ico</nonFilteredFileExtension>
+	  	   <nonFilteredFileExtension>xpm</nonFilteredFileExtension>
+	  	   </nonFilteredFileExtensions>
+	        <resources>
+                  <resource>
+                    <directory>icons</directory>
+                  </resource>
+                </resources>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+     </plugins>
+   </build>
 </project>
