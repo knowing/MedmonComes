@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="Medmon@Comes" sequenceNumber="41">
+<?pde version="3.8"?><target name="Medmon@Comes" sequenceNumber="55">
 <locations>
-<location path="/home/muki/Development/target_platform/medmon" type="Directory"/>
-<location path="${eclipse_home}" type="Profile"/>
-<location path="/home/muki/Development/target_platform/apache/apache-cxf-dosgi-ri-1.3.1/plugins" type="Directory"/>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="com.google.guava.runtime.feature.feature.group" version="11.0.1"/>
 <unit id="com.google.guava.sdk.feature.feature.group" version="11.0.1"/>
 <repository location="http://guava-osgi.googlecode.com/svn/trunk/repository/"/>
 </location>
-<location path="/home/muki/Development/workspace_knowing/Medmon/de.lmu.ifi.dbs.medmon.site/target/repository" type="Directory"/>
-<location path="/home/muki/Development/workspace_knowing/Knowing/de.lmu.ifi.dbs.knowing.updatesite/target/repository" type="Directory"/>
+<location path="/home/muki/Development/git/Medmon/de.lmu.ifi.dbs.medmon.site/target/repository/plugins" type="Directory"/>
+<location path="${eclipse_home}" type="Profile"/>
+<location path="/home/muki/Development/target_platform/apache/apache-cxf-dosgi-ri-1.3.1/plugins" type="Directory"/>
 </locations>
 <environment>
 <os>linux</os>

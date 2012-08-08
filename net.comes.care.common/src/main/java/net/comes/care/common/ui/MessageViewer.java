@@ -64,6 +64,8 @@ public class MessageViewer extends TableViewer {
 				scroll.setIncrement(i++); // Is that the way it should work?
 				parameters.setMessageOption(option);
 				msg = sycare.getMessage(parameters);
+				if(msg == null)
+					break;
 				messages.add(msg);
 			} catch (SOAPFaultException e) {
 				// no more messages
