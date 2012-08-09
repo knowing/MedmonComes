@@ -53,20 +53,20 @@ public class MessageViewer extends TableViewer {
 		parameters.setSessionId(sessionId);
 		AMessage msg = sycare.getMessage(parameters);
 
-		messages.add(msg);
 		// TODO This smells for deadlock
 		int i = 1;
 		while (true) {
 			try {
-
+				if(msg == null)
+					break;
+				messages.add(msg);
+				
 				MessageOption option = new MessageOption();
 				Scroll scroll = new Scroll();
 				scroll.setIncrement(i++); // Is that the way it should work?
 				parameters.setMessageOption(option);
 				msg = sycare.getMessage(parameters);
-				if(msg == null)
-					break;
-				messages.add(msg);
+				
 			} catch (SOAPFaultException e) {
 				// no more messages
 				break;

@@ -13,7 +13,7 @@ import net.comes.care.ws.sycare.Sycare;
 
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.e4.core.di.extensions.Preference;
-import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -26,12 +26,15 @@ import org.eclipse.swt.widgets.Text;
 import org.osgi.service.prefs.BackingStoreException;
 
 public class UserToolControl {
+	
+	public static final String LOGIN_TOPIC = "patient/login";
+	public static final String LOGOUT_TOPIC = "patient/logout";
 
 	@Inject
 	Sycare sycare;
-
+	
 	@Inject
-	ESelectionService selectionService;
+	IEventBroker broker;
 
 	private Text txtUsername;
 	private Text txtPassword;
@@ -67,6 +70,7 @@ public class UserToolControl {
 			public void widgetSelected(SelectionEvent e) {
 				// Already logged in
 				if (store.getSession().isPresent()) {
+					broker.post(LOGOUT_TOPIC, null);
 					store.setSession(null);
 					login.setText("<a>login</a>");
 					txtUsername.setVisible(true);
@@ -91,8 +95,7 @@ public class UserToolControl {
 					store.setSession(session);
 
 					Status status = fetchStatus(session);
-					selectionService.setSelection(session);
-					selectionService.setSelection(status);
+					broker.post(LOGIN_TOPIC, session);
 
 					StringBuilder sb = new StringBuilder();
 					sb.append(txtUsername.getText()).append(" | ").append("Ungelesene Nachrichten ").append(status.getAvailableMessages())

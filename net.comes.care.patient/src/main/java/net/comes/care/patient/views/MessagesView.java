@@ -1,5 +1,7 @@
 package net.comes.care.patient.views;
 
+import java.util.Collections;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
@@ -14,6 +16,7 @@ import net.comes.care.ws.sycare.Sycare;
 
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.e4.ui.di.UIEventTopic;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -43,7 +46,7 @@ public class MessagesView {
 
 	private MessageViewer messageViewer;
 	private Text txtSearch;
-
+	
 	/**
 	 * Create contents of the view part.
 	 */
@@ -79,7 +82,7 @@ public class MessagesView {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (store.getSession().isPresent())
-					onRefresh(store.getSession().get());
+					onLogin(store.getSession().get());
 			}
 		});
 
@@ -88,16 +91,21 @@ public class MessagesView {
 		btnRead.setText("Gelesen");
 
 	}
-
-	@Inject
-	private void onRefresh(@Optional @Named(IServiceConstants.ACTIVE_SELECTION) Session session) {
-		if (session == null)
+	
+	@Inject @Optional
+	protected void onLogin(@UIEventTopic(UserToolControl.LOGIN_TOPIC) Session session) {
+		System.err.println("LOGIN " + session);
+		if (messageViewer == null || messageViewer.getControl().isDisposed())
 			return;
-
 		// TODO until bug is fixed
 		messageViewer.setInput(sycare, session.getSessionId());
 
 		// Mock until fixed
+	}
+	
+	@Inject @Optional
+	protected void onLogout(@UIEventTopic(UserToolControl.LOGOUT_TOPIC) Session session) {
+		messageViewer.setInput(Collections.EMPTY_LIST);
 	}
 
 	@PreDestroy
