@@ -5,19 +5,18 @@ import java.util.Collections;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import net.comes.care.common.login.SessionStore;
 import net.comes.care.common.resources.ISharedImages;
 import net.comes.care.common.resources.ResourceManager;
 import net.comes.care.common.ui.MessageViewer;
+import net.comes.care.services.IMessagesService;
 import net.comes.care.ws.sycare.Session;
 import net.comes.care.ws.sycare.Sycare;
 
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.UIEventTopic;
-import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -37,6 +36,9 @@ public class MessagesView {
 
 	@Inject
 	Sycare sycare;
+	
+	@Inject
+	IMessagesService messagesService;
 
 	@Inject
 	SessionStore store;
@@ -89,12 +91,12 @@ public class MessagesView {
 		Button btnRead = new Button(cButtonBar, SWT.CENTER);
 		btnRead.setLayoutData(new RowData(125, SWT.DEFAULT));
 		btnRead.setText("Gelesen");
-
+		
+		messageViewer.setInput(messagesService.getMessages());
 	}
 	
 	@Inject @Optional
 	protected void onLogin(@UIEventTopic(UserToolControl.LOGIN_TOPIC) Session session) {
-		System.err.println("LOGIN " + session);
 		if (messageViewer == null || messageViewer.getControl().isDisposed())
 			return;
 		// TODO until bug is fixed

@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: H2
+Bundle-SymbolicName: net.comes.care.messages.h2
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Require-Bundle: net.comes.care.services;bundle-version="1.0.0",
+ net.comes.care.ws;bundle-version="0.1.1"
+Import-Package: javax.persistence;version="2.0.4",
+ org.osgi.framework;version="[1.6.0,2.0.0)",
+ org.osgi.service.jdbc;version="[1.0.0,2.0.0)",
+ org.slf4j;version="[1.6.0,2.0.0)"
+Meta-Persistence: META-INF/persistence.xml
+Eclipse-BundleShape: dir
+Service-Component: OSGI-INF/messageService.xml

@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Comes Care Services
+Bundle-SymbolicName: net.comes.care.services
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Require-Bundle: net.comes.care.ws;bundle-version="0.1.1"
+Import-Package: org.joda.time;version="[2.0.0,3.0.0)",
+ org.joda.time.base;version="[2.0.0,3.0.0)",
+ org.joda.time.chrono;version="[2.0.0,3.0.0)",
+ org.joda.time.field;version="[2.0.0,3.0.0)",
+ org.joda.time.format;version="[2.0.0,3.0.0)"
+Export-Package: net.comes.care.services

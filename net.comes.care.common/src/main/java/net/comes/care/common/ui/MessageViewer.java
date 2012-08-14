@@ -1,6 +1,7 @@
 package net.comes.care.common.ui;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.xml.ws.soap.SOAPFaultException;
 
@@ -48,7 +49,11 @@ public class MessageViewer extends TableViewer {
 	}
 
 	public void setInput(Sycare sycare, String sessionId) {
-		LinkedList<AMessage> messages = new LinkedList<>();
+		Object currentInput = getInput();
+		List<AMessage> messages = new LinkedList<>();
+		if(currentInput != null && currentInput instanceof List) {
+			messages = (List<AMessage>) currentInput;
+		}
 		GetMessageRequest parameters = new GetMessageRequest();
 		parameters.setSessionId(sessionId);
 		AMessage msg = sycare.getMessage(parameters);
