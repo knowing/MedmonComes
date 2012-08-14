@@ -5,6 +5,7 @@
 	<persistence-unit name="messages.h2" transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<class>net.comes.care.messages.h2.model.Message</class>
+        <class>net.comes.care.messages.h2.model.User</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 
 		<properties>

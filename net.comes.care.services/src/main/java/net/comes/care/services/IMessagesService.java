@@ -5,6 +5,8 @@ import java.util.List;
 import net.comes.care.ws.sycare.AMessage;
 
 public interface IMessagesService {
+	
+	public boolean login(String usermail);
 
 	public List<AMessage> getMessages();
 	
@@ -15,4 +17,5 @@ public interface IMessagesService {
 	public void persist(AMessage message);
 	
 	public void remove(AMessage message);
+
 } 

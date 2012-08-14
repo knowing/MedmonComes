@@ -6,12 +6,18 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import net.comes.care.ws.sycare.MessageType;
 
 @Entity
+@NamedQueries({
+	@NamedQuery(name="Message.byUser", query="SELECT m FROM Message m WHERE m.user = :user")
+})
 public class Message {
 
 	@Id
@@ -20,7 +26,7 @@ public class Message {
 
 	@Column
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date timestamp;
+	private Date timestamp = new Date();
 	
 	@Column
 	private String title;
@@ -36,6 +42,9 @@ public class Message {
 	
 	@Column
 	private int messageId;
+	
+	@ManyToOne
+	private User user;
 	
 	public long getId() {
 		return id;
@@ -96,6 +105,15 @@ public class Message {
 	public void setMessageId(int messageId) {
 		this.messageId = messageId;
 	}
+	
+	protected User getUser() {
+		return user;
+	}
+	
+	protected void setUser(User user) {
+		this.user = user;
+	}
+	
 	
 	@Override
 	public int hashCode() {

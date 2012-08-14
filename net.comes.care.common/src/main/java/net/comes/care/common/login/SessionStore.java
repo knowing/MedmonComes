@@ -10,6 +10,7 @@ import net.comes.care.ws.sycare.Session;
 public class SessionStore {
 
 	private Optional<Session> session = Optional.absent();
+	private Optional<String> email = Optional.absent();
 
 	protected SessionStore() {
 	}
@@ -21,5 +22,15 @@ public class SessionStore {
 	public void setSession(Session session) {
 		this.session = Optional.fromNullable(session);
 	}
+
+	public Optional<String> getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = Optional.fromNullable(email);
+	}
+	
+	
 
 }

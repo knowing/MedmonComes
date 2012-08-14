@@ -93,6 +93,7 @@ public class UserToolControl {
 
 					// Success
 					store.setSession(session);
+					store.setEmail(txtUsername.getText());
 
 					Status status = fetchStatus(session);
 					broker.post(LOGIN_TOPIC, session);

@@ -92,7 +92,6 @@ public class MessagesView {
 		btnRead.setLayoutData(new RowData(125, SWT.DEFAULT));
 		btnRead.setText("Gelesen");
 		
-		messageViewer.setInput(messagesService.getMessages());
 	}
 	
 	@Inject @Optional
@@ -100,6 +99,8 @@ public class MessagesView {
 		if (messageViewer == null || messageViewer.getControl().isDisposed())
 			return;
 		// TODO until bug is fixed
+		messagesService.login(store.getEmail().orNull());
+		messageViewer.setInput(messagesService.getMessages());
 		messageViewer.setInput(sycare, session.getSessionId());
 
 		// Mock until fixed

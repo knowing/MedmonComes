@@ -52,7 +52,7 @@ public class MessageViewer extends TableViewer {
 		Object currentInput = getInput();
 		List<AMessage> messages = new LinkedList<>();
 		if(currentInput != null && currentInput instanceof List) {
-			messages = (List<AMessage>) currentInput;
+			messages = new LinkedList<>((List<AMessage>) currentInput);
 		}
 		GetMessageRequest parameters = new GetMessageRequest();
 		parameters.setSessionId(sessionId);
