@@ -7,6 +7,8 @@ import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
 public class Activator implements BundleActivator {
+	
+	public static String PLUGIN_ID = "net.comes.care.patient";
 
 	private static BundleContext context;//$NON-NLS-1$
 	

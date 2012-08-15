@@ -43,16 +43,19 @@ public class SDRConverterHandler {
 
 	@Execute
 	public void execute(@Named("net.comes.care.parameters.file.source") String srcFile,
-			@Named("net.comes.care.parameters.file.target") String trgFile,
+			@Named("net.comes.care.parameters.file.target") final String trgFile,
 			@Optional @Named("net.comes.care.parameters.uifactory") String uifactory,
 			@Optional @Named("net.comes.care.parameters.sensor") String sensorId, IDPUDirectory dpuDir, IEvaluateService eval,
 			IEventBroker broker, EvaluationDialog dlg) {
 
+		log.debug("############### EVALUATION ##############");
 		log.debug("Start evaluation with file[" + srcFile + "], uifactory [" + uifactory + "], sensorId [" + sensorId + "]");
+		dlg.setTargetFile(trgFile);
 		dlg.open();
 		try {
-			execPath = Files.createTempDirectory("comes");
-			log.debug("Executionpath : " + execPath);
+			execPath = Files.createTempDirectory("comes_");
+			log.debug("Executionpath: " + execPath);
+			log.debug("Output file: " + trgFile);
 
 			// Check file if it exists
 			Path sdrFile = Paths.get(srcFile);
@@ -77,7 +80,8 @@ public class SDRConverterHandler {
 
 							@Override
 							public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-								Files.delete(file);
+								if(!file.equals(Paths.get(trgFile)))
+									Files.delete(file);
 								return CONTINUE;
 							}
 
@@ -101,10 +105,13 @@ public class SDRConverterHandler {
 
 		} catch (IOException ioe) {
 			log.error("Error creating tmp directory.", ioe);
+			broker.post(EvaluationDialog.FINISH_EVENT_TOPIC, ioe);
 		} catch (ValidationException ex) {
 			log.error(ex.getErrors().toString(), ex);
+			broker.post(EvaluationDialog.FINISH_EVENT_TOPIC, ex);
 		} catch (KnowingException ex) {
 			log.error("Exception in classification process.", ex);
+			broker.post(EvaluationDialog.FINISH_EVENT_TOPIC, ex);
 		}
 	}
 

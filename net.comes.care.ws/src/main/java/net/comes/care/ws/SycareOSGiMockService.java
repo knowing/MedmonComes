@@ -1,11 +1,13 @@
 package net.comes.care.ws;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 import net.comes.care.ws.sycare.AMessage;
 import net.comes.care.ws.sycare.ASurvey;
 import net.comes.care.ws.sycare.Credentials;
+import net.comes.care.ws.sycare.DeviceData;
 import net.comes.care.ws.sycare.DeviceManufacturers;
 import net.comes.care.ws.sycare.DeviceTypes;
 import net.comes.care.ws.sycare.GetDeviceManufacturersRequest;
@@ -23,9 +25,13 @@ import net.comes.care.ws.sycare.Session;
 import net.comes.care.ws.sycare.Status;
 import net.comes.care.ws.sycare.Sycare;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class SycareOSGiMockService implements Sycare {
 	
 	private final Queue<AMessage> messageQueue = new LinkedList<>();
+	private final Logger log = LoggerFactory.getLogger(Sycare.class);
 	
 	/**
 	 * OSGi activate. Generate mock objects here
@@ -51,7 +57,21 @@ public class SycareOSGiMockService implements Sycare {
 
 	@Override
 	public Status sendData(SendDataRequest parameters) {
-		return null;
+		log.debug("Trying to send data with parameters");
+		log.debug("DataType: " + parameters.getDataType());
+		log.debug("DeviceType: " + parameters.getDeviceType());
+		log.debug("DeviceData:");
+		for (DeviceData dd : parameters.getDeviceData()) {
+			log.debug("DeviceADDR: " + dd.getDeviceADDR());
+			for (String d : dd.getACData()) {
+				log.debug(d);
+			}
+			log.debug("##################################");
+		}
+		
+		Status status = new Status();
+		status.setAccepted(true);
+		return status;
 	}
 
 	@Override

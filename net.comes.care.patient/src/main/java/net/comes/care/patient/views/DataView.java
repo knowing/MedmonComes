@@ -1,7 +1,9 @@
 package net.comes.care.patient.views;
 
 import java.io.IOException;
+import java.io.Reader;
 import java.net.URI;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -12,20 +14,34 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 
+import net.comes.care.common.evaluation.ACDataReader;
+import net.comes.care.common.evaluation.EvaluationDialog;
 import net.comes.care.common.handlers.SDRConverterHandler;
 import net.comes.care.common.login.SessionStore;
 import net.comes.care.common.preferences.SensorPreferences;
 import net.comes.care.common.resources.ISharedImages;
 import net.comes.care.common.resources.ResourceManager;
 import net.comes.care.common.ui.DataViewer;
+import net.comes.care.patient.Activator;
+import net.comes.care.ws.sycare.DataType;
+import net.comes.care.ws.sycare.DeviceADDR;
+import net.comes.care.ws.sycare.DeviceData;
+import net.comes.care.ws.sycare.DeviceType;
+import net.comes.care.ws.sycare.SendDataRequest;
+import net.comes.care.ws.sycare.Session;
 import net.comes.care.ws.sycare.Sycare;
 
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ParameterizedCommand;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.e4.core.commands.ECommandService;
 import org.eclipse.e4.core.commands.EHandlerService;
+import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.e4.ui.di.UIEventTopic;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -51,6 +67,11 @@ import de.lmu.ifi.dbs.knowing.core.service.IEvaluateService;
 import de.lmu.ifi.dbs.medmon.sensor.core.ISensor;
 import de.lmu.ifi.dbs.medmon.sensor.core.ISensorDirectoryService;
 
+/**
+ * 
+ * @author Nepomuk Seiler
+ * 
+ */
 public class DataView {
 
 	@Inject
@@ -155,9 +176,12 @@ public class DataView {
 		if (path == null)
 			return;
 
-		btnUpload.setEnabled(true);
 		// update
 		dataViewer.setInput(sensor, path);
+
+		//Enabled button if logged in
+		if (store.getSession().isPresent())
+			btnUpload.setEnabled(true);
 	}
 
 	private String fetchSensorPath(ISensor sensor) {
@@ -196,7 +220,7 @@ public class DataView {
 		Properties parameter = new Properties();
 		try {
 			Path srcFile = Paths.get(files.get(0));
-			Path trgFile = Files.createTempFile("comes-upload", ".acdata");
+			Path trgFile = Files.createTempFile("comes-upload.", ".acdata");
 			parameter.setProperty("net.comes.care.parameters.file.source", srcFile.toString());
 			parameter.setProperty("net.comes.care.parameters.file.target", trgFile.toString());
 			parameter.setProperty("net.comes.care.parameters.uifactory", "none");
@@ -212,27 +236,64 @@ public class DataView {
 		}
 		handlerService.executeHandler(cmd);
 
-		/*
-		SendDataRequest parameters = new SendDataRequest();
-		parameters.setSessionId(store.getSession().get().getSessionId());
-		parameters.setDataType(DataType.ASCII_DELIMITED);
-		parameters.setDeviceType(DeviceType.AC);
-		List<DeviceData> data = parameters.getDeviceData(); // Adding data
-		DeviceData d = new DeviceData();
+	}
 
-		DeviceADDR deviceADDR = new DeviceADDR();
-		deviceADDR.setSerialNumber("00.02.C7.52.DF.9E");
-		deviceADDR.setDeviceManufacturer(" Omron RX Genius 6371T");
-		d.setDeviceADDR(deviceADDR);
-		List<String> acData = d.getACData();
-		acData.add("##;0;2010;5;25;19;50;41;Joggen;0;0;;;;");
-		acData.add("##;1;2010;5;25;19;50;42;biken;0;0;;;;");
-		acData.add("##;2;2010;5;25;19;50;48;Joggen;0;0;;;;");
-		data.add(d);
+	@Inject
+	@Optional
+	protected void onEvaluationFinish(@UIEventTopic(EvaluationDialog.FINISH_EVENT_TOPIC) String trgFile) {
+		try (Reader in = Files.newBufferedReader(Paths.get(trgFile), Charset.defaultCharset()); ACDataReader r = new ACDataReader(in)) {
+
+			SendDataRequest parameters = new SendDataRequest();
+			parameters.setSessionId(store.getSession().get().getSessionId());
+			parameters.setDataType(DataType.ASCII_DELIMITED);
+			parameters.setDeviceType(DeviceType.AC);
+			List<DeviceData> data = parameters.getDeviceData(); //
+
+			DeviceData d = new DeviceData();
+			DeviceADDR deviceADDR = new DeviceADDR();
+			deviceADDR.setSerialNumber("00.00.00.00.00.00");
+			deviceADDR.setDeviceManufacturer("Sendsor 3D Accelerometer v.0.0.1");
+			d.setDeviceADDR(deviceADDR);
+			String acData = r.readACData();
+			while (acData != null) {
+				d.getACData().add(acData);
+				acData = r.readACData();
+			}
+			data.add(d);
+
+			net.comes.care.ws.sycare.Status status = sycare.sendData(parameters);
+
+			if (status.isAccepted())
+				MessageDialog.openInformation(btnUpload.getShell(), "Erfolg", "Daten erfolgreich klassifiziert und versendet.");
+			else
+				MessageDialog.openError(btnUpload.getShell(), "Fehler", "Die Daten konnten nicht hochgeladen werden.");
+
+			// Delete tmp file
+			Files.delete(Paths.get(trgFile));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Inject
+	@Optional
+	protected void onEvaluationError(@UIEventTopic(EvaluationDialog.ERROR_EVENT_TOPIC) Exception e) {
+		IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Fehler", e);
+		ErrorDialog.openError(btnUpload.getShell(), "Fehler", e.getMessage(), status);
+	}
+	
+	@Inject @Optional
+	protected void onLogin(@UIEventTopic(UserToolControl.LOGIN_TOPIC) Session session) {
+		if (btnUpload == null || btnUpload.isDisposed())
+			return;
 		
-		Status status = sycare.sendData(parameters);
-		System.out.println("Status: " + status.isAccepted());
-		*/
+		//Enable if something can be selected
+		btnUpload.setEnabled(!dataViewer.getSelectedFiles().isEmpty());
+	}
+	
+	@Inject @Optional
+	protected void onLogout(@UIEventTopic(UserToolControl.LOGOUT_TOPIC) Session session) {
+		btnUpload.setEnabled(false);
 	}
 
 	@PreDestroy

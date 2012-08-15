@@ -48,7 +48,8 @@ import de.lmu.ifi.dbs.knowing.core.swt.factory.TabUIFactory;
 public class EvaluationDialog extends Dialog {
 
 	public static final String UIFACTORY_ID = "net.comes.care.patient.evaluation.Dialog";
-	public static final String FINISH_EVENT_TOPIC = "de/lmu/ifi/dbs/knowing/core/evaluation";
+	public static final String FINISH_EVENT_TOPIC = "de/lmu/ifi/dbs/knowing/core/evaluation/finish";
+	public static final String ERROR_EVENT_TOPIC = "de/lmu/ifi/dbs/knowing/core/evaluation/error";
 
 	private final IEventBroker broker;
 	private final IActorSystemManager asm;
@@ -57,6 +58,8 @@ public class EvaluationDialog extends Dialog {
 	private UIFactory<Composite> uiFactory;
 	private ActorSystem system;
 	private ProgressBar progressBar;
+	
+	private String targetFile;
 
 	/**
 	 * Create the dialog.
@@ -139,7 +142,7 @@ public class EvaluationDialog extends Dialog {
 					progressMap.put(actor.path(), (worked / work));
 				} else if (status instanceof ExceptionEvent) {
 					ExceptionEvent ex = (ExceptionEvent) status;
-					ex.throwable().printStackTrace();
+					broker.post(ERROR_EVENT_TOPIC, ex.throwable());
 				}
 
 				progressBar.setMaximum(progressMap.size() * 100);
@@ -153,7 +156,7 @@ public class EvaluationDialog extends Dialog {
 	}
 
 	private void onFinish() {
-		broker.send(FINISH_EVENT_TOPIC, "finished");
+		broker.post(FINISH_EVENT_TOPIC, targetFile);
 		close();
 	}
 
@@ -175,6 +178,14 @@ public class EvaluationDialog extends Dialog {
 
 	public ActorSystem getSystem() {
 		return system;
+	}
+	
+	public String getTargetFile() {
+		return targetFile;
+	}
+	
+	public void setTargetFile(String targetFile) {
+		this.targetFile = targetFile;
 	}
 
 }
