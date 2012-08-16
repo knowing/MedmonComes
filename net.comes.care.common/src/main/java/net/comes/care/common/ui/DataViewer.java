@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -48,10 +49,10 @@ public class DataViewer extends TableViewer {
 	@SuppressWarnings("unchecked")
 	public List<URI> getSelectedFiles() {
 		ISelection selection = getSelection();
-		if(selection.isEmpty())
-			return (List<URI>) getInput();
-		IStructuredSelection sel = (IStructuredSelection) selection;
-		return sel.toList();
+		if (selection.isEmpty())
+			return (getInput() != null) ? (List<URI>) getInput() : Collections.EMPTY_LIST;
+		List<URI> selections = ((IStructuredSelection) selection).toList();
+		return (selections == null) ? (List<URI>) getInput() : selections;
 	}
 	
 	public class DataLabelProvider extends LabelProvider implements ITableLabelProvider {

@@ -284,9 +284,11 @@ public class DataView {
 	
 	@Inject @Optional
 	protected void onLogin(@UIEventTopic(UserToolControl.LOGIN_TOPIC) Session session) {
-		if (btnUpload == null || btnUpload.isDisposed())
+		if (btnUpload == null || btnUpload.isDisposed() || dataViewer == null || dataViewer.getControl().isDisposed())
 			return;
 		
+		System.out.println("DataViewer " + dataViewer);
+		System.out.println("DataViewer " + dataViewer.getSelectedFiles());
 		//Enable if something can be selected
 		btnUpload.setEnabled(!dataViewer.getSelectedFiles().isEmpty());
 	}

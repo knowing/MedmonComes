@@ -14,6 +14,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Shell;
 
@@ -58,7 +59,8 @@ public class EvaluationDialog extends Dialog {
 	private UIFactory<Composite> uiFactory;
 	private ActorSystem system;
 	private ProgressBar progressBar;
-	
+	private Label lblStatus;
+
 	private String targetFile;
 
 	/**
@@ -84,8 +86,20 @@ public class EvaluationDialog extends Dialog {
 	protected Control createDialogArea(final Composite parent) {
 		Composite container = (Composite) super.createDialogArea(parent);
 		container.setLayout(new GridLayout(1, false));
-		progressBar = new ProgressBar(container, SWT.NONE);
-		progressBar.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+
+		Label lblHeading = new Label(container, SWT.NONE);
+		lblHeading.setText("Auswertung l\u00E4uft...");
+		lblHeading.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+
+		progressBar = new ProgressBar(container, SWT.SMOOTH);
+		GridData data = new GridData(SWT.FILL, SWT.TOP, true, false);
+		data.widthHint = 200;
+		data.heightHint = 25;
+		progressBar.setLayoutData(data);
+
+		lblStatus = new Label(container, SWT.NONE);
+		lblStatus.setText("...");
+		lblStatus.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 
 		system = asm.create("swt-default", ConfigFactory.defaultReference(ActorSystem.class.getClassLoader()));
 		// uiFactory = UIFactories.newTabUIFactoryInstance(system, parent,
@@ -95,22 +109,24 @@ public class EvaluationDialog extends Dialog {
 				return new TabUIFactory(parent, UIFACTORY_ID, SWT.BOTTOM) {
 					@Override
 					public void update(ActorRef actor, Status status) {
-						if (status instanceof Shutdown)
+						if (status instanceof Shutdown) {
 							parent.getDisplay().asyncExec(new Runnable() {
 								@Override
 								public void run() {
 									onFinish();
 								}
 							});
-						else if (status instanceof UpdateUI)
+						} else if (status instanceof UpdateUI) {
 							parent.getDisplay().asyncExec(new Runnable() {
 								@Override
 								public void run() {
 									updateUI();
 								}
 							});
-						else
+						} else {
 							updateProgress(actor, status);
+						}
+
 					}
 				};
 			}
@@ -129,17 +145,18 @@ public class EvaluationDialog extends Dialog {
 		progressBar.getDisplay().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				if (status instanceof Created)
+				if (status instanceof Created) {
 					progressMap.put(actor.path(), 0.0);
-				else if (status instanceof Running)
-					;
-				else if (status instanceof Finished || status instanceof Ready)
+				} else if (status instanceof Running) {
+					lblStatus.setText(actor.path().name() + " l\u00E4uft");
+				} else if (status instanceof Finished || status instanceof Ready) {
 					progressMap.put(actor.path(), 1.0);
-				else if (status instanceof Progress) {
+				} else if (status instanceof Progress) {
 					Progress p = (Progress) status;
 					double worked = p.worked();
 					double work = p.work();
 					progressMap.put(actor.path(), (worked / work));
+					lblStatus.setText(p.task());
 				} else if (status instanceof ExceptionEvent) {
 					ExceptionEvent ex = (ExceptionEvent) status;
 					broker.post(ERROR_EVENT_TOPIC, ex.throwable());
@@ -179,11 +196,11 @@ public class EvaluationDialog extends Dialog {
 	public ActorSystem getSystem() {
 		return system;
 	}
-	
+
 	public String getTargetFile() {
 		return targetFile;
 	}
-	
+
 	public void setTargetFile(String targetFile) {
 		this.targetFile = targetFile;
 	}
