@@ -7,7 +7,6 @@
     <artifactId>MedmonComes</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
-  <groupId>net.comes.care.ui</groupId>
   <artifactId>net.comes.care.ui</artifactId>
   <packaging>eclipse-plugin</packaging>
 </project>

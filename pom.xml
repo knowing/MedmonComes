@@ -21,6 +21,8 @@
 		<module>net.comes.care.patient</module>
 		<module>net.comes.care.sensors</module>
 		<module>net.comes.care.ui</module>
+		<module>net.comes.care.services</module>
+		<module>net.comes.care.messages.h2</module>
 		<module>net.comes.care.core.feature</module>
 		<module>net.comes.care.patient.feature</module>
 		<module>net.comes.care.knowing.feature</module>
@@ -160,7 +162,8 @@
 		<repository>
 			<id>gemini-dbaccess</id>
 			<layout>p2</layout>
-			<url>http://repository.mukis.de/p2/org.eclipse.gemini.dbaccess</url>
+			<url>https://hudson.eclipse.org/hudson/job/gemini-dbaccess/lastSuccessfulBuild/artifact/gemini.dbaccess.updatesite/target/site</url>
+			<!-- <url>http://repository.mukis.de/p2/org.eclipse.gemini.dbaccess</url> -->
 		</repository>
 		<repository>
 			<id>gemini-jpa-extension-di</id>
