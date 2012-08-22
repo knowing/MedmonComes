@@ -44,9 +44,15 @@ public class H2MessageService implements IMessagesService {
 		List<User> users = em.createNamedQuery("User.byEmail", User.class)
 				.setParameter("email", usermail)
 				.getResultList();
-		if(users.isEmpty())
-			return false;
-		this.user = users.get(0);
+		if(users.isEmpty()) {
+			user = new User();
+			user.setEmail(usermail);
+			em.persist(user);
+			em.getTransaction().commit();
+		} else {
+			this.user = users.get(0);
+		}
+		
 		em.close();
 		return true;
 	}
@@ -54,20 +60,18 @@ public class H2MessageService implements IMessagesService {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<AMessage> getMessages() {
-		//if(user == null) createMockData();
-
 		if (user == null)
 			return Collections.EMPTY_LIST;
 		EntityManager em = emf.createEntityManager();
 		List<Message> messages = em.find(User.class, user.getId()).getMessages();
 		em.close();
-
+		log.info("Getting messages: " + messages.size() + " " + messages);
 		return convertFrom(messages);
 	}
 
 	@Override
 	public List<AMessage> getMessages(String search) {
-		// Created fulltext search string
+		//TODO Created fulltext search string
 		return null;
 	}
 
@@ -82,6 +86,8 @@ public class H2MessageService implements IMessagesService {
 
 	@Override
 	public void persist(AMessage aMessage) {
+		if(user == null)
+			throw new NullPointerException("Not logged in with any user.");
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 
@@ -98,7 +104,25 @@ public class H2MessageService implements IMessagesService {
 
 	@Override
 	public void remove(AMessage message) {
-
+		if(user == null)
+			throw new NullPointerException("Not logged in with any user.");
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		User user = em.find(User.class, this.user.getId());
+		
+		List<Message> messages = em.createNamedQuery("Message.byUserAndMessageId", Message.class)
+			.setParameter("messageId", message.getMessageId())
+			.setParameter("user", user)
+			.getResultList();
+		
+		if(messages == null || messages.isEmpty())
+			throw new RuntimeException("Database is not in sync. Message was not found for " + user.getEmail() + " with messageId " + message.getMessageId());
+		if(messages.size() > 1)
+			throw new RuntimeException("Too many messages found for user " + user.getEmail() + " with messageId " + message.getMessageId());
+		
+		user.removeMessage(messages.get(0));
+		em.getTransaction().commit();
+		em.close();
 	}
 
 	private List<AMessage> convertFrom(List<Message> messages) {
@@ -113,33 +137,10 @@ public class H2MessageService implements IMessagesService {
 		aMessage.setMessageData(message.getContent());
 		aMessage.setMessageTitle(message.getTitle());
 		aMessage.setMessageType(MessageType.fromValue(message.getMessageType()));
+		aMessage.setMessageId(message.getMessageId());
 		return aMessage;
 	}
 
-	private void createMockData() {
-		EntityManager em = emf.createEntityManager();
-		em.getTransaction().begin();
-		User user = new User();
-		user.setEmail("lucky@luke.ll");
-		em.persist(user);
-		em.getTransaction().commit();
-		em.close();
-		this.user = user;
-
-		AMessage msg1 = new AMessage();
-		msg1.setMessageId(1);
-		msg1.setMessageType(MessageType.HTML);
-		msg1.setMessageTitle("Old Message One");
-		msg1.setMessageData("<h1>Important</h1> Old message");
-		persist(msg1);
-
-		AMessage msg2 = new AMessage();
-		msg2.setMessageId(1);
-		msg2.setMessageType(MessageType.STRING);
-		msg2.setMessageTitle("Old Message Two");
-		msg2.setMessageData("Unformatted old message");
-		persist(msg2);
-	}
 
 	protected void bindEntityManagerFactory(EntityManagerFactory emf, Map<String, String> properties) {
 		this.emf = emf;

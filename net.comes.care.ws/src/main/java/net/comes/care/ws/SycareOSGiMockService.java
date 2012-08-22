@@ -1,7 +1,6 @@
 package net.comes.care.ws;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 import net.comes.care.ws.sycare.AMessage;
@@ -39,12 +38,12 @@ public class SycareOSGiMockService implements Sycare {
 	protected void activate() {
 		//Messages
 		AMessage msg1 = new AMessage();
-		msg1.setMessageId(0);
+		msg1.setMessageId((int)(Math.random()* 100000.0));
 		msg1.setMessageTitle("Welcome to COMES");
 		msg1.setMessageData("This is a welcome message");
 		msg1.setMessageType(MessageType.STRING);
 		AMessage msg2 = new AMessage();
-		msg2.setMessageId(0);
+		msg2.setMessageId((int)(Math.random()* 100000.0));
 		msg2.setMessageTitle("Welcome to COMES in HTML");
 		msg2.setMessageData("<h1>Welcome</h1><p>This is a welcome message. <em>COMES Team</em></p>");
 		msg2.setMessageType(MessageType.HTML);
