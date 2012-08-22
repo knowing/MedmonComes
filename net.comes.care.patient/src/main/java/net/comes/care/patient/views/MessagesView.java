@@ -64,29 +64,36 @@ public class MessagesView {
 		container.setLayout(new GridLayout(2, false));
 
 		txtSearch = new Text(container, SWT.BORDER);
-		txtSearch.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-		messageViewer = new MessageViewer(container, SWT.BORDER | SWT.FULL_SELECTION);
-		messageViewer.getControl().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		messageViewer.setMessagesService(messagesService);
-		messageViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+		txtSearch.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,
+				2, 1));
+		messageViewer = new MessageViewer(container, SWT.BORDER
+				| SWT.FULL_SELECTION);
+		messageViewer.getControl().setLayoutData(
+				new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		messageViewer
+				.addSelectionChangedListener(new ISelectionChangedListener() {
 
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-				if (event.getSelection().isEmpty())
-					return;
-				IStructuredSelection selection = (IStructuredSelection) event.getSelection();
-				selectionService.setSelection(selection.getFirstElement());
-			}
-		});
+					@Override
+					public void selectionChanged(SelectionChangedEvent event) {
+						if (event.getSelection().isEmpty())
+							return;
+						IStructuredSelection selection = (IStructuredSelection) event
+								.getSelection();
+						selectionService.setSelection(selection
+								.getFirstElement());
+					}
+				});
 
 		Composite cButtonBar = new Composite(container, SWT.NONE);
-		cButtonBar.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, true, 1, 1));
+		cButtonBar.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, true,
+				1, 1));
 		cButtonBar.setLayout(new RowLayout(SWT.VERTICAL));
 
 		Button btnRefresh = new Button(cButtonBar, SWT.NONE);
 		btnRefresh.setLayoutData(new RowData(125, SWT.DEFAULT));
 		btnRefresh.setText("Aktualisieren");
-		btnRefresh.setImage(ResourceManager.getPluginImage(ISharedImages.PLUGIN_ID, ISharedImages.ICON_REFRESH_16));
+		btnRefresh.setImage(ResourceManager.getPluginImage(
+				ISharedImages.PLUGIN_ID, ISharedImages.ICON_REFRESH_16));
 		btnRefresh.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -99,20 +106,20 @@ public class MessagesView {
 		btnRemove.setLayoutData(new RowData(125, SWT.DEFAULT));
 		btnRemove.setText("L\u00F6schen");
 		btnRemove.addSelectionListener(new SelectionAdapter() {
-
+			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (messageViewer.getSelection().isEmpty())
+				if(messageViewer.getSelection().isEmpty())
 					return;
-
+				
 				@SuppressWarnings("unchecked")
-				List<AMessage> selections = ((IStructuredSelection) messageViewer.getSelection()).toList();
-
+				List<AMessage> selections = ((IStructuredSelection)messageViewer.getSelection()).toList();
+				
 				for (AMessage message : selections) {
 					messagesService.remove(message);
 					updateMessagesViewer();
 				}
-
+				
 			}
 		});
 
@@ -120,7 +127,8 @@ public class MessagesView {
 
 	@Inject
 	@Optional
-	protected void onLogin(@UIEventTopic(UserToolControl.LOGIN_TOPIC) Session session) {
+	protected void onLogin(
+			@UIEventTopic(UserToolControl.LOGIN_TOPIC) Session session) {
 		if (messageViewer == null || messageViewer.getControl().isDisposed())
 			return;
 
@@ -166,7 +174,8 @@ public class MessagesView {
 
 	@Inject
 	@Optional
-	protected void onLogout(@UIEventTopic(UserToolControl.LOGOUT_TOPIC) Session session) {
+	protected void onLogout(
+			@UIEventTopic(UserToolControl.LOGOUT_TOPIC) Session session) {
 		messageViewer.setInput(Collections.EMPTY_LIST);
 	}
 

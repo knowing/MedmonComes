@@ -1,8 +1,5 @@
 package net.comes.care.common.ui;
 
-import java.text.DateFormat;
-
-import net.comes.care.services.IMessagesService;
 import net.comes.care.ws.sycare.AMessage;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -16,10 +13,6 @@ import org.eclipse.swt.widgets.Composite;
 
 public class MessageViewer extends TableViewer {
 
-	private final DateFormat df = DateFormat.getDateTimeInstance();
-	
-	private IMessagesService messagesService;
-
 	public MessageViewer(Composite parent, int style) {
 		super(parent, style);
 		initColumns();
@@ -29,12 +22,8 @@ public class MessageViewer extends TableViewer {
 		getTable().setHeaderVisible(true);
 	}
 
-	public void setMessagesService(IMessagesService messagesService) {
-		this.messagesService = messagesService;
-	}
-
 	/**
-	 * select | Header | From | Date
+	 * select | Header | From
 	 */
 	private void initColumns() {
 		TableViewerColumn col = new TableViewerColumn(this, SWT.CHECK);
@@ -48,14 +37,9 @@ public class MessageViewer extends TableViewer {
 		col = new TableViewerColumn(this, SWT.LEAD);
 		col.getColumn().setText("Absender");
 		col.getColumn().setWidth(200);
-
-		col = new TableViewerColumn(this, SWT.LEAD);
-		col.getColumn().setText("Abgerufen");
-		col.getColumn().setWidth(200);
 	}
 
-	public class MessageLabelProvider extends LabelProvider implements
-			ITableLabelProvider {
+	public class MessageLabelProvider extends LabelProvider implements ITableLabelProvider {
 
 		@Override
 		public Image getColumnImage(Object element, int columnIndex) {
@@ -69,11 +53,7 @@ public class MessageViewer extends TableViewer {
 			case 1:
 				return msg.getMessageTitle();
 			case 2:
-				return "Unbekannt-"; // TODO feature request for messages.
-			case 3:
-				if (messagesService == null)
-					return "--";
-				return df.format(messagesService.getMetadata(msg).getReceiveDate());
+				return "Unbekannt";
 			}
 			return null;
 		}
