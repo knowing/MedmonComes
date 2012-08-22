@@ -12,6 +12,7 @@ import javax.persistence.EntityManagerFactory;
 import net.comes.care.messages.h2.model.Message;
 import net.comes.care.messages.h2.model.User;
 import net.comes.care.services.IMessagesService;
+import net.comes.care.services.MessageMetadata;
 import net.comes.care.ws.sycare.AMessage;
 import net.comes.care.ws.sycare.MessageType;
 
@@ -65,7 +66,7 @@ public class H2MessageService implements IMessagesService {
 		EntityManager em = emf.createEntityManager();
 		List<Message> messages = em.find(User.class, user.getId()).getMessages();
 		em.close();
-		log.info("Getting messages: " + messages.size() + " " + messages);
+		
 		return convertFrom(messages);
 	}
 
@@ -73,15 +74,6 @@ public class H2MessageService implements IMessagesService {
 	public List<AMessage> getMessages(String search) {
 		//TODO Created fulltext search string
 		return null;
-	}
-
-	@Override
-	public List<AMessage> getMessages(int limit) {
-		EntityManager em = emf.createEntityManager();
-		// TODO Limit for getMessages(int limit) method
-		List<Message> messages = em.createNamedQuery("Message.byUser", Message.class).getResultList();
-		em.close();
-		return convertFrom(messages);
 	}
 
 	@Override
@@ -109,6 +101,26 @@ public class H2MessageService implements IMessagesService {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		User user = em.find(User.class, this.user.getId());
+		Message dbMessage = findMessage(message, em);
+		user.removeMessage(dbMessage);
+		em.getTransaction().commit();
+		em.close();
+	}
+	
+	@Override
+	public MessageMetadata getMetadata(AMessage message) {
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		Message dbMessage = findMessage(message, em);
+		MessageMetadata metadata = new MessageMetadata(message);
+		metadata.setReceiveDate(dbMessage.getTimestamp());
+		
+		em.close();
+		return metadata;
+	}
+	
+	private Message findMessage(AMessage message, EntityManager em) {
+		User user = em.find(User.class, this.user.getId());
 		
 		List<Message> messages = em.createNamedQuery("Message.byUserAndMessageId", Message.class)
 			.setParameter("messageId", message.getMessageId())
@@ -120,9 +132,7 @@ public class H2MessageService implements IMessagesService {
 		if(messages.size() > 1)
 			throw new RuntimeException("Too many messages found for user " + user.getEmail() + " with messageId " + message.getMessageId());
 		
-		user.removeMessage(messages.get(0));
-		em.getTransaction().commit();
-		em.close();
+		return messages.get(0);
 	}
 
 	private List<AMessage> convertFrom(List<Message> messages) {
