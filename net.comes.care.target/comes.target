@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="Medmon@Comes" sequenceNumber="55">
+<?pde version="3.8"?><target name="Medmon@Comes" sequenceNumber="68">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="com.google.guava.runtime.feature.feature.group" version="11.0.1"/>
@@ -9,6 +9,24 @@
 <location path="/home/muki/Development/git/Medmon/de.lmu.ifi.dbs.medmon.site/target/repository/plugins" type="Directory"/>
 <location path="${eclipse_home}" type="Profile"/>
 <location path="/home/muki/Development/target_platform/apache/apache-cxf-dosgi-ri-1.3.1/plugins" type="Directory"/>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="gov.nist.math.jama.feature.feature.group" version="1.0.2"/>
+<repository location="http://repository.mukis.de/p2/jama/1.0.2/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.joda.convert.feature.feature.group" version="1.2.0"/>
+<unit id="org.joda.time.feature.feature.group" version="2.1.0"/>
+<repository location="http://repository.mukis.de/p2/joda/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="nz.ac.waikato.cs.weka.feature.feature.group" version="3.7.6.v20120711-1603"/>
+<repository location="http://repository.mukis.de/p2/weka/3.7.6/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="ch.qos.logback.feature.feature.group" version="1.0.6.201207091317"/>
+<unit id="org.slf4j.feature.feature.group" version="1.6.6.201207091317"/>
+<repository location="http://logback.qos.ch/p2"/>
+</location>
 </locations>
 <environment>
 <os>linux</os>
