@@ -1,16 +1,23 @@
 package net.comes.care.patient.views;
 
 import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
+import javax.xml.ws.soap.SOAPFaultException;
 
 import net.comes.care.common.login.SessionStore;
 import net.comes.care.common.resources.ISharedImages;
 import net.comes.care.common.resources.ResourceManager;
 import net.comes.care.common.ui.MessageViewer;
 import net.comes.care.services.IMessagesService;
+import net.comes.care.ws.sycare.AMessage;
+import net.comes.care.ws.sycare.GetMessageRequest;
+import net.comes.care.ws.sycare.MessageOption;
+import net.comes.care.ws.sycare.Scroll;
 import net.comes.care.ws.sycare.Session;
 import net.comes.care.ws.sycare.Sycare;
 
@@ -98,12 +105,47 @@ public class MessagesView {
 	protected void onLogin(@UIEventTopic(UserToolControl.LOGIN_TOPIC) Session session) {
 		if (messageViewer == null || messageViewer.getControl().isDisposed())
 			return;
-		// TODO until bug is fixed
-		messagesService.login(store.getEmail().orNull());
-		messageViewer.setInput(messagesService.getMessages());
-		messageViewer.setInput(sycare, session.getSessionId());
-
+		
+		messageServiceLogin();
+		loadAndPersistMessages();
+		updateMessagesViewer();
 		// Mock until fixed
+	}
+	
+	private void messageServiceLogin() {
+		messagesService.login(store.getEmail().orNull());
+		System.err.println("Logged in with " + store.getEmail().orNull());
+	}
+	
+	private void loadAndPersistMessages() {
+		System.err.println("Load and persist");
+		GetMessageRequest parameters = new GetMessageRequest();
+		parameters.setSessionId(store.getSession().get().getSessionId());
+		AMessage msg = sycare.getMessage(parameters);
+
+		// TODO This smells for deadlock
+		int i = 1;
+		while (true) {
+			try {
+				if(msg == null)
+					break;
+				messagesService.persist(msg);
+				
+				MessageOption option = new MessageOption();
+				Scroll scroll = new Scroll();
+				scroll.setIncrement(i++); // Is that the way it should work?
+				parameters.setMessageOption(option);
+				msg = sycare.getMessage(parameters);
+				
+			} catch (SOAPFaultException e) {
+				// no more messages
+				break;
+			}
+		}
+	}
+	
+	private void updateMessagesViewer() {
+		messageViewer.setInput(messagesService.getMessages());
 	}
 	
 	@Inject @Optional

@@ -1,15 +1,6 @@
 package net.comes.care.common.ui;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.xml.ws.soap.SOAPFaultException;
-
 import net.comes.care.ws.sycare.AMessage;
-import net.comes.care.ws.sycare.GetMessageRequest;
-import net.comes.care.ws.sycare.MessageOption;
-import net.comes.care.ws.sycare.Scroll;
-import net.comes.care.ws.sycare.Sycare;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
@@ -46,38 +37,6 @@ public class MessageViewer extends TableViewer {
 		col = new TableViewerColumn(this, SWT.LEAD);
 		col.getColumn().setText("Absender");
 		col.getColumn().setWidth(200);
-	}
-
-	public void setInput(Sycare sycare, String sessionId) {
-		Object currentInput = getInput();
-		List<AMessage> messages = new LinkedList<>();
-		if(currentInput != null && currentInput instanceof List) {
-			messages = new LinkedList<>((List<AMessage>) currentInput);
-		}
-		GetMessageRequest parameters = new GetMessageRequest();
-		parameters.setSessionId(sessionId);
-		AMessage msg = sycare.getMessage(parameters);
-
-		// TODO This smells for deadlock
-		int i = 1;
-		while (true) {
-			try {
-				if(msg == null)
-					break;
-				messages.add(msg);
-				
-				MessageOption option = new MessageOption();
-				Scroll scroll = new Scroll();
-				scroll.setIncrement(i++); // Is that the way it should work?
-				parameters.setMessageOption(option);
-				msg = sycare.getMessage(parameters);
-				
-			} catch (SOAPFaultException e) {
-				// no more messages
-				break;
-			}
-		}
-		setInput(messages);
 	}
 
 	public class MessageLabelProvider extends LabelProvider implements ITableLabelProvider {

@@ -44,9 +44,15 @@ public class H2MessageService implements IMessagesService {
 		List<User> users = em.createNamedQuery("User.byEmail", User.class)
 				.setParameter("email", usermail)
 				.getResultList();
-		if(users.isEmpty())
-			return false;
-		this.user = users.get(0);
+		if(users.isEmpty()) {
+			user = new User();
+			user.setEmail(usermail);
+			em.persist(user);
+			em.getTransaction().commit();
+		} else {
+			this.user = users.get(0);
+		}
+		
 		em.close();
 		return true;
 	}
@@ -82,6 +88,8 @@ public class H2MessageService implements IMessagesService {
 
 	@Override
 	public void persist(AMessage aMessage) {
+		if(user == null)
+			throw new NullPointerException("Not logged in with any user.");
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 
@@ -116,30 +124,6 @@ public class H2MessageService implements IMessagesService {
 		return aMessage;
 	}
 
-	private void createMockData() {
-		EntityManager em = emf.createEntityManager();
-		em.getTransaction().begin();
-		User user = new User();
-		user.setEmail("lucky@luke.ll");
-		em.persist(user);
-		em.getTransaction().commit();
-		em.close();
-		this.user = user;
-
-		AMessage msg1 = new AMessage();
-		msg1.setMessageId(1);
-		msg1.setMessageType(MessageType.HTML);
-		msg1.setMessageTitle("Old Message One");
-		msg1.setMessageData("<h1>Important</h1> Old message");
-		persist(msg1);
-
-		AMessage msg2 = new AMessage();
-		msg2.setMessageId(1);
-		msg2.setMessageType(MessageType.STRING);
-		msg2.setMessageTitle("Old Message Two");
-		msg2.setMessageData("Unformatted old message");
-		persist(msg2);
-	}
 
 	protected void bindEntityManagerFactory(EntityManagerFactory emf, Map<String, String> properties) {
 		this.emf = emf;
