@@ -16,7 +16,8 @@ import net.comes.care.ws.sycare.MessageType;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name="Message.byUser", query="SELECT m FROM Message m WHERE m.user = :user")
+	@NamedQuery(name="Message.byUser", query="SELECT m FROM Message m WHERE m.user = :user"),
+	@NamedQuery(name="Message.byUserAndMessageId", query="SELECT m FROM Message m WHERE m.user = :user AND m.messageId = :messageId")
 })
 public class Message {
 
@@ -106,15 +107,14 @@ public class Message {
 		this.messageId = messageId;
 	}
 	
-	protected User getUser() {
+	public User getUser() {
 		return user;
 	}
 	
 	protected void setUser(User user) {
 		this.user = user;
 	}
-	
-	
+		
 	@Override
 	public int hashCode() {
 		final int prime = 31;

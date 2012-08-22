@@ -60,20 +60,18 @@ public class H2MessageService implements IMessagesService {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<AMessage> getMessages() {
-		//if(user == null) createMockData();
-
 		if (user == null)
 			return Collections.EMPTY_LIST;
 		EntityManager em = emf.createEntityManager();
 		List<Message> messages = em.find(User.class, user.getId()).getMessages();
 		em.close();
-
+		log.info("Getting messages: " + messages.size() + " " + messages);
 		return convertFrom(messages);
 	}
 
 	@Override
 	public List<AMessage> getMessages(String search) {
-		// Created fulltext search string
+		//TODO Created fulltext search string
 		return null;
 	}
 
@@ -106,7 +104,25 @@ public class H2MessageService implements IMessagesService {
 
 	@Override
 	public void remove(AMessage message) {
-
+		if(user == null)
+			throw new NullPointerException("Not logged in with any user.");
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		User user = em.find(User.class, this.user.getId());
+		
+		List<Message> messages = em.createNamedQuery("Message.byUserAndMessageId", Message.class)
+			.setParameter("messageId", message.getMessageId())
+			.setParameter("user", user)
+			.getResultList();
+		
+		if(messages == null || messages.isEmpty())
+			throw new RuntimeException("Database is not in sync. Message was not found for " + user.getEmail() + " with messageId " + message.getMessageId());
+		if(messages.size() > 1)
+			throw new RuntimeException("Too many messages found for user " + user.getEmail() + " with messageId " + message.getMessageId());
+		
+		user.removeMessage(messages.get(0));
+		em.getTransaction().commit();
+		em.close();
 	}
 
 	private List<AMessage> convertFrom(List<Message> messages) {
@@ -121,6 +137,7 @@ public class H2MessageService implements IMessagesService {
 		aMessage.setMessageData(message.getContent());
 		aMessage.setMessageTitle(message.getTitle());
 		aMessage.setMessageType(MessageType.fromValue(message.getMessageType()));
+		aMessage.setMessageId(message.getMessageId());
 		return aMessage;
 	}
 
