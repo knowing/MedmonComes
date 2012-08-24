@@ -36,10 +36,6 @@
          id="de.lmu.ifi.dbs.knowing.weka.feature"
          version="0.0.0"/>
 
-   <includes
-         id="de.lmu.ifi.dbs.medmon.sensor.feature"
-         version="0.0.0"/>
-
    <requires>
       <import feature="org.eclipse.emf" version="2.8.0.v20120608-0554"/>
       <import feature="org.eclipse.emf.ecore" version="2.8.0.v20120606-0717"/>
@@ -189,6 +185,20 @@
 
    <plugin
          id="com.google.guava"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.sendsor.accelerationSensor"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.lmu.ifi.dbs.medmon.sensor.core"
          download-size="0"
          install-size="0"
          version="0.0.0"

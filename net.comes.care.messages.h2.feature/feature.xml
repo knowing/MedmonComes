@@ -21,10 +21,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.gemini.jpa.feature"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.gemini.dbaccess.feature"
          version="0.0.0"/>
 
@@ -40,6 +36,13 @@
 
    <plugin
          id="org.h2"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.gemini.jpa"
          download-size="0"
          install-size="0"
          version="0.0.0"

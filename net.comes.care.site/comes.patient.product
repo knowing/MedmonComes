@@ -38,7 +38,6 @@
       <feature id="net.comes.care.knowing.feature" version="1.0.0.qualifier"/>
       <feature id="net.comes.care.messages.h2.feature" version="1.0.0.qualifier"/>
       <feature id="org.apache.cxf" version="2.5.2"/>
-      <feature id="de.sendsor.accelerationSensor.feature" version="1.0.0.qualifier"/>
    </features>
 
    <configurations>
